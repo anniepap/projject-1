@@ -1,5 +1,5 @@
 #define N 3
-#define OK_SUCCESS 0
+#define OK_SUCCESS 1
 #include <cstdio>
 
 typedef unsigned int long uint32_t;
@@ -20,6 +20,7 @@ struct list_node {
 class Buffer {
 	size_t size;
 	size_t current;
+	list_node* table;
 public:
 	Buffer(); //Buffer* createBuffer();
 	~Buffer(); //OK_SUCCESS destroyBuffer(Buffer*);
@@ -30,10 +31,11 @@ public:
 class NodeIndex {
 	size_t size;
 	size_t current;
+	size_t* table;
 public:
 	NodeIndex(); //NodeIndex* createNodeIndex();
-	~NodeIndex(); //OK_SUCCESS destroyNodeIndex( NodeIndex* );
-	OK_SUCCESS insertNode(NodeIndex*, uint32_t nodeId, ...);
+	~NodeIndex(); //OK_SUCCESS destroyNodeIndex(NodeIndex*);
+	bool insertNode(NodeIndex*, uint32_t nodeId, ...);
 	size_t getListHead( NodeIndex*, uint32_t nodeId );
 };
 
