@@ -12,7 +12,7 @@ struct list_node {
 
 class Buffer {
 	size_t size;
-	size_t current;
+	size_t capacity;
 	list_node* table;
 public:
 	Buffer(); //Buffer* createBuffer();
@@ -23,7 +23,7 @@ public:
 
 class NodeIndex {
 	size_t size;
-	size_t current;
+	size_t capacity;
 	size_t* table;
 public:
 	NodeIndex(); //NodeIndex* createNodeIndex();
@@ -44,7 +44,7 @@ public:
 
 class Graph
 {
-	Pair in
+	Pair in;
 	Pair out;
 public:
 	Graph();
