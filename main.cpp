@@ -4,16 +4,18 @@
 
 typedef unsigned int long uint32_t;
 
-struct list_node {
-	uint32_t neighbor[N]; //the ids of the neighbor nodes
+class list_node {
+	size_t size; //current size of capacity used (N is the capacity)
+	//size_t capacity = N;
+	uint32_t neighbor[N]; //the ids of the neighbor nodes //offset of NodeIndex line
 	uint32_t edgeProperty[N]; //property for each edge
-	size_t nextListNode; //
+	size_t nextListNode; //0 means no overflow
 };
 
 class Buffer {
-	size_t size;
-	size_t capacity;
-	list_node* table;
+	size_t size; //current size of capacity used
+	size_t capacity; //capacity of table
+	list_node* table; //offset of Buffer line
 public:
 	Buffer(); //Buffer* createBuffer();
 	~Buffer(); //OK_SUCCESS destroyBuffer(Buffer*);
@@ -22,9 +24,9 @@ public:
 };
 
 class NodeIndex {
-	size_t size;
-	size_t capacity;
-	size_t* table;
+	size_t size; //current size of capacity used
+	size_t capacity; //capacity of table
+	size_t* table; //offset of Buffer line
 public:
 	NodeIndex(); //NodeIndex* createNodeIndex();
 	~NodeIndex(); //OK_SUCCESS destroyNodeIndex(NodeIndex*);
