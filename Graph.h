@@ -10,8 +10,8 @@ class Pair {
 public:
 	Pair();
 	~Pair();
-	createNode(uint32_t id);
-	addEdge(uint32_t from, uint32_t to);
+	void createNode(uint32_t id);
+	void addEdge(uint32_t from, uint32_t to);
 };
 
 class Graph
@@ -21,9 +21,9 @@ class Graph
 public:
 	Graph();
 	~Graph();
-	createNode(uint32_t id);
-	addEdge(uint32_t from, uint32_t to);
-	question(uint32_t from, uint32_t to);
+	void createNode(uint32_t id);
+	void addEdge(uint32_t from, uint32_t to);
+	void question(uint32_t from, uint32_t to);
 };
 
 #endif
