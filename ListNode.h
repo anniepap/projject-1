@@ -1,6 +1,8 @@
 #ifndef __LIST_NODE_H__
 #define __LIST_NODE_H__
 
+#include "defines.h"
+
 class list_node {
 	size_t size; //current size of capacity used (N is the capacity)
 	//size_t capacity = N;
