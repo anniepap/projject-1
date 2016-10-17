@@ -1,6 +1,8 @@
 #ifndef __NODEINDEX_H__
 #define __NODEINDEX_H__
 
+#include "defines.h"
+
 class NodeIndex {
 	size_t size; //current size of capacity used
 	size_t capacity; //capacity of table
