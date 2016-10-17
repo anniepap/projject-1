@@ -1,11 +1,11 @@
 #ifndef __BUFFER_H__
 #define __BUFFER_H__
 
-#include "defines.h"
+#include "ListNode.h"
 
 class Buffer {
 	size_t size; //current size of capacity used
-	size_t capacity; //capacity of table
+	size_t /; //capacity of table
 	list_node* table; //offset of Buffer line
 public:
 	Buffer(); //Buffer* createBuffer();
