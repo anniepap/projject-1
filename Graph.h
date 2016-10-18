@@ -1,8 +1,8 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-#include "Buffer.h"
 #include "NodeIndex.h"
+#include "Buffer.h"
 
 class Pair {
 	Buffer buffer;
@@ -16,8 +16,8 @@ public:
 
 class Graph
 {
-	Pair in;
 	Pair out;
+	Pair in;
 public:
 	Graph();
 	~Graph();

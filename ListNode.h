@@ -3,7 +3,7 @@
 
 #include "defines.h"
 
-class list_node {
+struct list_node {
 	size_t size; //current size of capacity used (N is the capacity)
 	//size_t capacity = N;
 	uint32_t neighbor[N]; //the ids of the neighbor nodes //offset of NodeIndex line
