@@ -3,3 +3,14 @@
 projject.layout
 projject.dev
 Makefile.win
+*.suo
+*.sdf
+projject.sln
+*.opendb
+*.obj
+projject/Debug/projject.log
+*.tlog
+projject/Debug/vc140.idb
+*.pdb
+projject/projject.vcxproj
+*.filters
