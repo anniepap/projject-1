@@ -12,7 +12,11 @@ Buffer::~Buffer() {
 	printf("Buffer::~Buffer\n");
 }
 
-size_t Buffer::allocNewNode() {
+list_node& operator[](size_t index) {
+	return table[index];
+}
+
+size_t Buffer::allocNewNode(size_t ptr) {
 	printf("Buffer::allocNewNode\n");
 	return 0;
 }
@@ -21,4 +25,3 @@ list_node* Buffer::getListNode(size_t) {
 	printf("Buffer::getListNode\n");
 	return NULL;
 }
-

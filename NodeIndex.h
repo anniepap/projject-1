@@ -3,15 +3,20 @@
 
 #include "defines.h"
 
+struct Node {
+	size_t size; //current size of capacity used on the first list_node
+	size_t offset; //offset of the first list_node
+};
+
 class NodeIndex {
-	size_t size; //current size of capacity used
 	size_t capacity; //capacity of table
-	size_t* table; //offset of Buffer line
+	Node* table; //offset of Buffer line
 public:
 	NodeIndex(); //NodeIndex* createNodeIndex();
 	~NodeIndex(); //OK_SUCCESS destroyNodeIndex(NodeIndex*);
-	bool insertNode(NodeIndex*, uint32_t nodeId, ...);
-	size_t getListHead(NodeIndex*, uint32_t nodeId);
+	Node& operator[](size_t index);
+	bool insertNode(uint32_t nodeId);
+	size_t getListHead(uint32_t nodeId);
 };
 
 #endif
