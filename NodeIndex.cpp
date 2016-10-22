@@ -11,7 +11,7 @@ NodeIndex::~NodeIndex() {
 	printf("NodeIndex::~NodeIndex\n");
 }
 
-Node& operator[](size_t index) {
+Node& NodeIndex::operator[](size_t index) {
 	return table[index];
 }
 
@@ -25,7 +25,3 @@ size_t NodeIndex::getListHead(uint32_t nodeId) {
 	return 0;
 }
 
-size_t NodeIndex::findEdge(uint32_t nodeId) {
-	printf("NodeIndex::findEdge\n");
-	return 0;
-}

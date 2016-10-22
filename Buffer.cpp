@@ -12,7 +12,7 @@ Buffer::~Buffer() {
 	printf("Buffer::~Buffer\n");
 }
 
-list_node& operator[](size_t index) {
+list_node& Buffer::operator[](size_t index) {
 	return table[index];
 }
 
@@ -24,4 +24,8 @@ size_t Buffer::allocNewNode(size_t ptr) {
 list_node* Buffer::getListNode(size_t) {
 	printf("Buffer::getListNode\n");
 	return NULL;
+}
+
+bool Buffer::find(size_t offset, uint32_t id) {
+	return false;
 }
