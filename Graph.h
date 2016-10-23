@@ -12,6 +12,7 @@ public:
 	~Pair();
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
+	void print(void);
 };
 
 class Graph
@@ -24,6 +25,7 @@ public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
 	void question(uint32_t from, uint32_t to);
+	void print(void);
 };
 
 #endif

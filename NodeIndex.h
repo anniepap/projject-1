@@ -15,7 +15,7 @@ public:
 	NodeIndex(); //NodeIndex* createNodeIndex();
 	~NodeIndex(); //OK_SUCCESS destroyNodeIndex(NodeIndex*);
 	Node& operator[](size_t index);
-	bool insertNode(uint32_t nodeId);
+	void insertNode(uint32_t nodeId);
 	size_t getListHead(uint32_t nodeId);
 };
 

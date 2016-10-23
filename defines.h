@@ -4,8 +4,8 @@
 #define LIST_NODE_CAPACITY 3
 #define NODE_INDEX_CAPACITY 10
 #define BUFFER_CAPACITY 20
-#define OK_SUCCESS 1
-#define NONE -1
+
+#define NONE (size_t) -1
 
 #include <cstdlib>
 #include <cstdio>

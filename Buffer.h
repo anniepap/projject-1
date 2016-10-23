@@ -13,7 +13,7 @@ public:
 	list_node& operator[](size_t index);
 	size_t allocNewNode(size_t ptr);
 	list_node* getListNode(size_t);
-	bool find(size_t offset, uint32_t id);
+	bool find(size_t offset, uint32_t id, size_t size);
 };
 
 #endif
