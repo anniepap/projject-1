@@ -1,12 +1,5 @@
 #include "Graph.h"
-
-Graph::Graph() {
-	printf("Graph::Graph\n");
-}
-
-Graph::~Graph() {
-	printf("Graph::~Graph\n");
-}
+#include "QueueSet.h"
 
 void Graph::insertNode(uint32_t id) {
 	out.insertNode(id);
@@ -19,7 +12,48 @@ void Graph::addEdge(uint32_t from, uint32_t to) {
 }
 
 void Graph::question(uint32_t from, uint32_t to) {
-	printf("Graph::question %lu->%lu\n", from, to);
+	if (from == to) {
+		printf("0\n");
+		return;
+	}
+
+	ListQueueSet q1;
+	ListQueueSet q2;
+	ListQueueSet visited;
+	q1.push(from);
+	size_t lvl = 1;
+	
+	while (!q1.empty()) {
+		while (!q1.empty()) {
+			uint32_t i = q1.pop();
+			visited.push(i);
+			
+			Node& node = out.index[i];
+			size_t size = node.size;
+			size_t offset = node.offset;
+			while (offset != NONE)
+			{
+				list_node& bucket = out.buffer[offset];
+				for (size_t i = 0; i < size; ++i) {
+					uint32_t j = bucket.neighbor[i];
+					if (j == to) {
+						printf("%u\n", lvl);
+						return;
+					}
+					if (!visited.find(j))
+						q2.push(j);
+				}
+				offset = bucket.nextListNode;
+				size = LIST_NODE_CAPACITY;
+			}
+		}
+		while (!q2.empty()) {
+			q1.push(q2.pop());
+		}
+		lvl++;
+	}
+
+	printf("-1\n");
 }
 
 void Graph::print(void) {
@@ -30,14 +64,6 @@ void Graph::print(void) {
 }
 
 /////////////////////////////////////////////////
-
-Pair::Pair() {
-	printf("Pair::Pair\n");
-}
-
-Pair::~Pair() {
-	printf("Pair::~Pair\n");
-}
 
 void Pair::insertNode(uint32_t id) {
 	index.insertNode(id);
@@ -59,7 +85,7 @@ void Pair::addEdge(uint32_t from, uint32_t to) {
 }
 
 void Pair::print(void) {
-	for (uint32_t i = 0; i < 8; ++i)
+	for (uint32_t i = 0; i < index.getCapacity(); ++i)
 	{
 		printf("NODE %lu\n", i);
 		Node& node = index[i];
@@ -77,3 +103,4 @@ void Pair::print(void) {
 		}
 	}
 }
+

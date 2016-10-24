@@ -4,12 +4,10 @@ Buffer::Buffer() {
 	size = 0;
 	capacity = BUFFER_CAPACITY;
 	table = (list_node*) malloc(capacity*sizeof(list_node));
-	printf("Buffer::Buffer\n");
 }
 
 Buffer::~Buffer() {
 	free(table);
-	printf("Buffer::~Buffer\n");
 }
 
 list_node& Buffer::operator[](size_t index) {

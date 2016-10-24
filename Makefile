@@ -1,2 +1,2 @@
 all:
-	g++ *.cpp -Wall -Wextra -Wconversion -o a
+	g++ *.cpp -g -Wall -Wextra -Wconversion -o a

@@ -17,6 +17,7 @@ public:
 	Node& operator[](size_t index);
 	void insertNode(uint32_t nodeId);
 	size_t getListHead(uint32_t nodeId);
+	size_t getCapacity(void);
 };
 
 #endif

@@ -34,3 +34,8 @@ void NodeIndex::insertNode(uint32_t nodeId) {
 size_t NodeIndex::getListHead(uint32_t nodeId) {
 	return (capacity > nodeId) ? NONE : table[nodeId].offset;
 }
+
+size_t NodeIndex::getCapacity(void) {
+	return capacity;
+}
+

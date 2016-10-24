@@ -1,5 +1,5 @@
 #include "Graph.h"
-
+/*
 int main(void) {
 	Graph graph;
 
@@ -16,4 +16,5 @@ int main(void) {
 
 	graph.print();
 	return 0;
-}
+}*/
+
