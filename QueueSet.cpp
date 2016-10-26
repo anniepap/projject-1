@@ -3,21 +3,28 @@
 ListQueueSet::Node::Node(uint32_t id) : id(id), next(NULL) {
 }
 
-ListQueueSet::ListQueueSet() : size(0), head(NULL), back(NULL) {
+ListQueueSet::ListQueueSet(size_t size) : size(0), head(NULL), back(NULL) {
+	visited = new bool[size];
+	for (size_t i = 0; i < size; ++i) {
+		visited[i] = false;
+	}
 }
 
 ListQueueSet::~ListQueueSet() {
 	while (head != NULL) {
 		pop();
 	}
+	delete visited;
 }
 
 void ListQueueSet::push(uint32_t id) {
-	if (!find(id)) {
+	if (!visited[id])
+	{
 		size++;
 		Node* node = new Node(id);
 		if (!head) head = back = node;
 		else back = back->next = node;
+		visited[id] = true;
 	}
 }
 
@@ -35,12 +42,10 @@ bool ListQueueSet::empty() {
 	return size == 0;
 }
 
-bool ListQueueSet::find(uint32_t id) {
-	Node* node = head;
-	while (node != NULL) {
-		if (node->id == id) return true;
-		node = node->next;
-	}
-	return false;
+size_t ListQueueSet::getSize() {
+	return size;
 }
 
+bool ListQueueSet::getVisited(size_t index) {
+	return visited[index];
+}

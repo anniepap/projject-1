@@ -1,20 +1,40 @@
 #include "Graph.h"
-/*
-int main(void) {
+#include <fstream>
+#include <iostream>
+using namespace std;
+
+int main(void)
+{
 	Graph graph;
+	ifstream myReadFile;
+	char com;
+	uint32_t from;
+	uint32_t to;
 
-	graph.addEdge(1, 2);
-	graph.addEdge(2, 3);
-	graph.addEdge(3, 1);
-	graph.addEdge(4, 1);
-	graph.addEdge(2, 4);
+	myReadFile.open("datasets/small/smallGraph.txt");
+	if (myReadFile.is_open()) {
+		while (!myReadFile.eof()) {
+			myReadFile >> from >> to;
+			if (!myReadFile.good())
+				break;
+			graph.addEdge(from, to);
+		}
+	}
+	myReadFile.close();
 
-	graph.question(1, 3);
-	graph.addEdge(4, 5);
-	graph.question(1, 5);
-	graph.question(5, 1);
+	myReadFile.open("datasets/small/smallWorkload_FINAL.txt");
+	if (myReadFile.is_open()) {
+		while(!myReadFile.eof()) {
+			myReadFile >> com;
+			if (com != 'F')
+				myReadFile >> from >> to;
+			if (com == 'A')
+				graph.addEdge(from, to);
+			if (com == 'Q')
+				cout << graph.question(from, to) << endl;
+		}
+	}
+	myReadFile.close();
 
-	graph.print();
 	return 0;
-}*/
-
+}

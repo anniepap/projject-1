@@ -8,7 +8,7 @@
 #define NONE (size_t) -1
 
 #include <cstdlib>
-#include <cstdio>
+#include <iostream>
 
 typedef unsigned int long uint32_t;
 

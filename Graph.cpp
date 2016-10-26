@@ -11,55 +11,31 @@ void Graph::addEdge(uint32_t from, uint32_t to) {
 	in.addEdge(to, from);
 }
 
-void Graph::question(uint32_t from, uint32_t to) {
-	if (from == to) {
-		printf("0\n");
-		return;
-	}
+long Graph::question(uint32_t from, uint32_t to) {
+	if (to == from) return 0;
 
-	ListQueueSet q1;
-	ListQueueSet q2;
-	ListQueueSet visited;
-	q1.push(from);
-	size_t lvl = 1;
-	
-	while (!q1.empty()) {
-		while (!q1.empty()) {
-			uint32_t i = q1.pop();
-			visited.push(i);
-			
-			Node& node = out.index[i];
-			size_t size = node.size;
-			size_t offset = node.offset;
-			while (offset != NONE)
-			{
-				list_node& bucket = out.buffer[offset];
-				for (size_t i = 0; i < size; ++i) {
-					uint32_t j = bucket.neighbor[i];
-					if (j == to) {
-						printf("%u\n", lvl);
-						return;
-					}
-					if (!visited.find(j))
-						q2.push(j);
-				}
-				offset = bucket.nextListNode;
-				size = LIST_NODE_CAPACITY;
-			}
-		}
-		while (!q2.empty()) {
-			q1.push(q2.pop());
-		}
+	size_t max = (out.index.getCapacity() > in.index.getCapacity()) ? out.index.getCapacity() : in.index.getCapacity();
+	ListQueueSet start(max);
+	ListQueueSet target(max);
+
+	long lvl = 1;
+
+	start.push(from);
+	target.push(to);
+
+	while (!start.empty() && !target.empty()) {
+		if (out.bfs(start, target)) return 2*lvl-1;
+		if (in.bfs(target, start)) return 2*lvl;
 		lvl++;
 	}
 
-	printf("-1\n");
+	return -1;
 }
 
 void Graph::print(void) {
-	printf("OUT EDGES\n");
+	std::cout << "OUT EDGES" << std::endl;
 	out.print();
-	printf("IN EDGES\n");
+	std::cout << "IN EDGES" << std::endl;
 	in.print();
 }
 
@@ -71,10 +47,10 @@ void Pair::insertNode(uint32_t id) {
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
 	index.insertNode(from);
-	index.insertNode(to);
+	//index.insertNode(to);
 
 	Node& node = index[from];
-	if (buffer.find(node.offset, to, node.size) == true) return;
+//	if (buffer.find(node.offset, to, node.size) == true) return;
 	if (node.size == LIST_NODE_CAPACITY) {
 		node.offset = buffer.allocNewNode(node.offset);
 		node.size = 0;
@@ -87,20 +63,44 @@ void Pair::addEdge(uint32_t from, uint32_t to) {
 void Pair::print(void) {
 	for (uint32_t i = 0; i < index.getCapacity(); ++i)
 	{
-		printf("NODE %lu\n", i);
+		std::cout << "NODE " << i << std::endl;
 		Node& node = index[i];
 		size_t size = node.size;
 		size_t offset = node.offset;
 		while (offset != NONE)
 		{
 			list_node& bucket = buffer[offset];
-			printf("\tBUCKET %u:", offset);
+			std::cout << "\tBUCKET " << offset << ':';
 			for (size_t i = 0; i < size; ++i)
-				printf(" %lu", bucket.neighbor[i]);
-			printf("\n");
+				std::cout << ' ' << bucket.neighbor[i];
+			std::cout << std::endl;
 			offset = bucket.nextListNode;
 			size = LIST_NODE_CAPACITY;
 		}
 	}
 }
 
+bool Pair::bfs(ListQueueSet& start, ListQueueSet& target) {
+	size_t size = start.getSize();
+	for (size_t i = 0; i < size; ++i) {
+		uint32_t id = start.pop();
+		
+		Node& node = index[id];
+		size_t size = node.size;
+		size_t offset = node.offset;
+		while (offset != NONE)
+		{
+			list_node& bucket = buffer[offset];
+			for (size_t i = 0; i < size; ++i) {
+				id = bucket.neighbor[i];
+				if (start.getVisited(id) == false) {
+					if (target.getVisited(id) == true) return true;
+					start.push(id);
+				}
+			}
+			offset = bucket.nextListNode;
+			size = LIST_NODE_CAPACITY;
+		}
+	}
+	return false;
+}

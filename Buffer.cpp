@@ -17,7 +17,7 @@ list_node& Buffer::operator[](size_t index) {
 size_t Buffer::allocNewNode(size_t ptr) {
 	if (size == capacity)
 	{
-		capacity <<=1;
+		capacity <<= 1;
 		table = (list_node*) realloc(table, capacity*sizeof(list_node));
 	}
 	table[size].nextListNode = ptr;

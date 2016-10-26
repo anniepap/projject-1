@@ -2,6 +2,7 @@
 #define __GRAPH_H__
 
 #include "NodeIndex.h"
+#include "QueueSet.h"
 #include "Buffer.h"
 
 struct Pair {
@@ -10,6 +11,7 @@ struct Pair {
 public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
+	bool bfs(ListQueueSet& start, ListQueueSet& target);
 	void print(void);
 };
 
@@ -20,7 +22,7 @@ class Graph
 public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
-	void question(uint32_t from, uint32_t to);
+	long question(uint32_t from, uint32_t to);
 	void print(void);
 };
 

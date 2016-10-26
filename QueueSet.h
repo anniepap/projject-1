@@ -14,13 +14,15 @@ class ListQueueSet {
 	size_t size;
 	Node* head;
 	Node* back;
+	bool* visited;
 public:
-	ListQueueSet();
+	ListQueueSet(size_t size);
 	~ListQueueSet();
 	void push(uint32_t id);
 	uint32_t pop();
 	bool empty();
-	bool find(uint32_t id);
+	size_t getSize();
+	bool getVisited(size_t index);
 };
 
 #endif
