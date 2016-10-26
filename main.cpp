@@ -3,15 +3,17 @@
 #include <iostream>
 using namespace std;
 
-int main(void)
+int main(int argc, char** argv)
 {
+	if (argc != 3) return -1;
+
 	Graph graph;
 	ifstream myReadFile;
 	char com;
 	uint32_t from;
 	uint32_t to;
 
-	myReadFile.open("datasets/small/smallGraph.txt");
+	myReadFile.open(argv[1]);
 	if (myReadFile.is_open()) {
 		while (!myReadFile.eof()) {
 			myReadFile >> from >> to;
@@ -22,7 +24,7 @@ int main(void)
 	}
 	myReadFile.close();
 
-	myReadFile.open("datasets/small/smallWorkload_FINAL.txt");
+	myReadFile.open(argv[2]);
 	if (myReadFile.is_open()) {
 		while(!myReadFile.eof()) {
 			myReadFile >> com;

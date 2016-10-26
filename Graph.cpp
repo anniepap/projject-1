@@ -32,13 +32,6 @@ long Graph::question(uint32_t from, uint32_t to) {
 	return -1;
 }
 
-void Graph::print(void) {
-	std::cout << "OUT EDGES" << std::endl;
-	out.print();
-	std::cout << "IN EDGES" << std::endl;
-	in.print();
-}
-
 /////////////////////////////////////////////////
 
 void Pair::insertNode(uint32_t id) {
@@ -58,26 +51,6 @@ void Pair::addEdge(uint32_t from, uint32_t to) {
 
 	buffer[node.offset].neighbor[node.size] = to;
 	node.size++;
-}
-
-void Pair::print(void) {
-	for (uint32_t i = 0; i < index.getCapacity(); ++i)
-	{
-		std::cout << "NODE " << i << std::endl;
-		Node& node = index[i];
-		size_t size = node.size;
-		size_t offset = node.offset;
-		while (offset != NONE)
-		{
-			list_node& bucket = buffer[offset];
-			std::cout << "\tBUCKET " << offset << ':';
-			for (size_t i = 0; i < size; ++i)
-				std::cout << ' ' << bucket.neighbor[i];
-			std::cout << std::endl;
-			offset = bucket.nextListNode;
-			size = LIST_NODE_CAPACITY;
-		}
-	}
 }
 
 bool Pair::bfs(ListQueueSet& start, ListQueueSet& target) {

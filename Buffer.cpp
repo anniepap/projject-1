@@ -39,3 +39,4 @@ bool Buffer::find(size_t offset, uint32_t id, size_t size) {
 	}
 	return false;
 }
+
