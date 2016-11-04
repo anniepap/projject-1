@@ -7,6 +7,15 @@ void Graph::insertNode(uint32_t id) {
 }
 
 void Graph::addEdge(uint32_t from, uint32_t to) {
+/*	if (1){//in.count(to) < out.count(from)) {
+		Node& node = in.index[to];
+		if (in.buffer.find(node.offset, from, node.size) == true) return;
+	}
+	else {
+		Node& node = out.index[from];
+		if (out.buffer.find(node.offset, to, node.size) == true) return;
+	}
+*/
 	out.addEdge(from, to);
 	in.addEdge(to, from);
 }
@@ -14,7 +23,7 @@ void Graph::addEdge(uint32_t from, uint32_t to) {
 long Graph::question(uint32_t from, uint32_t to) {
 	if (to == from) return 0;
 
-	size_t max = (out.index.getCapacity() > in.index.getCapacity()) ? out.index.getCapacity() : in.index.getCapacity();
+	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
 	ListQueueSet start(max);
 	ListQueueSet target(max);
 
@@ -24,8 +33,8 @@ long Graph::question(uint32_t from, uint32_t to) {
 	target.push(to);
 
 	while (!start.empty() && !target.empty()) {
-		if (out.bfs(start, target)) return 2*lvl-1;
-		if (in.bfs(target, start)) return 2*lvl;
+		if (out.bfs(start, target)) return lvl<<1-1;
+		if (in.bfs(target, start)) return lvl<<1;
 		lvl++;
 	}
 
@@ -38,12 +47,15 @@ void Pair::insertNode(uint32_t id) {
 	index.insertNode(id);
 }
 
+size_t Pair::getCapacity() {
+	return index.getCapacity();
+}
+
 void Pair::addEdge(uint32_t from, uint32_t to) {
 	index.insertNode(from);
 	//index.insertNode(to);
 
 	Node& node = index[from];
-//	if (buffer.find(node.offset, to, node.size) == true) return;
 	if (node.size == LIST_NODE_CAPACITY) {
 		node.offset = buffer.allocNewNode(node.offset);
 		node.size = 0;

@@ -5,13 +5,14 @@
 #include "QueueSet.h"
 #include "Buffer.h"
 
-struct Pair {
+class Pair {
 	Buffer buffer;
 	NodeIndex index;
 public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
 	bool bfs(ListQueueSet& start, ListQueueSet& target);
+	size_t getCapacity();
 };
 
 class Graph
