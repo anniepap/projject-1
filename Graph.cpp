@@ -51,7 +51,7 @@ void Graph::insertNode(uint32_t id) {
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
 	index.insertNode(from);
-	index.insertNode(to);
+//	index.insertNode(to);
 
 	Node& node = index[from];
 

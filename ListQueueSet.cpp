@@ -13,8 +13,7 @@ ListQueueSet::~ListQueueSet() {
 }
 
 void ListQueueSet::push(uint32_t id) {
-	if (!visited[id])
-	{
+	if (!visited[id]) {
 		size++;
 		Node* node = new Node(id);
 		if (!head) head = back = node;
@@ -32,3 +31,4 @@ uint32_t ListQueueSet::pop() {
 	delete node;
 	return id;
 }
+

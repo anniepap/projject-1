@@ -13,9 +13,7 @@ bool ArrayQueueSet::full() {
 }
 
 void ArrayQueueSet::push(uint32_t id) {
-	if (!visited[id])
-	{
-		if (full()) std::cout << "PROSEXE PSHLE" << std::endl;
+	if (!visited[id]) {
 		size++;
 		array[back] = id;
 		back = ( back + 1 ) % capacity;
@@ -24,7 +22,6 @@ void ArrayQueueSet::push(uint32_t id) {
 }
 
 uint32_t ArrayQueueSet::pop() {
-	if (size == 0) std::cout << "PROSEXE PSHLE!!" << std::endl;
 	size--;
 	uint32_t id = array[head];
 	head = ( head + 1 ) % capacity;
