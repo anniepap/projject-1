@@ -7,15 +7,12 @@ NodeIndex::NodeIndex() {
 	{
 		table[i].size = LIST_NODE_CAPACITY;
 		table[i].offset = NONE;
+		table[i].count = 0;
 	}
 }
 
 NodeIndex::~NodeIndex() {
 	free(table);
-}
-
-Node& NodeIndex::operator[](size_t index) {
-	return table[index];
 }
 
 void NodeIndex::insertNode(uint32_t nodeId) {
@@ -28,7 +25,12 @@ void NodeIndex::insertNode(uint32_t nodeId) {
 	{
 		table[i].size = LIST_NODE_CAPACITY;
 		table[i].offset = NONE;
+		table[i].count = 0;
 	}
+}
+
+Node& NodeIndex::operator[](size_t index) {
+	return table[index];
 }
 
 size_t NodeIndex::getListHead(uint32_t nodeId) {

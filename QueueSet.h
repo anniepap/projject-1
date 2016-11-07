@@ -3,23 +3,18 @@
 
 #include "defines.h"
 
-class ListQueueSet {
-
-	struct Node {
-		uint32_t id;
-		Node* next;
-		Node(uint32_t id);
-	};
-
+class QueueSet {
+protected:
+	size_t capacity;
 	size_t size;
-	Node* head;
-	Node* back;
 	bool* visited;
 public:
-	ListQueueSet(size_t size);
-	~ListQueueSet();
-	void push(uint32_t id);
-	uint32_t pop();
+	QueueSet(size_t capacity);
+	virtual ~QueueSet();
+
+	virtual void push(uint32_t id) = 0;
+	virtual uint32_t pop() = 0;
+
 	bool empty();
 	size_t getSize();
 	bool getVisited(size_t index);

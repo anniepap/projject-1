@@ -11,8 +11,10 @@ class Pair {
 public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
-	bool bfs(ListQueueSet& start, ListQueueSet& target);
+	bool bfs(QueueSet& start, QueueSet& target);
 	size_t getCapacity();
+	size_t getCount(uint32_t id);
+	bool find(uint32_t to, uint32_t from);
 };
 
 class Graph

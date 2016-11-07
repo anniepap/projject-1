@@ -1,21 +1,18 @@
 #include "Graph.h"
-#include "QueueSet.h"
-
-void Graph::insertNode(uint32_t id) {
-	out.insertNode(id);
-	in.insertNode(id);
-}
+#include "ListQueueSet.h"
+#include "ArrayQueueSet.h"
 
 void Graph::addEdge(uint32_t from, uint32_t to) {
-/*	if (1){//in.count(to) < out.count(from)) {
-		Node& node = in.index[to];
-		if (in.buffer.find(node.offset, from, node.size) == true) return;
+
+	if (in.getCapacity() > to && out.getCapacity() > from) {
+		if (in.getCount(to) < out.getCount(from)) {
+			if (in.find(from, to)) return;
+		}
+		else {
+			if (out.find(to, from)) return;
+		}
 	}
-	else {
-		Node& node = out.index[from];
-		if (out.buffer.find(node.offset, to, node.size) == true) return;
-	}
-*/
+
 	out.addEdge(from, to);
 	in.addEdge(to, from);
 }
@@ -24,8 +21,12 @@ long Graph::question(uint32_t from, uint32_t to) {
 	if (to == from) return 0;
 
 	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
-	ListQueueSet start(max);
-	ListQueueSet target(max);
+
+//	ListQueueSet start(max);
+//	ListQueueSet target(max);
+
+	ArrayQueueSet start(max);
+	ArrayQueueSet target(max);
 
 	long lvl = 1;
 
@@ -33,7 +34,7 @@ long Graph::question(uint32_t from, uint32_t to) {
 	target.push(to);
 
 	while (!start.empty() && !target.empty()) {
-		if (out.bfs(start, target)) return lvl<<1-1;
+		if (out.bfs(start, target)) return (lvl<<1)-1;
 		if (in.bfs(target, start)) return lvl<<1;
 		lvl++;
 	}
@@ -41,31 +42,30 @@ long Graph::question(uint32_t from, uint32_t to) {
 	return -1;
 }
 
+void Graph::insertNode(uint32_t id) {
+	out.insertNode(id);
+	in.insertNode(id);
+}
+
 /////////////////////////////////////////////////
-
-void Pair::insertNode(uint32_t id) {
-	index.insertNode(id);
-}
-
-size_t Pair::getCapacity() {
-	return index.getCapacity();
-}
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
 	index.insertNode(from);
-	//index.insertNode(to);
+	index.insertNode(to);
 
 	Node& node = index[from];
+
 	if (node.size == LIST_NODE_CAPACITY) {
 		node.offset = buffer.allocNewNode(node.offset);
 		node.size = 0;
+		node.count++;
 	}
 
 	buffer[node.offset].neighbor[node.size] = to;
 	node.size++;
 }
 
-bool Pair::bfs(ListQueueSet& start, ListQueueSet& target) {
+bool Pair::bfs(QueueSet& start, QueueSet& target) {
 	size_t size = start.getSize();
 	for (size_t i = 0; i < size; ++i) {
 		uint32_t id = start.pop();
@@ -89,3 +89,21 @@ bool Pair::bfs(ListQueueSet& start, ListQueueSet& target) {
 	}
 	return false;
 }
+
+void Pair::insertNode(uint32_t id) {
+	index.insertNode(id);
+}
+
+size_t Pair::getCapacity() {
+	return index.getCapacity();
+}
+
+size_t Pair::getCount(uint32_t id) {
+	return index[id].count;
+}
+
+bool Pair::find(uint32_t to, uint32_t from) {
+	Node& node = index[from];
+	return buffer.find(node.offset, to, node.size);
+}
+

@@ -6,6 +6,7 @@
 struct Node {
 	size_t size; //current size of capacity used on the first list_node
 	size_t offset; //offset of the first list_node
+	size_t count; //number of buckets for this node
 };
 
 class NodeIndex {

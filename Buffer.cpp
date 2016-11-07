@@ -10,10 +10,6 @@ Buffer::~Buffer() {
 	free(table);
 }
 
-list_node& Buffer::operator[](size_t index) {
-	return table[index];
-}
-
 size_t Buffer::allocNewNode(size_t ptr) {
 	if (size == capacity)
 	{
@@ -22,10 +18,6 @@ size_t Buffer::allocNewNode(size_t ptr) {
 	}
 	table[size].nextListNode = ptr;
 	return size++;
-}
-
-list_node* Buffer::getListNode(size_t index) {
-	return (capacity > index) ? NULL : &table[index];
 }
 
 bool Buffer::find(size_t offset, uint32_t id, size_t size) {
@@ -38,5 +30,13 @@ bool Buffer::find(size_t offset, uint32_t id, size_t size) {
 		size = LIST_NODE_CAPACITY;
 	}
 	return false;
+}
+
+list_node& Buffer::operator[](size_t index) {
+	return table[index];
+}
+
+list_node* Buffer::getListNode(size_t index) {
+	return (capacity > index) ? NULL : &table[index];
 }
 
