@@ -13,11 +13,11 @@ bool ArrayQueueSet::full() {
 }
 
 void ArrayQueueSet::push(uint32_t id) {
-	if (!visited[id]) {
+	if (!visited.contains(id)) {
 		size++;
 		array[back] = id;
 		back = ( back + 1 ) % capacity;
-		visited[id] = true;
+		visited.add(id);
 	}
 }
 

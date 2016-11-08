@@ -1,14 +1,6 @@
 #include "QueueSet.h"
 
-QueueSet::QueueSet(size_t capacity) : capacity(capacity), size(0) {
-	visited = new bool[capacity];
-	for (size_t i = 0; i < capacity; ++i) {
-		visited[i] = false;
-	}
-}
-
-QueueSet::~QueueSet() {
-	delete visited;
+QueueSet::QueueSet(size_t capacity) : capacity(capacity), size(0), visited(capacity) {
 }
 
 bool QueueSet::empty() {
@@ -20,5 +12,5 @@ size_t QueueSet::getSize() {
 }
 
 bool QueueSet::getVisited(size_t index) {
-	return visited[index];
+	return visited.contains(index);
 }
