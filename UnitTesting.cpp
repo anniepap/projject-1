@@ -22,10 +22,13 @@ TEST(InsertTest, NonExistingEdges) {
 TEST(EdgeTest, SingleEdge) {
 	Graph graph;
 	uint32_t nodeId1 = 0, nodeId2 = 1;
+	graph.insertNode(nodeId1);
+	graph.insertNode(nodeId2);
 	graph.addEdge(nodeId1, nodeId2);
 
 	size_t index = graph.getOut().getIndex().getListHead(nodeId1);
 	list_node& ln = graph.getOut().getBuffer()[index];
+	//ASSERT_EQ(graph.getOut().getBuffer().find(index, nodeId2, 1), true);
 	ASSERT_EQ(ln.neighbor[0], nodeId2);
 
 	size_t index2 = graph.getIn().getIndex().getListHead(nodeId2);
@@ -41,7 +44,7 @@ TEST(EdgeTest, BufferOverflow) {
 
 	size_t index = graph.getOut().getIndex().getListHead(0);
 	list_node& ln = graph.getOut().getBuffer()[index];
-	ASSERT_NE(ln.nextListNode, 0); // must have overflow
+	ASSERT_NE(ln.nextListNode, NONE); // must have overflow
 
 	list_node& ln2 = graph.getOut().getBuffer()[ln.nextListNode];
 	ASSERT_EQ(ln.neighbor[0], LIST_NODE_CAPACITY + 1);
