@@ -15,16 +15,21 @@ public:
 	size_t getCapacity();
 	size_t getCount(uint32_t id);
 	bool find(uint32_t to, uint32_t from);
+
+	Buffer& getBuffer();
+	NodeIndex& getIndex();
 };
 
-class Graph
-{
+class Graph {
 	Pair out;
 	Pair in;
 public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
 	long question(uint32_t from, uint32_t to);
+
+	Pair& getOut();
+	Pair& getIn();
 };
 
 #endif

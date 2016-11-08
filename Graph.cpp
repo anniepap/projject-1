@@ -47,6 +47,13 @@ void Graph::insertNode(uint32_t id) {
 	in.insertNode(id);
 }
 
+Pair& Graph::getOut() {
+	return out;
+}
+Pair& Graph::getIn() {
+	return in;
+}
+
 /////////////////////////////////////////////////
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
@@ -107,3 +114,9 @@ bool Pair::find(uint32_t to, uint32_t from) {
 	return buffer.find(node.offset, to, node.size);
 }
 
+Buffer& Pair::getBuffer() {
+	return buffer;
+}
+NodeIndex& Pair::getIndex() {
+	return index;
+}
