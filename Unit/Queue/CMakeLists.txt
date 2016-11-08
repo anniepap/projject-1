@@ -5,5 +5,5 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
  
 # Link runTests with what we want to test and the GTest and pthread library
-add_executable(runTests ArrayQueueSet.cpp Buffer.cpp Graph.cpp ListQueueSet.cpp NodeIndex.cpp QueueSet.cpp UnitTesting.cpp)
+add_executable(runTests UnitTesting.cpp ../../ArrayQueueSet.cpp ../../HashSet.cpp ../../QueueSet.cpp)
 target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)

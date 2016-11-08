@@ -22,9 +22,6 @@ long Graph::question(uint32_t from, uint32_t to) {
 
 	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
 
-//	ListQueueSet start(max);
-//	ListQueueSet target(max);
-
 	ArrayQueueSet start(max);
 	ArrayQueueSet target(max);
 
@@ -57,8 +54,7 @@ Pair& Graph::getIn() {
 /////////////////////////////////////////////////
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
-	index.insertNode(from);
-//	index.insertNode(to);
+	insertNode(from);
 
 	Node& node = index[from];
 
@@ -80,8 +76,7 @@ bool Pair::bfs(QueueSet& start, QueueSet& target) {
 		Node& node = index[id];
 		size_t size = node.size;
 		size_t offset = node.offset;
-		while (offset != NONE)
-		{
+		while (offset != NONE) {
 			list_node& bucket = buffer[offset];
 			for (size_t i = 0; i < size; ++i) {
 				id = bucket.neighbor[i];
@@ -117,6 +112,7 @@ bool Pair::find(uint32_t to, uint32_t from) {
 Buffer& Pair::getBuffer() {
 	return buffer;
 }
+
 NodeIndex& Pair::getIndex() {
 	return index;
 }

@@ -6,7 +6,7 @@
 class HashSet : public Set {
 	size_t n;
 	bool** set;
-	void assert(size_t key);
+	void ensure(size_t key);
 public:
 	HashSet(size_t size);
 	~HashSet();
