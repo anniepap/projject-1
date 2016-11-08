@@ -13,12 +13,12 @@ ListQueueSet::~ListQueueSet() {
 }
 
 void ListQueueSet::push(uint32_t id) {
-	if (!visited[id]) {
+	if (!visited.contains(id)) {
 		size++;
 		Node* node = new Node(id);
 		if (!head) head = back = node;
 		else back = back->next = node;
-		visited[id] = true;
+		visited.add(id);
 	}
 }
 
