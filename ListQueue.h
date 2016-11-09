@@ -1,9 +1,9 @@
-#ifndef __LIST_QUEUESET_H__
-#define __LIST_QUEUESET_H__
+#ifndef __LIST_QUEUE_H__
+#define __LIST_QUEUE_H__
 
-#include "QueueSet.h"
+#include "Queue.h"
 
-class ListQueueSet : public QueueSet {
+class ListQueue : public Queue {
 
 	struct Node {
 		uint32_t id;
@@ -14,8 +14,8 @@ class ListQueueSet : public QueueSet {
 	Node* head;
 	Node* back;
 public:
-	ListQueueSet(size_t size);
-	~ListQueueSet();
+	ListQueue(void);
+	~ListQueue();
 
 	uint32_t pop(void);
 	void push(uint32_t id);

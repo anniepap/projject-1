@@ -1,19 +1,19 @@
-#ifndef __QUEUESET_H__
-#define __QUEUESET_H__
+#ifndef __QUEUE_SET_H__
+#define __QUEUE_SET_H__
 
 #include "defines.h"
+#include "HashQueue.h"
+#include "ArrayQueue.h"
 #include "HashSet.h"
 
 class QueueSet {
-protected:
-	size_t capacity;
-	size_t size;
+	HashQueue queue;
 	HashSet visited;
 public:
 	QueueSet(size_t capacity);
 
-	virtual void push(uint32_t id) = 0;
-	virtual uint32_t pop() = 0;
+	void push(uint32_t id);
+	uint32_t pop();
 
 	bool empty();
 	size_t getSize();

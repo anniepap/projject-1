@@ -1,16 +1,28 @@
 #include "QueueSet.h"
 
-QueueSet::QueueSet(size_t capacity) : capacity(capacity), size(0), visited(capacity) {
+QueueSet::QueueSet(size_t capacity) : queue(capacity), visited(capacity) {
 }
 
 bool QueueSet::empty() {
-	return size == 0;
+	return queue.empty();
 }
 
 size_t QueueSet::getSize() {
-	return size;
+	return queue.getSize();
 }
 
 bool QueueSet::getVisited(size_t index) {
 	return visited.contains(index);
 }
+
+void QueueSet::push(uint32_t id) {
+	if (!visited.contains(id)) {
+		queue.push(id);
+		visited.add(id);
+	}
+}
+
+uint32_t QueueSet::pop() {
+	return queue.pop();
+}
+

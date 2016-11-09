@@ -1,6 +1,5 @@
 #include "Graph.h"
-#include "ListQueueSet.h"
-#include "ArrayQueueSet.h"
+#include "QueueSet.h"
 
 void Graph::addEdge(uint32_t from, uint32_t to) {
 
@@ -22,8 +21,8 @@ long Graph::question(uint32_t from, uint32_t to) {
 
 	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
 
-	ArrayQueueSet start(max);
-	ArrayQueueSet target(max);
+	QueueSet start(max);
+	QueueSet target(max);
 
 	long lvl = 1;
 
