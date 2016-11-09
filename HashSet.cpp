@@ -20,23 +20,18 @@ HashSet::~HashSet() {
 bool HashSet::contains(uint32_t id) {
 	size_t k = id/n;
 	size_t p = id%n;
-	ensure(k);
-	return set[k][p];
+	return (set[k] == NULL) ? false : set[k][p];
 }
 
 void HashSet::add(uint32_t id) {
 	size_t k = id/n;
 	size_t p = id%n;
-	ensure(k);
-	set[k][p] = true;
-}
-
-void HashSet::ensure(size_t k) {
 	if (set[k] == NULL) {
 		set[k] = new bool[n];
 		for (size_t p = 0; p < n; ++p) {
 			set[k][p] = false;
 		}
 	}
+	set[k][p] = true;
 }
 

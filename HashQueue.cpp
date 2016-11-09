@@ -28,8 +28,9 @@ void HashQueue::push(uint32_t id) {
 	hash[back.k][back.p] = id;
 	back.p = ( back.p + 1 ) % n;
 
-	if (back.p == 0)
+	if (back.p == 0) {
 		back.k = ( back.k + 1 ) % n;
+	}
 }
 
 uint32_t HashQueue::pop() {

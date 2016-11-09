@@ -3,8 +3,7 @@
 #include <iostream>
 using namespace std;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 	if (argc != 3) return -1;
 
 	Graph graph;
