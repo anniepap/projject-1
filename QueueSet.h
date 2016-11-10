@@ -3,8 +3,9 @@
 
 #include "defines.h"
 #include "HashQueue.h"
-#include "ArrayQueue.h"
 #include "HashSet.h"
+#include "ArraySet.h"
+#include "ArrayQueue.h"
 
 class QueueSet {
 	HashQueue queue;

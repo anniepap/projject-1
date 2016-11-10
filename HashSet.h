@@ -4,7 +4,7 @@
 #include "Set.h"
 
 class HashSet : public Set {
-	size_t n;
+	size_t rows;
 	bool** set;
 public:
 	HashSet(size_t size);

@@ -34,7 +34,17 @@ long Graph::question(uint32_t from, uint32_t to) {
 		if (in.bfs(target, start)) return lvl<<1;
 		lvl++;
 	}
-
+/*
+	while (!start.empty() && !target.empty()) {
+		if (start.getSize() > target.getSize()) {
+			if (in.bfs(target, start)) return lvl;
+		}
+		else {
+			if (out.bfs(start, target)) return lvl;
+		}
+		lvl++;
+	}
+*/
 	return -1;
 }
 
