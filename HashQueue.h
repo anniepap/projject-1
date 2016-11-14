@@ -4,20 +4,16 @@
 #include "Queue.h"
 
 class HashQueue : public Queue {
-	struct Point {
-		size_t k;
-		size_t p;
-	};
-	Point head;
-	Point back;
 
-	size_t n;
+	size_t head;
+	size_t back;
+
+	size_t rows;
 	uint32_t** hash;
 public:
 	HashQueue(size_t capacity);
 	~HashQueue();
 
-	bool full();
 	uint32_t pop(void);
 	void push(uint32_t id);
 };

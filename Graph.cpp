@@ -28,15 +28,15 @@ long Graph::question(uint32_t from, uint32_t to) {
 
 	start.push(from);
 	target.push(to);
-
+/*
 	while (!start.empty() && !target.empty()) {
 		if (out.bfs(start, target)) return (lvl<<1)-1;
 		if (in.bfs(target, start)) return lvl<<1;
 		lvl++;
 	}
-/*
+*/
 	while (!start.empty() && !target.empty()) {
-		if (start.getSize() > target.getSize()) {
+		if (target.getSize() < start.getSize()) {
 			if (in.bfs(target, start)) return lvl;
 		}
 		else {
@@ -44,13 +44,8 @@ long Graph::question(uint32_t from, uint32_t to) {
 		}
 		lvl++;
 	}
-*/
-	return -1;
-}
 
-void Graph::insertNode(uint32_t id) {
-	out.insertNode(id);
-	in.insertNode(id);
+	return -1;
 }
 
 Pair& Graph::getOut() {

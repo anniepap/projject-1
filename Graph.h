@@ -24,7 +24,6 @@ class Graph {
 	Pair out;
 	Pair in;
 public:
-	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
 	long question(uint32_t from, uint32_t to);
 

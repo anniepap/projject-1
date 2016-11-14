@@ -1,18 +1,19 @@
 #include <cmath>
 #include "HashQueue.h"
 
+#define SIZE 1000
+
 HashQueue::HashQueue(size_t capacity) {
-	head.k = head.p = 0;
-	back.k = back.p = 0;
-	n = (size_t) ceil(sqrt((double) capacity));
-	hash = new uint32_t*[n];
-	for (size_t i = 0; i < n; ++i) {
+	head = back = 0;
+	rows = (size_t) ceil((double) capacity/SIZE);
+	hash = new uint32_t*[rows];
+	for (size_t i = 0; i < rows; ++i) {
 		hash[i] = NULL;
 	}
 }
 
 HashQueue::~HashQueue() {
-	for (size_t i = 0; i < n; ++i) {
+	for (size_t i = 0; i < rows; ++i) {
 		if (hash[i] != NULL)
 			delete[] hash[i];
 	}
@@ -20,30 +21,27 @@ HashQueue::~HashQueue() {
 }
 
 void HashQueue::push(uint32_t id) {
+	size_t row = back/SIZE;
+	if (hash[row] == NULL) {
+		hash[row] = new uint32_t[SIZE];
+	}
+
+	hash[row][back%SIZE] = id;
+	back++;
 	size++;
-	if (back.p == 0) {
-		hash[back.k] = new uint32_t[n];
-	}
-
-	hash[back.k][back.p] = id;
-	back.p = ( back.p + 1 ) % n;
-
-	if (back.p == 0) {
-		back.k = ( back.k + 1 ) % n;
-	}
 }
 
 uint32_t HashQueue::pop() {
-	size--;
+	size_t row = head/SIZE;
+	size_t col = head%SIZE;
+	uint32_t id = hash[row][col];
 
-	uint32_t id = hash[head.k][head.p];
-	head.p = ( head.p + 1 ) % n;
-
-	if (head.p == 0) {
-		delete[] hash[head.k];
-		hash[head.k] = NULL;
-		head.k = ( head.k + 1 ) % n;
+	if (col == SIZE-1) {
+		delete[] hash[row];
+		hash[row] = NULL;
 	}
+	head++;
+	size--;
 
 	return id;
 }
