@@ -2,10 +2,10 @@
 #include <gtest/gtest.h>
 using namespace std;
 
-#include "../../ArrayQueueSet.h"
+#include "../../QueueSet.h"
 
 TEST(QueueSet, FullTest) {
-	ArrayQueueSet set(10);
+	QueueSet set(10);
 
 	ASSERT_EQ(set.empty(), true);
 

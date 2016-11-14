@@ -4,24 +4,6 @@ using namespace std;
 
 #include "../../Graph.h"
 
-TEST(InsertTest, Capacity) {
-	Graph graph;
-	// should double index twice
-	uint32_t nodeId = (NODE_INDEX_CAPACITY * 2 * 2) - 1;
-	graph.insertNode(nodeId);
-
-	ASSERT_EQ(graph.getOut().getIndex().getCapacity(), NODE_INDEX_CAPACITY * 2 * 2);
-	ASSERT_EQ(graph.getIn().getIndex().getCapacity(), NODE_INDEX_CAPACITY * 2 * 2);
-}
-
-TEST(InsertTest, NonExistingEdges) {
-	Graph graph;
-	uint32_t nodeId = NODE_INDEX_CAPACITY - 1;
-	graph.insertNode(nodeId);
-
-	ASSERT_EQ(graph.getOut().getIndex().getListHead(nodeId), NONE);
-}
-
 TEST(EdgeTest, SingleEdge) {
 	Graph graph;
 
