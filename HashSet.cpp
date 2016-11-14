@@ -4,7 +4,7 @@
 #define COLUMNS 256
 
 HashSet::HashSet(size_t size) {
-	rows = (size_t) ceil(size/COLUMNS);
+	rows = (size_t) ceil(((double) size)/COLUMNS);
 	set = new bool*[rows];
 	for (size_t i = 0; i < rows; ++i) {
 		set[i] = NULL;

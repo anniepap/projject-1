@@ -1,4 +1,4 @@
-OBJS = ArrayQueueSet.o Buffer.o HashSet.o main.o QueueSet.o Graph.o NodeIndex.o
+OBJS = HashQueue.o Buffer.o HashSet.o main.o Queue.o QueueSet.o Graph.o NodeIndex.o
 
 all: out
 
@@ -6,16 +6,19 @@ out: $(OBJS)
 	g++ $(OBJS) -o out
 
 medium: all
-	./out datasets/medium/mediumGraph.txt datasets/medium/mediumWorkload_FINAL.txt
+	./out /tmp/sdi1300064/medium/mediumGraph.txt /tmp/sdi1300064/medium/mediumWorkload_FINAL.txt
 
 small: all
-	./out datasets/small/smallGraph.txt datasets/small/smallWorkload_FINAL.txt
+	./out /tmp/sdi1300064/small/smallGraph.txt /tmp/sdi1300064/small/smallWorkload_FINAL.txt
 
 tiny: all
-	./out datasets/tiny/tinyGraph.txt datasets/tiny/tinyWorkload_FINAL.txt
+	./out /tmp/sdi1300064/tiny/tinyGraph.txt /tmp/sdi1300064/tiny/tinyWorkload_FINAL.txt
 
-ArrayQueueSet.o: QueueSet.o ArrayQueueSet.cpp ArrayQueueSet.h
-	g++ -c ArrayQueueSet.cpp
+HashQueue.o: Queue.o HashQueue.cpp HashQueue.h
+	g++ -c HashQueue.cpp
+
+Queue.o: Queue.h Queue.h
+	g++ -c Queue.cpp
 
 Buffer.o: Buffer.cpp Buffer.h ListNode.h
 	g++ -c Buffer.cpp
@@ -26,7 +29,7 @@ HashSet.o: HashSet.cpp HashSet.h Set.h
 main.o: Graph.o main.cpp
 	g++ -c main.cpp
 
-QueueSet.o: HashSet.o QueueSet.cpp QueueSet.h defines.h
+QueueSet.o: HashSet.o HashQueue.o QueueSet.cpp QueueSet.h defines.h
 	g++ -c QueueSet.cpp
 
 Graph.o: NodeIndex.o QueueSet.o Buffer.o Graph.cpp Graph.h
