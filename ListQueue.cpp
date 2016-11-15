@@ -13,14 +13,14 @@ ListQueue::~ListQueue() {
 }
 
 void ListQueue::push(uint32_t id) {
-	size++;
+	size_++;
 	Node* node = new Node(id);
 	if (!head) head = back = node;
 	else back = back->next = node;
 }
 
 uint32_t ListQueue::pop() {
-	size--;
+	size_--;
 	Node* node = head;
 	head = head->next;
 	if (!head) back = NULL;

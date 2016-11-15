@@ -25,7 +25,7 @@ void HashQueue::push(uint32_t id) {
 
 	hash[row][col] = id;
 	back++;
-	size++;
+	size_++;
 }
 
 uint32_t HashQueue::pop() {
@@ -39,7 +39,7 @@ uint32_t HashQueue::pop() {
 		hash[row] = NULL;
 	}
 	head++;
-	size--;
+	size_--;
 
 	return id;
 }

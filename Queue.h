@@ -5,15 +5,15 @@
 
 class Queue {
 protected:
-	size_t size;
+	size_t size_;
 public:
 	Queue(void);
 
 	virtual void push(uint32_t id) = 0;
 	virtual uint32_t pop() = 0;
 
-	bool empty();
-	size_t getSize();
+	bool empty(void);
+	size_t size(void);
 };
 
 #endif

@@ -4,21 +4,18 @@
 #include "defines.h"
 #include "HashQueue.h"
 #include "HashSet.h"
-#include "ArraySet.h"
-#include "ArrayQueue.h"
 
 class QueueSet {
 	HashQueue queue;
-	HashSet visited;
+	HashSet set;
 public:
 	QueueSet(size_t capacity);
 
 	void push(uint32_t id);
-	uint32_t pop();
-
-	bool empty();
-	size_t getSize();
-	bool getVisited(size_t index);
+	uint32_t pop(void);
+	bool empty(void);
+	size_t size(void);
+	bool visited(size_t index);
 };
 
 #endif

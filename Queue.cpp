@@ -1,13 +1,14 @@
 #include "Queue.h"
 
-Queue::Queue(void) : size(0) {
+Queue::Queue(void) {
+	size_ = 0;
 }
 
 bool Queue::empty() {
-	return size == 0;
+	return size_ == 0;
 }
 
-size_t Queue::getSize() {
-	return size;
+size_t Queue::size() {
+	return size_;
 }
 

@@ -4,7 +4,6 @@
 #include "Queue.h"
 
 class HashQueue : public Queue {
-
 	size_t head;
 	size_t back;
 

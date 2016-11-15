@@ -36,7 +36,7 @@ long Graph::question(uint32_t from, uint32_t to) {
 	}
 */
 	while (!start.empty() && !target.empty()) {
-		if (target.getSize() < start.getSize()) {
+		if (target.size() < start.size()) {
 			if (in.bfs(target, start)) return lvl;
 		}
 		else {
@@ -73,7 +73,7 @@ void Pair::addEdge(uint32_t from, uint32_t to) {
 }
 
 bool Pair::bfs(QueueSet& start, QueueSet& target) {
-	size_t size = start.getSize();
+	size_t size = start.size();
 	for (size_t i = 0; i < size; ++i) {
 		uint32_t id = start.pop();
 		
@@ -84,8 +84,8 @@ bool Pair::bfs(QueueSet& start, QueueSet& target) {
 			list_node& bucket = buffer[offset];
 			for (size_t i = 0; i < size; ++i) {
 				id = bucket.neighbor[i];
-				if (start.getVisited(id) == false) {
-					if (target.getVisited(id) == true) return true;
+				if (start.visited(id) == false) {
+					if (target.visited(id) == true) return true;
 					start.push(id);
 				}
 			}

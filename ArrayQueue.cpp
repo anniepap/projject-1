@@ -13,13 +13,13 @@ bool ArrayQueue::full() {
 }
 
 void ArrayQueue::push(uint32_t id) {
-	size++;
+	size_++;
 	array[back] = id;
 	back = ( back + 1 ) % capacity;
 }
 
 uint32_t ArrayQueue::pop() {
-	size--;
+	size_--;
 	uint32_t id = array[head];
 	head = ( head + 1 ) % capacity;
 	return id;
