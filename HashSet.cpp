@@ -1,37 +1,29 @@
 #include <cmath>
 #include "HashSet.h"
 
-#define COLUMNS 256
-
 HashSet::HashSet(size_t size) {
-	rows = (size_t) ceil(((double) size)/COLUMNS);
-	set = new bool*[rows];
-	for (size_t i = 0; i < rows; ++i) {
-		set[i] = NULL;
-	}
+	rows = (size_t) ceil(((double) size)/SIZE);
+	set = (bool**) calloc(rows, sizeof(bool*));
 }
 
 HashSet::~HashSet() {
 	for (size_t i = 0; i < rows; ++i) {
 		if (set[i] != NULL)
-			delete[] set[i];
+			free(set[i]);
 	}
-	delete[] set;
+	free(set);
 }
 
 bool HashSet::contains(uint32_t id) {
-	size_t k = id/COLUMNS;
-	return (set[k] == NULL) ? false : set[k][id%COLUMNS];
+	size_t k = id/SIZE;
+	return (set[k] == NULL) ? false : set[k][id%SIZE];
 }
 
 void HashSet::add(uint32_t id) {
-	size_t k = id/COLUMNS;
+	size_t k = id/SIZE;
 	if (set[k] == NULL) {
-		set[k] = new bool[COLUMNS];
-		for (size_t p = 0; p < COLUMNS; ++p) {
-			set[k][p] = false;
-		}
+		set[k] = (bool*) calloc(SIZE, sizeof(bool));
 	}
-	set[k][id%COLUMNS] = true;
+	set[k][id%SIZE] = true;
 }
 
