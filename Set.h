@@ -5,8 +5,8 @@
 
 class Set {
 public:
-	virtual bool contains(uint32_t id) = 0;
-	virtual void add(uint32_t id) = 0;
+	virtual bool find(uint32_t id) = 0;
+	virtual void insert(uint32_t id) = 0;
 };
 
 #endif

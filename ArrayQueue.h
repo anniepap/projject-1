@@ -12,7 +12,6 @@ public:
 	ArrayQueue(size_t capacity);
 	~ArrayQueue();
 
-	bool full();
 	uint32_t pop(void);
 	void push(uint32_t id);
 };

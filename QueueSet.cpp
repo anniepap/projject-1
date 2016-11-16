@@ -12,13 +12,13 @@ size_t QueueSet::size(void) {
 }
 
 bool QueueSet::visited(size_t index) {
-	return set.contains(index);
+	return set.find(index);
 }
 
 void QueueSet::push(uint32_t id) {
-	if (!set.contains(id)) {
+	if (!set.find(id)) {
 		queue.push(id);
-		set.add(id);
+		set.insert(id);
 	}
 }
 

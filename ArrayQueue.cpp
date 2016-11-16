@@ -8,19 +8,15 @@ ArrayQueue::~ArrayQueue() {
 	delete[] array;
 }
 
-bool ArrayQueue::full() {
-	return ( back + 1 ) % capacity == head;
-}
-
 void ArrayQueue::push(uint32_t id) {
 	size_++;
 	array[back] = id;
-	back = ( back + 1 ) % capacity;
+	back++;
 }
 
 uint32_t ArrayQueue::pop() {
 	size_--;
 	uint32_t id = array[head];
-	head = ( head + 1 ) % capacity;
+	head++;
 	return id;
 }

@@ -8,8 +8,8 @@ class ArraySet : public Set {
 public:
 	ArraySet(size_t size);
 	~ArraySet();
-	bool contains(uint32_t id);
-	void add(uint32_t id);
+	bool find(uint32_t id);
+	void insert(uint32_t id);
 };
 
 #endif

@@ -14,12 +14,12 @@ HashSet::~HashSet() {
 	free(set);
 }
 
-bool HashSet::contains(uint32_t id) {
+bool HashSet::find(uint32_t id) {
 	size_t k = id/SIZE;
 	return (set[k] == NULL) ? false : set[k][id%SIZE];
 }
 
-void HashSet::add(uint32_t id) {
+void HashSet::insert(uint32_t id) {
 	size_t k = id/SIZE;
 	if (set[k] == NULL) {
 		set[k] = (bool*) calloc(SIZE, sizeof(bool));

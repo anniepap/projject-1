@@ -9,8 +9,8 @@ class HashSet : public Set {
 public:
 	HashSet(size_t size);
 	~HashSet();
-	bool contains(uint32_t id);
-	void add(uint32_t id);
+	bool find(uint32_t id);
+	void insert(uint32_t id);
 };
 
 #endif

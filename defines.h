@@ -1,11 +1,11 @@
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
-#define LIST_NODE_CAPACITY 15
-#define NODE_INDEX_CAPACITY 2048
-#define BUFFER_CAPACITY 2048
+#define LIST_NODE_CAPACITY 10
+#define NODE_INDEX_CAPACITY 1024
+#define BUFFER_CAPACITY 1024
 
-#define SIZE 2048
+#define SIZE 1024
 
 #define NONE (size_t) -1
 

@@ -1,9 +1,10 @@
 #ifndef __QUEUE_SET_H__
 #define __QUEUE_SET_H__
 
-#include "defines.h"
 #include "HashQueue.h"
 #include "HashSet.h"
+#include "ArrayQueue.h"
+#include "ArraySet.h"
 
 class QueueSet {
 	HashQueue queue;

@@ -11,11 +11,11 @@ ArraySet::~ArraySet() {
 	delete[] set;
 }
 
-bool ArraySet::contains(uint32_t id) {
+bool ArraySet::find(uint32_t id) {
 	return set[id];
 }
 
-void ArraySet::add(uint32_t id) {
+void ArraySet::insert(uint32_t id) {
 	set[id] = true;
 }
 
