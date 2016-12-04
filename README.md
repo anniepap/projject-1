@@ -1,13 +1,11 @@
 # Projject
 
 ## Personal Details
-___________________
 Athanasopoulos George
 Karatsenidis Konstantinos
 Papachristou Anna
 
 ## Compile Instructions
-_______________________
 ### Derive exe file
 >make all
 
@@ -15,7 +13,6 @@ _______________________
 >make clean
 
 ## Execution Instructions
-_________________________
 ### Run tiny Dataset
 >make tiny
 
@@ -26,5 +23,4 @@ _________________________
 >make medium
 
 ## Implementation Environment
-_____________________________
 This project has been developed at Linux Platform but it was tested at Windows as well.
