@@ -1,27 +1,30 @@
-Personal Details
-~~~~~~~~~~~~~~~~
+# Projject
+
+## Personal Details
+___________________
 Athanasopoulos George
 Karatsenidis Konstantinos
 Papachristou Anna
 
-Compile Instructions
-~~~~~~~~~~~~~~~~~~~~
+## Compile Instructions
+_______________________
+### Derive exe file
 >make all
 
-(Remove object and executable files)
+### Remove object and executable files
 >make clean
 
-Execution Instructions
-~~~~~~~~~~~~~~~~~~~~~~
-(Run tiny Dataset)
+## Execution Instructions
+_________________________
+### Run tiny Dataset
 >make tiny
 
-(Run small Dataset)
+### Run small Dataset
 >make small
 
-(Run medium Dataset)
+### Run medium Dataset
 >make medium
 
-Implementation Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Implementation Environment
+_____________________________
 This project has been developed at Linux Platform but it was tested at Windows as well.
