@@ -40,5 +40,5 @@ GrailIndexNode::GrailIndexNode(int min_rank, int rank): min_rank(min_rank), rank
 }
 
 bool GrailIndexNode::isSubSet(GrailIndexNode Y){
-	return (Y.min_rank<=this->min_rank && X.rank<=Y.rank);
+	return (Y.min_rank<=min_rank && rank<=Y.rank);
 }
