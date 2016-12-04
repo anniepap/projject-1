@@ -4,6 +4,7 @@
 [Athanasopoulos George](https://github.com/Geotha)
 
 [Karatsenidis Konstantinos](https://github.com/gate2k1)
+
 [Papachristou Anna](https://github.com/anniepap)
 
 ## Compile Instructions
