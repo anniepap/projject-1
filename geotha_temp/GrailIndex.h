@@ -1,8 +1,8 @@
 #ifndef __GRAILINDEX_H__
 #define __GRAILINDEX_H__
 
-#include "../defines.h"
-#include "../Graph.h"
+#include "../Part 1/defines.h"
+#include "../Part 1/Graph.h"
 
 #define NUMBEROFLABELS 1
 enum GRAIL_ANSWER  {NO=0, MAYBE=1, YES=2};		
@@ -24,13 +24,10 @@ public:
 class GrailIndexNode {
 	int min_rank;
 	int rank;
-public: 
-	GrailIndexNode(int min_rank, int rank);
-	GrailIndexNode(){}
-	bool isSubSet(GrailIndexNode Y);
-	void Rank(int rank){ this->rank= rank; }
-	void MinRank(int min_rank){ this->min_rank= min_rank; }
-	int MinRank() { return min_rank; }
+public:
+	set(int min_rank, int rank);
+	bool isSubSet(GrailIndexNode& Y);
+	int MinRank();
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -44,10 +41,10 @@ public:
 	uint32_t Next();
 };
 
-class Stack {	
+class Stack {
 	uint32_t size_of_stack;
 	uint32_t* array;
-	uint32_t top;
+	uint32_t size;
 public: 
 	Stack(uint32_t size_of_stack);
 	~Stack();
@@ -57,6 +54,5 @@ public:
 	bool find(uint32_t element);
 	bool IsEmpty();
 };
-
 
 #endif

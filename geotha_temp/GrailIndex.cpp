@@ -10,19 +10,16 @@ GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph-
 	}
 
 //---------------------------------------
-	for (int j=0 ; j<NUMBEROFLABELS ;j++){
+	for (int j=0; j<NUMBEROFLABELS;j++){
 		//Post Order
 		GraphPostOrderCursor* post_order_cursor= new GraphPostOrderCursor(graph);
 		uint32_t curr_id;
 		int rank=1;
 		unsigned int min_rank;
-		GrailIndexNode curr_grail_node;
 		while( (curr_id=post_order_cursor->Next())!=NONE ) {
 			/*graph->OutEdges(curr_id,);*/ //Find children of curr_grail_node  // OutEdges,number_of_edges //////////////////
 			min_rank= calc_min_rank(j,rank/*,OutEdges,number_of_edges*/);
-			curr_grail_node.Rank(rank); 
-			curr_grail_node.MinRank(min_rank); 
-			IndexTables[curr_id][j] = curr_grail_node;
+			IndexTables[curr_id][j].set(rank, min_rank);
 			rank++;
 		}
 		delete post_order_cursor;
@@ -50,7 +47,7 @@ GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t tar
 unsigned int GrailIndex::calc_min_rank(const int curr_label,int rank/*,out_edges,number_of_edges*/){
 	if (1/*number_of_edges==0*/) return rank;
 	unsigned int min=-1;
-	for (int i=0 ; i<1/*number_of_edges*/; i++){
+	for (int i=0; i<1/*number_of_edges*/; i++){
 		if ( IndexTables[ 1/*out_edges[i]*/ ][curr_label].MinRank() <min){
 			min= IndexTables[ 1/*out_edges[i]*/ ][curr_label].MinRank();
 		}
@@ -60,10 +57,16 @@ unsigned int GrailIndex::calc_min_rank(const int curr_label,int rank/*,out_edges
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GrailIndexNode::GrailIndexNode(int min_rank, int rank): min_rank(min_rank), rank(rank){
+GrailIndexNode::set(int min_rank, int rank) {
+	this->min_rank = min_rank;
+	this->rank = rank;
 }
 
-bool GrailIndexNode::isSubSet(GrailIndexNode Y){
+int GrailIndexNode::MinRank() {
+	return min_rank;
+}
+
+bool GrailIndexNode::isSubSet(GrailIndexNode& Y){
 	return (Y.min_rank<=min_rank && rank<=Y.rank);
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,7 +108,7 @@ uint32_t GraphPostOrderCursor::Next(){	///////////////////////////////
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Stack::Stack(uint32_t size_of_stack): size_of_stack(size_of_stack), top(NONE){
+Stack::Stack(uint32_t size_of_stack): size_of_stack(size_of_stack), size(0){
 	array= new uint32_t[size_of_stack];
 }
 
@@ -114,25 +117,24 @@ Stack::~Stack(){
 }
 
 void Stack::Push(uint32_t element){
-	array[++top]=element;
+	array[size++]=element;
 }
 
 uint32_t Stack::Pop(){
-	if (top==-1){
+	if (size==0){
 		return NONE;
 	}
-	top--;
-	return array[top+1];
+	return array[--size];
 }
 
 uint32_t Stack::Top(){
-	if (top==NONE)
+	if (size==0)
 		return NONE;
-	return array[top];
+	return array[size-1];
 }
 
 bool Stack::find(uint32_t element){
-	for (int i=0 ; i<=top ;i++){
+	for (int i=0; i<size;i++){
 		if (array[i]==element) 
 			return true;
 	}
@@ -140,5 +142,5 @@ bool Stack::find(uint32_t element){
 }
 
 bool Stack::IsEmpty(){
-	return top==NONE;
+	return size==0;
 }
