@@ -1,5 +1,6 @@
 #include "GrailIndex.h"
 
+// Na allaksoun ta Graph me NodeIndex
 
 //buildGrailIndex
 GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph->sizeofnodes()*/) {
@@ -17,6 +18,8 @@ GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph-
 		int rank=1;
 		unsigned int min_rank;
 		while( (curr_id=post_order_cursor->Next())!=NONE ) {
+			if (curr_id==ENDOFCOMPONENT)
+				continue;
 			/*graph->OutEdges(curr_id,);*/ //Find children of curr_grail_node  // OutEdges,number_of_edges //////////////////
 			min_rank= calc_min_rank(j,rank/*,OutEdges,number_of_edges*/);
 			IndexTables[curr_id][j].set(rank, min_rank);
@@ -57,7 +60,7 @@ unsigned int GrailIndex::calc_min_rank(const int curr_label,int rank/*,out_edges
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GrailIndexNode::set(int min_rank, int rank) {
+void GrailIndexNode::set(int min_rank, int rank) {
 	this->min_rank = min_rank;
 	this->rank = rank;
 }
@@ -86,6 +89,7 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 uint32_t GraphPostOrderCursor::Next(){	///////////////////////////////
 	if (stack->IsEmpty() && 1 /*!visited->isFull() lipei auth h sunartisi*/ ){
 		stack->Push( 6/*ena apo ta kena*/ );		
+		return ENDOFCOMPONENT;
 	}
 	uint32_t curr_id,cur_edge;
 	while(!stack->IsEmpty())

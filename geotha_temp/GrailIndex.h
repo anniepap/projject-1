@@ -1,10 +1,11 @@
 #ifndef __GRAILINDEX_H__
 #define __GRAILINDEX_H__
 
-#include "../Part 1/defines.h"
-#include "../Part 1/Graph.h"
+#include "../defines.h"
+#include "../Graph.h"
 
 #define NUMBEROFLABELS 1
+#define ENDOFCOMPONENT -2
 enum GRAIL_ANSWER  {NO=0, MAYBE=1, YES=2};		
 
 class GrailIndexNode;
@@ -25,7 +26,7 @@ class GrailIndexNode {
 	int min_rank;
 	int rank;
 public:
-	set(int min_rank, int rank);
+	void set(int min_rank, int rank);
 	bool isSubSet(GrailIndexNode& Y);
 	int MinRank();
 };
