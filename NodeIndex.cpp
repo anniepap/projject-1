@@ -5,8 +5,10 @@ NodeIndex::NodeIndex() {
 	table = (Node*) malloc(capacity*sizeof(Node));
 	for (size_t i = 0; i < capacity; ++i)
 	{
-		table[i].size = LIST_NODE_CAPACITY;
-		table[i].offset = NONE;
+		for (int z = 0; z < NODE_HASH; ++z) {
+			table[i].size[z] = LIST_NODE_CAPACITY;
+			table[i].offset[z] = NONE;
+		}
 		table[i].count = 0;
 	}
 }
@@ -23,18 +25,16 @@ void NodeIndex::insertNode(uint32_t nodeId) {
 	table = (Node*) realloc(table, capacity*sizeof(Node));
 	for (size_t i = old_cap; i < capacity; ++i)
 	{
-		table[i].size = LIST_NODE_CAPACITY;
-		table[i].offset = NONE;
+		for (int z = 0; z < NODE_HASH; ++z) {
+			table[i].size[z] = LIST_NODE_CAPACITY;
+			table[i].offset[z] = NONE;
+		}
 		table[i].count = 0;
 	}
 }
 
 Node& NodeIndex::operator[](size_t index) {
 	return table[index];
-}
-
-size_t NodeIndex::getListHead(uint32_t nodeId) {
-	return (capacity > nodeId) ? NONE : table[nodeId].offset;
 }
 
 size_t NodeIndex::getCapacity(void) {
