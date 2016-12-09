@@ -2,15 +2,15 @@
 #include "../defines.h"
 
 #define THRESHOLD 0.6
-#define OK_SUCCESS 1	// Mporei na thelei allagh,  na koitaksw kai opou xrisimopoieitai
 
 class UpdateIndex;
 
 class CC{
-	uint32_t*  ccindex;	// To allaksa. prin eixe auto uint32_t  ccindex[];
+	uint32_t*  ccindex;
 	uint32_t size;
 	UpdateIndex* updateIndex;
-	uint32_t metricVal;		// Na to spasoume se #queries with update kai #queries
+	uint32_t number_of_update_index_queries;
+	uint32_t number_of_queries;		
 
 	void SetIndex(uint32_t nodeId, uint32_t componentId);
 	void SetUpdateIndex(uint32_t componentId, uint32_t component_attached);
@@ -18,16 +18,17 @@ class CC{
 public:
 	CC(uint32_t size);
 	~CC();
-	/*OK_SUCCESS*/ void  insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
-	/*OK_SUCCESS*/ void  rebuildIndexes();
-	void UpdateMetric();		// Na ulopoihthei
+	void  insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
+	void  rebuildIndexes();
+	void UpdateMetric(bool update_index_used=false);	
+	float Metric();
 };
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class UpdateIndex{
-	uint32_t* index;	// To allaksa. prin eixe auto uint32_t index[];
+	uint32_t* index;	
 	uint32_t size;
 public:	
 	UpdateIndex(uint32_t size);

@@ -1,7 +1,5 @@
 #include "GrailIndex.h"
 
-// Na allaksoun ta Graph me NodeIndex
-
 //buildGrailIndex
 GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph->sizeofnodes()*/) {
 	// Allocation of table
@@ -77,18 +75,22 @@ bool GrailIndexNode::isSubSet(GrailIndexNode& Y){
 GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph){
 	uint32_t size= 6;//graph->SizeOfNodes();
 	stack= new Stack(size);
-	stack->Push( 1 /*rand()%size*/ );	// katallhlh xrisi tis time
 	visited= new HashSet(size);
+	random_nodes= new Collection(size);
+	stack->Push( random_nodes->Pop() );
 }
 
 GraphPostOrderCursor::~GraphPostOrderCursor(){
 	delete stack;
 	delete visited;
+	delete random_nodes;
 }
 
 uint32_t GraphPostOrderCursor::Next(){	///////////////////////////////
 	if (stack->IsEmpty() && 1 /*!visited->isFull() lipei auth h sunartisi*/ ){
-		stack->Push( 6/*ena apo ta kena*/ );		
+		uint32_t cur_id;
+		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
+		stack->Push( cur_id );	
 		return ENDOFCOMPONENT;
 	}
 	uint32_t curr_id,cur_edge;
@@ -97,13 +99,25 @@ uint32_t GraphPostOrderCursor::Next(){	///////////////////////////////
 		curr_id=stack->Top();
 		if (1/* graph->HasOutEdges(curr_id) den uparxei*/){
 			// For all childen //////// cur_edge
-			if (!visited->find(cur_edge) && !stack->find(cur_edge) ){
+		/* for+ while (offset != NONE) {
+			list_node& bucket = buffer[offset];
+			for (size_t i = 0; i < size; ++i) {
+				id = bucket.neighbor[i];
+				if (start.visited(id) == false) {
+					if (target.visited(id) == true) return true;
+					start.push(id);
+				}
+			}
+			offset = bucket.nextListNode;
+			size = LIST_NODE_CAPACITY;
+		} */
+			if (!visited->find(cur_edge)){
 				stack->Push(cur_edge);
+				visited->insert(cur_edge);
 			}
 		}
 		else{
 			stack->Pop();
-			visited->insert(curr_id);
 			return curr_id;
 		}
 	}
@@ -136,15 +150,36 @@ uint32_t Stack::Top(){
 		return NONE;
 	return array[size-1];
 }
-
-bool Stack::find(uint32_t element){
+/*
+bool Stack::find(uint32_t element){			// Na fugei. na ginetai visited otan ginetai push
 	for (int i=0; i<size;i++){
 		if (array[i]==element) 
 			return true;
 	}
 	return false;
 }
-
+*/
 bool Stack::IsEmpty(){
 	return size==0;
+}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Collection::Collection(const uint32_t size): size_of_collection(size), cur_pos(0){
+	array= new uint32_t[size];
+
+	srand(time(NULL));
+	uint32_t up_index=0, down_index=size-1, first_num=0, last_num=size-1, index,curr_id;
+	for (int i=0; i<size; i++){
+		index= (rand()%2==0)? up_index++: down_index--;
+		curr_id= (rand()%2==0)? first_num++: last_num--;
+		array[index]= curr_id;
+	}
+}
+
+Collection::~Collection(){
+	delete[] array;
+}
+
+uint32_t Collection::Pop(){
+	return (cur_pos>size_of_collection-1)? NONE : array[cur_pos++];
 }

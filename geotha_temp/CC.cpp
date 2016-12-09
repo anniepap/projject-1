@@ -1,6 +1,6 @@
 #include "CC.h"
 
-CC::CC(const uint32_t size):size(size),metricVal(0){
+CC::CC(const uint32_t size):size(size),number_of_update_index_queries(0),number_of_queries(0){
 	ccindex= new uint32_t[size];
 	updateIndex= new UpdateIndex(size);
 }
@@ -10,7 +10,7 @@ CC::~CC(){
 	delete updateIndex;
 }
 
-/*OK_SUCCESS*/ void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
+void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
 	uint32_t componentS, componentE;
 	componentS= findNodeConnectedComponentID(nodeIdS);
 	componentE= findNodeConnectedComponentID(nodeIdE);
@@ -24,7 +24,7 @@ int CC::findNodeConnectedComponentID(uint32_t nodeId){
 	return ccindex[nodeId];
 }
 
-/*OK_SUCCESS*/ void  CC::rebuildIndexes(){
+void  CC::rebuildIndexes(){
 	for (int i=0;updateIndex->Size();i++){
 		if ( i<updateIndex->Index(i) ){
 			for(int j=0;j<size;j++){		// theloume Allo algorithmo. Autos kanei n^2
@@ -36,8 +36,13 @@ int CC::findNodeConnectedComponentID(uint32_t nodeId){
 	}
 }
 
-void UpdateMetric(){
-	// pws na ksezwrizoume tis 2 periptwseis
+void CC::UpdateMetric(bool update_index_used){
+	if (update_index_used) number_of_update_index_queries;
+	number_of_queries++;	
+}
+
+float CC::Metric(){
+	return (float)number_of_update_index_queries/number_of_queries;
 }
 
 void CC::SetIndex(uint32_t nodeId, uint32_t componentId ){

@@ -10,6 +10,7 @@ enum GRAIL_ANSWER  {NO=0, MAYBE=1, YES=2};
 
 class GrailIndexNode;
 class Stack;
+class Collection;
 
 class GrailIndex {
 	const uint32_t SizeOfIndex;
@@ -36,13 +37,14 @@ class GraphPostOrderCursor {
 	NodeIndex* graph;
 	Stack* stack;
 	HashSet* visited;
+	Collection* random_nodes;
 public: 
-	GraphPostOrderCursor(Graph* graph);  // Stin ekfwnisi thelei orisma Index
+	GraphPostOrderCursor(Graph* graph); 
 	~GraphPostOrderCursor();
 	uint32_t Next();
 };
 
-class Stack {
+class Stack {					// Elegxthike
 	uint32_t size_of_stack;
 	uint32_t* array;
 	uint32_t size;
@@ -52,8 +54,19 @@ public:
 	void Push(uint32_t element);
 	uint32_t Pop();
 	uint32_t Top();
-	bool find(uint32_t element);
+	//bool find(uint32_t element);
 	bool IsEmpty();
+};
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Collection {					// Elegxthike
+	uint32_t size_of_collection;
+	uint32_t* array;
+	uint32_t cur_pos;
+public:
+	Collection(const uint32_t size);
+	~Collection();
+	uint32_t Pop();	
 };
 
 #endif
