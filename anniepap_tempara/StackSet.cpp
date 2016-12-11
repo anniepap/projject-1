@@ -4,7 +4,7 @@ StackSet::StackSet(size_t capacity) : stack(/*capacity*/), visited(capacity) {
 }
 
 bool StackSet::empty() {
-	return stack.empty();
+	return stack.isEmpty();
 }
 
 size_t StackSet::getSize() {

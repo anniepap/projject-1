@@ -2,31 +2,35 @@
 #include "StackLinkedList.h"
 using namespace std;
 
-void Stack::push(uint32_t value) {
+void Stack::push(uint32_t id) {
     size++;
     node* ptr;
-    ptr = new node;
-    ptr->data = value;
+    ptr = new node();
+    ptr->id = id;
     ptr->next = NULL;
-    if(top != NULL)
-        ptr->next = top;
-    top = ptr;
+    if(top_ != NULL)
+        ptr->next = top_;
+    top_ = ptr;
 }
 
-uint32_t stack::pop() {
+uint32_t Stack::pop() {
     size--;
     node* temp;
-    temp = top;
-    top = top->next;
-    uint32_t value = temp->data;
+    temp = top_;
+    top_ = top_->next;
+    uint32_t value = temp->id;
     delete temp;
     return value;
 }
 
-bool stack::empty() {
-    return top == NULL;
+uint32_t Stack::top() {
+	return top_->id;
 }
 
-uint32_t getSize() {
+bool Stack::isEmpty() {
+    return top_ == NULL;
+}
+
+uint32_t Stack::getSize() {
     return size;
 }
