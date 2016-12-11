@@ -6,13 +6,13 @@ out: $(OBJS)
 	g++ $(OBJS) -o out
 
 medium: all
-	./out /tmp/sdi1300064/medium/mediumGraph.txt /tmp/sdi1300064/medium/mediumWorkload_FINAL.txt
+	./out datasets/medium/mediumGraph.txt datasets/medium/mediumWorkload_FINAL.txt
 
 small: all
-	./out /tmp/sdi1300064/small/smallGraph.txt /tmp/sdi1300064/small/smallWorkload_FINAL.txt
+	./out datasets/small/smallGraph.txt datasets/small/smallWorkload_FINAL.txt
 
 tiny: all
-	./out /tmp/sdi1300064/tiny/tinyGraph.txt /tmp/sdi1300064/tiny/tinyWorkload_FINAL.txt
+	./out datasets/tiny/tinyGraph.txt datasets/tiny/tinyWorkload_FINAL.txt
 
 HashQueue.o: Queue.o HashQueue.cpp HashQueue.h
 	g++ -c HashQueue.cpp
