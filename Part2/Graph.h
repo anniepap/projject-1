@@ -6,7 +6,6 @@
 #include "Buffer.h"
 
 class Pair {
-	friend class PairCursor;
 	Buffer buffer;
 	NodeIndex index;
 public:
@@ -30,6 +29,7 @@ public:
 
 	Pair& getOut();
 	Pair& getIn();
+	void test();
 };
 
 #endif

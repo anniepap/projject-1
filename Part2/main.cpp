@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	if (argc != 3) return -1;
+	//if (argc != 3) return -1;
 
 	Graph graph;
 	ifstream myReadFile;
@@ -23,6 +23,9 @@ int main(int argc, char** argv) {
 	}
 	myReadFile.close();
 
+	graph.test();
+
+/*
 	myReadFile.open(argv[2]);
 	if (myReadFile.is_open()) {
 		while(!myReadFile.eof()) {
@@ -31,12 +34,12 @@ int main(int argc, char** argv) {
 				myReadFile >> from >> to;
 			if (com == 'A')
 				graph.addEdge(from, to);
-			else if (com == 'Q')
+			if (com == 'Q')
 				cout << graph.question(from, to) << endl;
 //				graph.question(from, to);
 		}
 	}
 	myReadFile.close();
-
+*/
 	return 0;
 }

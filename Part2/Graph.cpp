@@ -1,5 +1,4 @@
 #include "Graph.h"
-#include "PairCursor.h"
 #include "QueueSet.h"
 
 void Graph::addEdge(uint32_t from, uint32_t to) {
@@ -56,6 +55,12 @@ Pair& Graph::getIn() {
 	return in;
 }
 
+void Graph::test() {
+	SCC* scc = out.getIndex().estimateStronglyConnectedComponents(out.getBuffer());
+	scc->print();
+	delete scc;
+}
+
 /////////////////////////////////////////////////
 
 void Pair::addEdge(uint32_t from, uint32_t to) {
@@ -63,27 +68,35 @@ void Pair::addEdge(uint32_t from, uint32_t to) {
 
 	Node& node = index[from];
 
-	if (node.size[to % NODE_HASH] == LIST_NODE_CAPACITY) {
-		node.offset[to % NODE_HASH] = buffer.allocNewNode(node.offset[to % NODE_HASH]);
-		node.size[to % NODE_HASH] = 0;
+	if (node.size == LIST_NODE_CAPACITY) {
+		node.offset = buffer.allocNewNode(node.offset);
+		node.size = 0;
 		node.count++;
 	}
 
-	buffer[node.offset[to % NODE_HASH]].neighbor[node.size[to % NODE_HASH]] = to;
-	node.size[to % NODE_HASH]++;
+	buffer[node.offset].neighbor[node.size] = to;
+	node.size++;
 }
 
 bool Pair::bfs(QueueSet& start, QueueSet& target) {
 	size_t size = start.size();
-	PairCursor pc(this);
 	for (size_t i = 0; i < size; ++i) {
-		pc.init(start.pop());
-		uint32_t id;
-		while (pc.next(&id)) {
-			if (start.visited(id) == false) {
-				if (target.visited(id) == true) return true;
-				start.push(id);
+		uint32_t id = start.pop();
+		
+		Node& node = index[id];
+		size_t size = node.size;
+		size_t offset = node.offset;
+		while (offset != NONE) {
+			list_node& bucket = buffer[offset];
+			for (size_t i = 0; i < size; ++i) {
+				id = bucket.neighbor[i];
+				if (start.visited(id) == false) {
+					if (target.visited(id) == true) return true;
+					start.push(id);
+				}
 			}
+			offset = bucket.nextListNode;
+			size = LIST_NODE_CAPACITY;
 		}
 	}
 	return false;
@@ -103,7 +116,7 @@ size_t Pair::getCount(uint32_t id) {
 
 bool Pair::find(uint32_t to, uint32_t from) {
 	Node& node = index[from];
-	return buffer.find(node.offset[to % NODE_HASH], to, node.size[to % NODE_HASH]);
+	return buffer.find(node.offset, to, node.size);
 }
 
 Buffer& Pair::getBuffer() {
