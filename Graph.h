@@ -30,6 +30,7 @@ public:
 
 	Pair& getOut();
 	Pair& getIn();
+	uint32_t SizeOfNodes();
 };
 
 #endif

@@ -56,6 +56,10 @@ Pair& Graph::getIn() {
 	return in;
 }
 
+uint32_t Graph::SizeOfNodes(){
+	return out.getCapacity();
+}
+
 /////////////////////////////////////////////////
 
 void Pair::addEdge(uint32_t from, uint32_t to) {

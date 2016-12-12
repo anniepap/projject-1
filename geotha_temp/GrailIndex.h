@@ -3,6 +3,7 @@
 
 #include "../defines.h"
 #include "../Graph.h"
+#include "../PairCursor.h"
 
 #define NUMBEROFLABELS 1
 #define ENDOFCOMPONENT -2
@@ -15,12 +16,11 @@ class Collection;
 class GrailIndex {
 	const uint32_t SizeOfIndex;
 	GrailIndexNode** IndexTables;
-
-	unsigned int calc_min_rank(const int curr_label,int rank/*, out_edges, number_of_edges*/); // elipes.... prepei na allaksoun ta 2 teleuataia
+	// SCC* components;
 public:
-	GrailIndex(Graph* graph/*, SCC* components pros to parwn den xreiazetai*/);  // to Graph eixe NodeIndex
+	GrailIndex(Graph* graph/*, SCC* components pros to parwn den xreiazetai*/); 			// Elegxthike
 	~GrailIndex(); 
-	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);
+	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);			// Den Elegxthike
 };
 
 class GrailIndexNode {
@@ -33,8 +33,8 @@ public:
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class GraphPostOrderCursor {
-	NodeIndex* graph;
+class GraphPostOrderCursor {		// Elegxthike
+	Graph* graph;
 	Stack* stack;
 	HashSet* visited;
 	Collection* random_nodes;

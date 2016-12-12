@@ -7,8 +7,8 @@ using namespace std;
 
 main(int argc, char** argv){
 
-/*
-	if (argc != 3) return -1;
+
+	if (argc != 2) return -1;
 
 	Graph graph;
 	ifstream myReadFile;
@@ -27,7 +27,13 @@ main(int argc, char** argv){
 	}
 	myReadFile.close();
 
-	GraphPostOrderCursor* temp= new GraphPostOrderCursor(&graph);
-*/
+
+
+	GrailIndex* temp= new GrailIndex(&graph);
+
+	cout<< temp->isReachableGrailIndex(5,6) << endl;
+
+	delete temp;
+
 	
 }
