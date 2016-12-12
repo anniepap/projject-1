@@ -12,13 +12,13 @@ size_t StackSet::getSize() {
 }
 
 bool StackSet::getVisited(size_t index) {
-	return visited.contains(index);
+	return visited.find(index);
 }
 
 void StackSet::push(uint32_t id) {
-	if (!visited.contains(id)) {
+	if (!visited.find(id)) {
 		stack.push(id);
-		visited.add(id);
+		visited.insert(id);
 	}
 }
 

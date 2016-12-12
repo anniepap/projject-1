@@ -4,6 +4,7 @@
 HashSet::HashSet(size_t size) {
 	rows = (size_t) ceil(((double) size)/SIZE);
 	set = (bool**) calloc(rows, sizeof(bool*));
+	size_ = 0;
 }
 
 HashSet::~HashSet() {
@@ -25,5 +26,12 @@ void HashSet::insert(uint32_t id) {
 		set[k] = (bool*) calloc(SIZE, sizeof(bool));
 	}
 	set[k][id%SIZE] = true;
+	size_++;
+}
+
+void HashSet::erase(uint32_t id) {
+	size_t k = id/SIZE;
+	set[k][id%SIZE] = false;
+	size_--;
 }
 

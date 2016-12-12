@@ -1,7 +1,7 @@
 #ifndef __STACKLINKEDLIST_H__
 #define __STACKLINKEDLIST_H__
 
-#include "defines.h"
+#include "../Part1/defines.h"
 
 struct node {
     uint32_t id;

@@ -1,9 +1,10 @@
 #ifndef __HASH_QUEUE_H__
 #define __HASH_QUEUE_H__
 
-#include "Queue.h"
+#include "defines.h"
 
-class HashQueue : public Queue {
+class HashQueue {
+	size_t size_;
 	size_t head;
 	size_t back;
 
@@ -15,6 +16,8 @@ public:
 
 	uint32_t pop(void);
 	void push(uint32_t id);
+	bool empty(void);
+	size_t size(void);
 };
 
 #endif

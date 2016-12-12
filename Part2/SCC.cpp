@@ -1,6 +1,6 @@
-#include "SCC.h"
-
 #include <iostream>
+#include "SCC.h"
+#include "StackLinkedList.h"
 using namespace std;
 
 Component::Component(uint32_t id) {
@@ -8,12 +8,20 @@ Component::Component(uint32_t id) {
 	included_nodes_count = 0;
 }
 
-SCC::SCC(uint32_t N) {
+SCC::SCC(size_t capacity) {
+	table = new TarNode[capacity];
+	for (size_t i = 0; i < capacity; ++i)
+	{
+		table[i].index = NONE;
+		table[i].lowlink = NONE;
+		table[i].onStack = false;
+	}
+
 	components_count = 0;
 	components = NULL;
-	number_of_nodes = N;
-	id_belongs_to_component = new uint32_t[N];
-	for (uint32_t i = 0; i < N; ++i)
+	number_of_nodes = capacity;
+	id_belongs_to_component = new uint32_t[capacity];
+	for (uint32_t i = 0; i < capacity; ++i)
 	{
 		id_belongs_to_component[i] = NONE;
 	}
@@ -25,14 +33,8 @@ Component** SCC::getComponents() {
 
 void SCC::increaseComponents(uint32_t sccId) {
 	components_count++;
-	if (components_count == 1) {
-		components = (Component**) malloc(sizeof(Component*));
-	}
-	else {
-		components = (Component**) realloc(components, sizeof(Component*) * components_count);
-	}
-	Component* component = new Component(sccId);
-	components[components_count - 1] = component;
+	components = (Component**) realloc(components, sizeof(Component*) * components_count);
+	components[components_count - 1] = new Component(sccId);
 }
 
 void SCC::addNodeToComponent(uint32_t nodeId, uint32_t sccId) {
@@ -68,7 +70,8 @@ void SCC::print() {
 	for (uint32_t i = 0; i < number_of_nodes; ++i)
 	{
 		cout << i << " -> " << id_belongs_to_component[i] << endl;
-	}*/
+	}
+	*/
 }
 
 SCC::~SCC() {
@@ -76,6 +79,7 @@ SCC::~SCC() {
 }
 
 bool SCC::destroyStronglyConnectedComponents() {
+	delete[] table;
 	for (uint32_t i = 0; i < components_count; ++i)
 	{
 		free(components[i]->included_node_ids);
@@ -100,3 +104,89 @@ int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t s
 
 }
 */
+
+void SCC::estimateStronglyConnectedComponents(Pair& pair) {
+/*	uint32_t index = 0;
+	uint32_t lastw_id = NONE;
+	Stack tarjanStack;
+
+	Stack activeStack;
+	Stack offsetStack;
+	Stack indexStack;
+
+	for (size_t id = 0; id < pair.getCapacity(); ++id) {
+		if (table[id].index == NONE) {
+			// Simulate the dfs search that recursion is doing
+			activeStack.push(id);
+			talbe[id].pc = new PairCursor(&pair);
+			talbe[id].pc->init(id);
+			while (!activeStack.isEmpty()) {
+				uint32_t id = activeStack.top();
+				TarNode& v = table[id];
+
+				// First time visiting node
+				if (v.index == NONE) {
+					v.index = index;
+					v.lowlink = index;
+					v.onStack = true;
+					index++;
+					tarjanStack.push(id);
+				}
+				else {
+					uint32_t t = indexStack.pop();
+					indexStack.push(t+1);
+					Node w = table[lastw_id];
+					v.lowlink = (v.lowlink < w.lowlink) ? v.lowlink : w.lowlink;
+				}
+
+				bool continueDfs = false;
+				// Take all edges
+				uint32_t nextOffset = offsetStack.top();
+				uint32_t startIndex = indexStack.top();
+				uint32_t currentCapacity = LIST_NODE_CAPACITY;
+				if (v.offset == nextOffset) {
+					currentCapacity = v.size;
+				}
+				while (nextOffset != NONE) {
+					list_node& neighbors = buffer[nextOffset];
+					for (int j = startIndex; j < currentCapacity ; ++j) {
+						uint32_t neighbor_id = neighbors.neighbor[j];
+						Node& w = table[neighbor_id];
+						if (w.index == NONE) {
+							activeStack.push(neighbor_id);
+							offsetStack.push(w.offset);
+							indexStack.push(0);
+							continueDfs = true;
+							break;
+						}
+						else if (w.onStack) {
+							v.lowlink = (v.lowlink < w.index) ? v.lowlink : w.index;
+						}
+					}
+					if (continueDfs)
+						break;
+					nextOffset = neighbors.nextListNode;
+					startIndex = 0;
+					currentCapacity = LIST_NODE_CAPACITY;
+				}
+
+				if (!continueDfs) {
+					if (v.lowlink == v.index) {
+						scc->increaseComponents(v.lowlink);
+						uint32_t neighbor_id;
+						do {
+							neighbor_id = tarjanStack.pop();
+							Node& w = table[neighbor_id];
+							w.onStack = false;
+							scc->addNodeToComponent(neighbor_id, w.lowlink);
+						} while(neighbor_id != id);
+					}
+					lastw_id = activeStack.pop();
+					offsetStack.pop();
+					indexStack.pop();
+				}
+			}
+		}
+	}
+*/
+}

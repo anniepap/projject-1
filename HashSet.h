@@ -1,9 +1,10 @@
 #ifndef __HASH_SET_H__
 #define __HASH_SET_H__
 
-#include "Set.h"
+#include "defines.h"
 
-class HashSet : public Set {
+class HashSet {
+	size_t size_;
 	size_t rows;
 	bool** set;
 public:
@@ -11,6 +12,7 @@ public:
 	~HashSet();
 	bool find(uint32_t id);
 	void insert(uint32_t id);
+	void erase(uint32_t id);
 };
 
 #endif

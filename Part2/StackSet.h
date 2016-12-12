@@ -1,9 +1,9 @@
 #ifndef __STACK_SET_H__
 #define __STACK_SET_H__
 
-#include "defines.h"
+#include "../Part1/defines.h"
 #include "StackLinkedList.h"
-#include "HashSet.h"
+#include "../Part1/HashSet.h"
 
 class StackSet {
 	Stack stack;
