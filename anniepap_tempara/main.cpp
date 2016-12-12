@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <cstring>
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -9,11 +10,19 @@ int main(int argc, char** argv) {
 	Graph graph;
 	ifstream myReadFile;
 	char com;
+	char* gType = new char[10];
+	int size = 0;
 	uint32_t from;
 	uint32_t to;
 
 	myReadFile.open(argv[1]);
 	if (myReadFile.is_open()) {
+		myReadFile.getline(gType, sizeof(gType)*10);
+
+		for (int i = 0; gType[i] != '\0'; ++i) {
+			size++;
+		}
+
 		while (!myReadFile.eof()) {
 			myReadFile >> from >> to;
 			if (!myReadFile.good())
@@ -23,7 +32,21 @@ int main(int argc, char** argv) {
 	}
 	myReadFile.close();
 
-	graph.test();
+	char* graphType = new char[size];
+
+	for (int i = 0; i < size-1; ++i) {
+		graphType[i] = gType[i];
+	}
+
+	if (strcmp(graphType, "STATIC") == 0) {
+		// static graph
+
+	}
+	else if (strcmp(graphType, "DYNAMIC")) {
+		/* code */
+	}
+	
+	//graph.test();
 
 /*
 	myReadFile.open(argv[2]);
@@ -41,5 +64,8 @@ int main(int argc, char** argv) {
 	}
 	myReadFile.close();
 */
+	
+	delete[] gType;
+	delete[] graphType;
 	return 0;
 }
