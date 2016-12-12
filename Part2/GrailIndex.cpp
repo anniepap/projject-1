@@ -1,8 +1,7 @@
 #include "GrailIndex.h"
-#include <ctime>
 
 //buildGrailIndex
-GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph->sizeofnodes()*/) {
+GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex( graph->SizeOfNodes() )/*, components(components)*/ {
 	// Allocation of table
 	IndexTables= new GrailIndexNode*[SizeOfIndex];
 	for(int i=0;i<SizeOfIndex;i++){
@@ -10,18 +9,31 @@ GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex(1/*graph-
 	}
 
 //---------------------------------------
+	PairCursor graph_cursor( &graph-> getOut() );
+	uint32_t curr_id,cur_edge;
+
 	for (int j=0; j<NUMBEROFLABELS;j++){
 		//Post Order
 		GraphPostOrderCursor* post_order_cursor= new GraphPostOrderCursor(graph);
-		uint32_t curr_id;
 		int rank=1;
 		unsigned int min_rank;
 		while( (curr_id=post_order_cursor->Next())!=NONE ) {
 			if (curr_id==ENDOFCOMPONENT)
 				continue;
-			/*graph->OutEdges(curr_id,);*/ //Find children of curr_grail_node  // OutEdges,number_of_edges //////////////////
-			min_rank= calc_min_rank(j,rank/*,OutEdges,number_of_edges*/);
-			IndexTables[curr_id][j].set(rank, min_rank);
+						
+			uint32_t min_rank = -1;
+			graph_cursor.init(curr_id);
+			bool f = graph_cursor.next(&cur_edge);
+			if (!f)
+				min_rank = rank;
+	 		while (f) {
+				if ( IndexTables[ cur_edge ][j].MinRank() < min_rank){
+					min_rank= IndexTables[ cur_edge ][j].MinRank();
+				}
+				f = graph_cursor.next(&cur_edge);
+	  		} 
+
+			IndexTables[curr_id][j].set(min_rank, rank);
 			rank++;
 		}
 		delete post_order_cursor;
@@ -38,6 +50,9 @@ GrailIndex::~GrailIndex() {
 }
 
 GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t target_node){
+//	if ( findNodeStronglyConnectedComponentID(source_node) == findNodeStronglyConnectedComponentID(target_node) )
+//		return YES;
+
 	for(int i=0;i<NUMBEROFLABELS;i++){
 		if ( !IndexTables[target_node][i].isSubSet(IndexTables[source_node][i]) ){
 			return NO;
@@ -45,18 +60,6 @@ GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t tar
 	}
 	return MAYBE;
 }
-
-unsigned int GrailIndex::calc_min_rank(const int curr_label,int rank/*,out_edges,number_of_edges*/){
-	if (1/*number_of_edges==0*/) return rank;
-	unsigned int min=-1;
-	for (int i=0; i<1/*number_of_edges*/; i++){
-		if ( IndexTables[ 1/*out_edges[i]*/ ][curr_label].MinRank() <min){
-			min= IndexTables[ 1/*out_edges[i]*/ ][curr_label].MinRank();
-		}
-	}
-	return min;
-}
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 void GrailIndexNode::set(int min_rank, int rank) {
@@ -73,12 +76,14 @@ bool GrailIndexNode::isSubSet(GrailIndexNode& Y){
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph){
-	uint32_t size= 6;//graph->SizeOfNodes();
+GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph): graph(graph) {
+	uint32_t size= graph->SizeOfNodes();
 	stack= new Stack(size);
 	visited= new HashSet(size);
 	random_nodes= new Collection(size);
-	stack->Push( random_nodes->Pop() );
+	uint32_t element = random_nodes->Pop();	
+	stack->Push( element );
+	visited->insert( element );
 }
 
 GraphPostOrderCursor::~GraphPostOrderCursor(){
@@ -87,37 +92,30 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 	delete random_nodes;
 }
 
-uint32_t GraphPostOrderCursor::Next(){	///////////////////////////////
-	if (stack->IsEmpty() && 1 /*!visited->isFull() lipei auth h sunartisi*/ ){
+uint32_t GraphPostOrderCursor::Next(){	
+	if (stack->IsEmpty() && !visited->IsFull() ){
 		uint32_t cur_id;
 		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
 		stack->Push( cur_id );	
+		visited->insert( cur_id );		
 		return ENDOFCOMPONENT;
 	}
+
+	PairCursor graph_cursor( *graph,1 );
 	uint32_t curr_id,cur_edge;
 	while(!stack->IsEmpty())
 	{
 		curr_id=stack->Top();
-		if (1/* graph->HasOutEdges(curr_id) den uparxei*/){
-			// For all childen //////// cur_edge
-		/* for+ while (offset != NONE) {
-			list_node& bucket = buffer[offset];
-			for (size_t i = 0; i < size; ++i) {
-				id = bucket.neighbor[i];
-				if (start.visited(id) == false) {
-					if (target.visited(id) == true) return true;
-					start.push(id);
-				}
-			}
-			offset = bucket.nextListNode;
-			size = LIST_NODE_CAPACITY;
-		} */
+		graph_cursor.init(curr_id);
+		bool flag=0;
+ 		while (graph_cursor.next(&cur_edge)) {
 			if (!visited->find(cur_edge)){
 				stack->Push(cur_edge);
 				visited->insert(cur_edge);
+				flag=1;
 			}
-		}
-		else{
+  		}
+		if (!flag){ 
 			stack->Pop();
 			return curr_id;
 		}
@@ -140,10 +138,15 @@ void Stack::Push(uint32_t element){
 }
 
 uint32_t Stack::Pop(){
+	if (size==0){
+		return NONE;
+	}
 	return array[--size];
 }
 
 uint32_t Stack::Top(){
+	if (size==0)
+		return NONE;
 	return array[size-1];
 }
 /*
