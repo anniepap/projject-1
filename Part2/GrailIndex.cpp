@@ -77,7 +77,7 @@ bool GrailIndexNode::isSubSet(GrailIndexNode& Y){
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph): graph(graph) {
+GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): graph(graph), undirected(undirected) {
 	uint32_t size= graph->SizeOfNodes();
 	stack= new Stack(size);
 	visited= new HashSet(size);
@@ -102,20 +102,31 @@ uint32_t GraphPostOrderCursor::Next(){
 		return ENDOFCOMPONENT;
 	}
 
-	PairCursor graph_cursor( *graph,1 );
+	PairCursor out_cursor( *graph, true );
 	uint32_t curr_id,cur_edge;
+	PairCursor in_cursor( *graph, false );
 	while(!stack->IsEmpty())
 	{
 		curr_id=stack->Top();
-		graph_cursor.init(curr_id);
+		out_cursor.init(curr_id);
 		bool flag=0;
- 		while (graph_cursor.next(&cur_edge)) {
+ 		while (out_cursor.next(&cur_edge)) {
 			if (!visited->find(cur_edge)){
 				stack->Push(cur_edge);
 				visited->insert(cur_edge);
 				flag=1;
 			}
   		}
+  		if (undirected){
+			in_cursor.init(curr_id);		
+	 		while (in_cursor.next(&cur_edge)) {
+				if (!visited->find(cur_edge)){
+					stack->Push(cur_edge);
+					visited->insert(cur_edge);
+					flag=1;
+				}
+	  		}
+	  	}
 		if (!flag){ 
 			stack->Pop();
 			return curr_id;

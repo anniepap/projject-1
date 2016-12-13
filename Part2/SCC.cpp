@@ -14,6 +14,10 @@ SCC::SCC(size_t capacity) : capacity(capacity) {
 	id_belongs_to_component = new uint32_t[capacity];
 }
 
+uint32_t SCC::ComponentsCount(){
+	return components_count;
+}
+
 Component** SCC::getComponents() {
 	return components;
 }
@@ -59,16 +63,31 @@ void SCC::destroyStronglyConnectedComponents() {
 	components_count = 0;
 }
 
+
+int SCC::findNodeStronglyConnectedComponentID(uint32_t nodeId) {
+	return id_belongs_to_component[nodeId];
+}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+void ComponentCursor::iterateStronglyConnectedComponentID(SCC* components) {
+	scc = components;
+	index = 0;
+}
+
+bool ComponentCursor::next_StronglyConnectedComponentID() {
+	if ( index == scc->ComponentsCount() - 1 ){
+		false;
+	}
+	index++;
+	return true;
+}
+
+Component* ComponentCursor::GetCurrentConnectedComponent(){
+	return scc->getComponents()[index];
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /*
-int findNodeStronglyConnectedComponentID(uint32_t nodeId) {
-
-}
-OK_SUCCESS iterateStronglyConnectedComponentID(ComponentCursor* cursor) {
-
-}
-bool next_StronglyConnectedComponentID(ComponentCursor* cursor) {
-
-}
 int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t source_node, uint32_t target_node) {
 
 }

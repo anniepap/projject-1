@@ -1,13 +1,28 @@
 #include "CC.h"
 
-CC::CC(const uint32_t size):size(size),number_of_update_index_queries(0),number_of_queries(0){
+CC::CC(const uint32_t size, Graph* graph):size(size),number_of_update_index_queries(0),number_of_queries(0){
 	ccindex= new uint32_t[size];
 	updateIndex= new UpdateIndex(size);
+
+	GraphPostOrderCursor* DfsIterator =new GraphPostOrderCursor(graph, true);
+	uint32_t components_counter=0;		
+	uint32_t curr_id;
+	while((curr_id=DfsIterator->Next())!=NONE){
+		if (curr_id==ENDOFCOMPONENT){
+			components_counter++;
+			continue;
+		}
+		ccindex[curr_id]= components_counter; 
+	}
 }
 
 CC::~CC(){
 	delete[] ccindex;
 	delete updateIndex;
+}
+
+UpdateIndex* CC::getUpdateIndex(){
+	return updateIndex;
 }
 
 void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
@@ -36,6 +51,10 @@ void  CC::rebuildIndexes(){
 	}
 }
 
+bool CC::OverflowThreshhold(){
+	return Metric() > THRESHOLD;
+}
+
 void CC::UpdateMetric(bool update_index_used){
 	if (update_index_used) number_of_update_index_queries;
 	number_of_queries++;	
@@ -43,10 +62,6 @@ void CC::UpdateMetric(bool update_index_used){
 
 float CC::Metric(){
 	return (float)number_of_update_index_queries/number_of_queries;
-}
-
-void CC::SetIndex(uint32_t nodeId, uint32_t componentId ){
-	ccindex[nodeId]= componentId;
 }
 
 void CC::SetUpdateIndex(uint32_t componentId, uint32_t component_attached){
@@ -60,6 +75,11 @@ UpdateIndex::UpdateIndex(uint32_t size):size(size){
 
 UpdateIndex::~UpdateIndex(){
 	delete[] index;
+}
+
+bool UpdateIndex::isConnected(uint32_t from, uint32_t to){
+	//////// code here
+
 }
 
 void UpdateIndex::SetUpdateIndex(uint32_t componentId, uint32_t component_attached){

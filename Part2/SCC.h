@@ -8,6 +8,7 @@
 #include "../Part1/PairCursor.h"
 
 class NodeIndex;
+class SCC;
 
 struct Component {
 	uint32_t included_nodes_count; // number of nodes in component
@@ -15,9 +16,13 @@ struct Component {
 	Component(); 
 };
 
-struct ComponentCursor{
-	Component* component_ptr; // pointer to current's iteration component
-	// Any other necessary information in order to move to next component in the vector
+class ComponentCursor{
+	SCC* scc;
+	int index;
+public :
+	void iterateStronglyConnectedComponentID(SCC* components);
+	bool next_StronglyConnectedComponentID();
+	Component* GetCurrentConnectedComponent();
 };
 
 struct TarNode {
@@ -39,10 +44,9 @@ public:
 	~SCC();
 	
 	int findNodeStronglyConnectedComponentID(uint32_t nodeId);
-	bool iterateStronglyConnectedComponentID(ComponentCursor* cursor);
-	bool next_StronglyConnectedComponentID(ComponentCursor* cursor);
 	int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t source_node, uint32_t target_node);
 
+	uint32_t ComponentsCount();
 	Component** getComponents();
 
 	void increaseComponents();
