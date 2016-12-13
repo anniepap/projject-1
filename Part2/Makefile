@@ -1,9 +1,15 @@
-OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/StackLinkedList.o ../obj/PairCursor.o
+OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/StackLinkedList.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o
 
 all: out
 
 out: $(OBJS)
 	g++ $(OBJS) -o out
+
+../obj/GrailIndex.o: GrailIndex.cpp GrailIndex.h
+	g++ -c GrailIndex.cpp -o ../obj/GrailIndex.o
+
+../obj/CC.o: CC.cpp CC.h
+	g++ -c CC.cpp -o ../obj/CC.o
 
 ../obj/PairCursor.o: ../Part1/PairCursor.cpp ../Part1/PairCursor.h
 	g++ -c ../Part1/PairCursor.cpp -o ../obj/PairCursor.o

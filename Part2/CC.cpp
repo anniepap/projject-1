@@ -1,10 +1,11 @@
 #include "CC.h"
 
-CC::CC(const uint32_t size):size(size),number_of_update_index_queries(0),number_of_queries(0){
+CC::CC(const uint32_t size, Graph* graph):size(size),number_of_update_index_queries(0),number_of_queries(0){
 	ccindex= new uint32_t[size];
 	updateIndex= new UpdateIndex(size);
 
-	GraphPostOrderCursor* DfsIterator =new GraphPostOrderCursor(graph, true);		
+	GraphPostOrderCursor* DfsIterator =new GraphPostOrderCursor(graph, true);
+	uint32_t components_counter=0;		
 	uint32_t curr_id;
 	while((curr_id=DfsIterator->Next())!=NONE){
 		if (curr_id==ENDOFCOMPONENT){
@@ -18,6 +19,10 @@ CC::CC(const uint32_t size):size(size),number_of_update_index_queries(0),number_
 CC::~CC(){
 	delete[] ccindex;
 	delete updateIndex;
+}
+
+UpdateIndex* CC::getUpdateIndex(){
+	return updateIndex;
 }
 
 void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
@@ -46,7 +51,7 @@ void  CC::rebuildIndexes(){
 	}
 }
 
-bool OverflowThreshhold(){
+bool CC::OverflowThreshhold(){
 	return Metric() > THRESHOLD;
 }
 
@@ -72,8 +77,8 @@ UpdateIndex::~UpdateIndex(){
 	delete[] index;
 }
 
-bool isConnected(uint32_t from, uint32_t to){
-
+bool UpdateIndex::isConnected(uint32_t from, uint32_t to){
+	//////// code here
 
 }
 

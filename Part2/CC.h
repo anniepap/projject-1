@@ -1,5 +1,6 @@
 
 #include "../Part1/defines.h"
+#include "GrailIndex.h"
 
 #define THRESHOLD 0.6
 
@@ -14,11 +15,12 @@ class CC{
 
 	void SetUpdateIndex(uint32_t componentId, uint32_t component_attached);
 public:
-	CC(uint32_t size);
+	CC(uint32_t size, Graph* graph);
 	~CC();
+	UpdateIndex* getUpdateIndex();	
 	void  insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
 	int findNodeConnectedComponentID(uint32_t nodeId);
-	void  rebuildIndexes();
+	void rebuildIndexes();
 	bool OverflowThreshhold();
 	void UpdateMetric(bool update_index_used=false);	
 	float Metric();

@@ -1,4 +1,6 @@
 #include "../Part1/Graph.h"
+#include "GrailIndex.h"
+#include "CC.h"
 #include "SCC.h"
 #include <cstring>
 #include <fstream>
@@ -58,8 +60,8 @@ int main(int argc, char** argv) {
 
 
 	if (strcmp(graphType, "STATIC") == 0) {
-		SCC components( graph->SizeOfNodes() );
-		//GrailIndex grail_index(&graph,&components);	
+		SCC components( graph.SizeOfNodes() );
+		GrailIndex grail_index(&graph/*,&components*/);	
 
 		myReadFile.open(argv[2]);
 		if (myReadFile.is_open()) {
@@ -81,7 +83,7 @@ int main(int argc, char** argv) {
 	}
 
 	else if (strcmp(graphType, "DYNAMIC")) {
-		CC cc( graph->SizeOfNodes() );
+		CC cc( graph.SizeOfNodes(),& graph );
 
 		myReadFile.open(argv[2]);
 		if (myReadFile.is_open()) {
@@ -96,10 +98,10 @@ int main(int argc, char** argv) {
 					if ( cc.OverflowThreshhold() ){
 						cc.rebuildIndexes();
 					}
-					if ( cc.findNodeConnectedComponentID(from) = cc.findNodeConnectedComponentID(to) ) {
+					if ( cc.findNodeConnectedComponentID(from) == cc.findNodeConnectedComponentID(to) ) {
 						// Anazitisi  cout << graph.question(from, to) << endl;
 					}
-					else if (cc.U .isConnected( from, to);) {
+					else if ( cc.getUpdateIndex()->isConnected( from, to) ) {
 						// Anazitisi  cout << graph.question(from, to) << endl;
 						cc.UpdateMetric(true);
 						continue;
