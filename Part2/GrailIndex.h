@@ -35,11 +35,12 @@ public:
 
 class GraphPostOrderCursor {		// Elegxthike
 	Graph* graph;
+	bool undirected;
 	Stack* stack;
 	HashSet* visited;
 	Collection* random_nodes;
 public: 
-	GraphPostOrderCursor(Graph* graph); 
+	GraphPostOrderCursor(Graph* graph, bool undirected=false); 
 	~GraphPostOrderCursor();
 	uint32_t Next();
 };

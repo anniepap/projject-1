@@ -12,14 +12,14 @@ class CC{
 	uint32_t number_of_update_index_queries;
 	uint32_t number_of_queries;		
 
-	void SetIndex(uint32_t nodeId, uint32_t componentId);
 	void SetUpdateIndex(uint32_t componentId, uint32_t component_attached);
-	int findNodeConnectedComponentID(uint32_t nodeId);
 public:
 	CC(uint32_t size);
 	~CC();
 	void  insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
+	int findNodeConnectedComponentID(uint32_t nodeId);
 	void  rebuildIndexes();
+	bool OverflowThreshhold();
 	void UpdateMetric(bool update_index_used=false);	
 	float Metric();
 };
@@ -33,6 +33,7 @@ class UpdateIndex{
 public:	
 	UpdateIndex(uint32_t size);
 	~UpdateIndex();
+	bool isConnected(uint32_t from, uint32_t to);
 	void SetUpdateIndex(uint32_t componentId, uint32_t component_attached);
 	uint32_t Size();
 	uint32_t Index(uint32_t pos);

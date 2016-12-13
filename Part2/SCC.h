@@ -7,6 +7,7 @@
 #include "../Part1/Buffer.h"
 
 class NodeIndex;
+class SCC;
 
 struct Component {
 	uint32_t component_id; 		   // current component id
@@ -15,9 +16,13 @@ struct Component {
 	Component(uint32_t id); 
 };
 
-struct ComponentCursor{
-	Component* component_ptr; // pointer to current's iteration component
-	// Any other necessary information in order to move to next component in the vector
+class ComponentCursor{
+	SCC* scc;
+	int index;
+public :
+	void iterateStronglyConnectedComponentID(SCC* components);
+	bool next_StronglyConnectedComponentID();
+	Component* GetCurrentConnectedComponent();
 };
 
 struct TarNode {
@@ -37,11 +42,10 @@ public:
 	~SCC();
 	
 	int findNodeStronglyConnectedComponentID(uint32_t nodeId);
-	bool iterateStronglyConnectedComponentID(ComponentCursor* cursor);
-	bool next_StronglyConnectedComponentID(ComponentCursor* cursor);
 	int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t source_node, uint32_t target_node);
 	bool destroyStronglyConnectedComponents();
 
+	uint32_t ComponentsCount();
 	Component** getComponents();
 
 	void increaseComponents(uint32_t sccId);
