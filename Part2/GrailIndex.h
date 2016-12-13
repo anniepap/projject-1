@@ -1,9 +1,9 @@
 #ifndef __GRAILINDEX_H__
 #define __GRAILINDEX_H__
 
-#include "../defines.h"
-#include "../Graph.h"
-#include "../PairCursor.h"
+#include "../Part1/defines.h"
+#include "../Part1/Graph.h"
+#include "../Part1/PairCursor.h"
 
 #define NUMBEROFLABELS 1
 #define ENDOFCOMPONENT -2

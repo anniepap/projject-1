@@ -1,92 +1,61 @@
 #include <iostream>
 #include "SCC.h"
-#include "StackLinkedList.h"
+#include "GrailIndex.h"
 using namespace std;
 
-Component::Component(uint32_t id) {
-	component_id = id;
+Component::Component() {
 	included_nodes_count = 0;
+	included_node_ids = NULL;
 }
 
-SCC::SCC(size_t capacity) {
-	table = new TarNode[capacity];
-	for (size_t i = 0; i < capacity; ++i)
-	{
-		table[i].index = NONE;
-		table[i].lowlink = NONE;
-		table[i].onStack = false;
-	}
-
+SCC::SCC(size_t capacity) : capacity(capacity) {
 	components_count = 0;
 	components = NULL;
-	number_of_nodes = capacity;
 	id_belongs_to_component = new uint32_t[capacity];
-	for (uint32_t i = 0; i < capacity; ++i)
-	{
-		id_belongs_to_component[i] = NONE;
-	}
 }
 
 Component** SCC::getComponents() {
 	return components;
 }
 
-void SCC::increaseComponents(uint32_t sccId) {
+void SCC::increaseComponents() {
 	components_count++;
-	components = (Component**) realloc(components, sizeof(Component*) * components_count);
-	components[components_count - 1] = new Component(sccId);
+	components = (Component**) realloc(components, sizeof(Component*)*components_count);
+	components[components_count - 1] = new Component();
 }
 
-void SCC::addNodeToComponent(uint32_t nodeId, uint32_t sccId) {
-	uint32_t i;
-	for (i = 0; i < components_count; ++i)
-		if (components[i]->component_id == sccId)
-			break;
+void SCC::addNodeToComponent(uint32_t nodeId) {
+	Component* c = components[components_count - 1];
+	c->included_nodes_count++;
+	c->included_node_ids = (uint32_t*) realloc(c->included_node_ids, sizeof(uint32_t)*c->included_nodes_count);
+	c->included_node_ids[c->included_nodes_count - 1] = nodeId;
 
-	components[i]->included_nodes_count++;
-	if (components[i]->included_nodes_count == 1) {
-		components[i]->included_node_ids = (uint32_t*) malloc(sizeof(uint32_t));
-	}
-	else {
-		components[i]->included_node_ids = 
-		(uint32_t*) realloc(components[i]->included_node_ids, sizeof(uint32_t) * components[i]->included_nodes_count);
-	}
-	components[i]->included_node_ids[components[i]->included_nodes_count - 1] = nodeId;
-
-	id_belongs_to_component[nodeId] = sccId;
+	id_belongs_to_component[nodeId] = components_count - 1;
 }
 
 void SCC::print() {
-	for (uint32_t i = 0; i < components_count; ++i)
-	{
-		cout << "component " << components[i]->component_id << endl;
+	for (uint32_t i = 0; i < components_count; ++i) {
+		cout << "component:";
 		for (uint32_t j = 0; j < components[i]->included_nodes_count; ++j)
-		{
-			cout << components[i]->included_node_ids[j] << endl;
-		}
+			cout << ' ' << components[i]->included_node_ids[j];
+		cout << endl;
 	}
 
-	/*
-	for (uint32_t i = 0; i < number_of_nodes; ++i)
-	{
+	for (uint32_t i = 0; i < capacity; ++i)
 		cout << i << " -> " << id_belongs_to_component[i] << endl;
-	}
-	*/
 }
 
 SCC::~SCC() {
 	destroyStronglyConnectedComponents();
 }
 
-bool SCC::destroyStronglyConnectedComponents() {
-	delete[] table;
-	for (uint32_t i = 0; i < components_count; ++i)
-	{
+void SCC::destroyStronglyConnectedComponents() {
+	for (uint32_t i = 0; i < components_count; ++i) {
 		free(components[i]->included_node_ids);
 		delete components[i];
 	}
-
 	free(components);
+	delete[] id_belongs_to_component;
 	components_count = 0;
 }
 
@@ -106,87 +75,79 @@ int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t s
 */
 
 void SCC::estimateStronglyConnectedComponents(Pair& pair) {
-/*	uint32_t index = 0;
-	uint32_t lastw_id = NONE;
-	Stack tarjanStack;
+	uint32_t index = 1;
 
-	Stack activeStack;
-	Stack offsetStack;
-	Stack indexStack;
+	TarNode* table = new TarNode[capacity];
+	for (size_t i = 0; i < capacity; ++i) {
+		table[i].index = 0;
+		table[i].lowlink = 0;
+		table[i].onStack = false;
+		table[i].pc = NULL;
+		table[i].caller = NULL;
+	}
 
-	for (size_t id = 0; id < pair.getCapacity(); ++id) {
-		if (table[id].index == NONE) {
-			// Simulate the dfs search that recursion is doing
-			activeStack.push(id);
-			talbe[id].pc = new PairCursor(&pair);
-			talbe[id].pc->init(id);
-			while (!activeStack.isEmpty()) {
-				uint32_t id = activeStack.top();
-				TarNode& v = table[id];
+	Stack tarjanStack(capacity);
 
-				// First time visiting node
-				if (v.index == NONE) {
-					v.index = index;
-					v.lowlink = index;
-					v.onStack = true;
-					index++;
-					tarjanStack.push(id);
+	for (size_t id = 0; id < capacity; ++id) {
+		if (table[id].index == 0) { // Simulate the dfs search that recursion is doing
+			TarNode& u = table[id];
+			u.index = index;
+			u.lowlink = index;
+			index++;
+			u.pc = new PairCursor(&pair);
+			u.pc->init(id);
+			tarjanStack.Push(id);
+			u.caller = NULL;
+			u.onStack = true;
+			TarNode* last = &u;
+			while (true) {
+				uint32_t wid;
+				if (last->pc->next(&wid)) {
+					TarNode& w = table[wid];
+					if (w.index == 0) {
+						w.index = index;
+						w.lowlink = index;
+						index++;
+						w.pc = new PairCursor(&pair);
+						w.pc->init(wid);
+						tarjanStack.Push(wid);
+						w.caller = last;
+						w.onStack = true;
+						last = &w;
+					}
+					else if (w.onStack) {
+						if (w.index < last->lowlink)
+							last->lowlink = w.index;
+					}
 				}
 				else {
-					uint32_t t = indexStack.pop();
-					indexStack.push(t+1);
-					Node w = table[lastw_id];
-					v.lowlink = (v.lowlink < w.lowlink) ? v.lowlink : w.lowlink;
-				}
+					if (last->lowlink == last->index) {
+						uint32_t tid;
+						TarNode* top;
 
-				bool continueDfs = false;
-				// Take all edges
-				uint32_t nextOffset = offsetStack.top();
-				uint32_t startIndex = indexStack.top();
-				uint32_t currentCapacity = LIST_NODE_CAPACITY;
-				if (v.offset == nextOffset) {
-					currentCapacity = v.size;
-				}
-				while (nextOffset != NONE) {
-					list_node& neighbors = buffer[nextOffset];
-					for (int j = startIndex; j < currentCapacity ; ++j) {
-						uint32_t neighbor_id = neighbors.neighbor[j];
-						Node& w = table[neighbor_id];
-						if (w.index == NONE) {
-							activeStack.push(neighbor_id);
-							offsetStack.push(w.offset);
-							indexStack.push(0);
-							continueDfs = true;
-							break;
-						}
-						else if (w.onStack) {
-							v.lowlink = (v.lowlink < w.index) ? v.lowlink : w.index;
-						}
-					}
-					if (continueDfs)
-						break;
-					nextOffset = neighbors.nextListNode;
-					startIndex = 0;
-					currentCapacity = LIST_NODE_CAPACITY;
-				}
-
-				if (!continueDfs) {
-					if (v.lowlink == v.index) {
-						scc->increaseComponents(v.lowlink);
-						uint32_t neighbor_id;
+						increaseComponents();
 						do {
-							neighbor_id = tarjanStack.pop();
-							Node& w = table[neighbor_id];
-							w.onStack = false;
-							scc->addNodeToComponent(neighbor_id, w.lowlink);
-						} while(neighbor_id != id);
+							tid = tarjanStack.Pop();
+							top = &table[tid];
+							top->onStack = false;
+							addNodeToComponent(tid);
+						} while (top != last);
 					}
-					lastw_id = activeStack.pop();
-					offsetStack.pop();
-					indexStack.pop();
+
+					if (last->caller == NULL) break;
+					
+					TarNode* newLast = last->caller;
+					if (last->lowlink < newLast->lowlink)
+						newLast->lowlink = last->lowlink;
+					last = newLast;
 				}
 			}
 		}
 	}
-*/
+
+	for (size_t i = 0; i < capacity; ++i) {
+		delete table[i].pc;
+	}
+	delete[] table;
 }
+

@@ -57,7 +57,7 @@ Pair& Graph::getIn() {
 }
 
 uint32_t Graph::SizeOfNodes(){
-	return out.getCapacity();
+	return (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
 }
 
 /////////////////////////////////////////////////

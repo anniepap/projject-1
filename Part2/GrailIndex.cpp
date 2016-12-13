@@ -1,4 +1,5 @@
 #include "GrailIndex.h"
+#include <ctime>
 
 //buildGrailIndex
 GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex( graph->SizeOfNodes() )/*, components(components)*/ {
