@@ -15,3 +15,4 @@ projject/Debug/vc140.idb
 projject/projject.vcxproj
 *.filters
 *.txt
+/CMakeFiles/
