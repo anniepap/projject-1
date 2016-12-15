@@ -12,6 +12,8 @@ SCC::SCC(size_t capacity) : capacity(capacity) {
 	components_count = 0;
 	components = NULL;
 	id_belongs_to_component = new uint32_t[capacity];
+	
+	//CreateHyperGraph(Pair& pair);
 }
 
 uint32_t SCC::ComponentsCount(){
@@ -35,6 +37,18 @@ void SCC::addNodeToComponent(uint32_t nodeId) {
 	c->included_node_ids[c->included_nodes_count - 1] = nodeId;
 
 	id_belongs_to_component[nodeId] = components_count - 1;
+}
+
+Graph* SCC::CreateHyperGraph(Pair& pair){
+	Graph* graph = new graph;
+	PairCursor pc(&pair);
+	uint32_t to;
+	for (uint32_t i = 0; i < capacity; ++i) {
+		pc.init(i);
+		while (pc.next(&to)
+			graph->addEdge(i, to);
+	}
+	return graph;
 }
 
 void SCC::print() {
