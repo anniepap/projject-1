@@ -2,7 +2,7 @@
 #include <ctime>
 
 //buildGrailIndex
-GrailIndex::GrailIndex(Graph* graph/*, SCC* components*/): SizeOfIndex( graph->SizeOfNodes() )/*, components(components)*/ {
+GrailIndex::GrailIndex(Graph* graph, SCC* components): SizeOfIndex( graph->SizeOfNodes() ), components(components) {  // To graph prepei na einai upergrafos
 	// Allocation of table
 	IndexTables= new GrailIndexNode*[SizeOfIndex];
 	for(int i=0;i<SizeOfIndex;i++){
@@ -51,11 +51,13 @@ GrailIndex::~GrailIndex() {
 }
 
 GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t target_node){
-//	if ( findNodeStronglyConnectedComponentID(source_node) == findNodeStronglyConnectedComponentID(target_node) )
-//		return YES;
+	int source_component = components->findNodeStronglyConnectedComponentID(source_node);
+	int target_component = components->findNodeStronglyConnectedComponentID(target_node);
+	if ( source_component == target_component )
+		return YES;
 
 	for(int i=0;i<NUMBEROFLABELS;i++){
-		if ( !IndexTables[target_node][i].isSubSet(IndexTables[source_node][i]) ){
+		if ( !IndexTables[target_component][i].isSubSet(IndexTables[source_component][i]) ){
 			return NO;
 		}
 	}

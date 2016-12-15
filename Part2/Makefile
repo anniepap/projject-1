@@ -1,4 +1,6 @@
-OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/StackLinkedList.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o
+OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o ../obj/StackLinkedList.o 
+
+# parapanw prepei na fugei to StackLinkedList an telika den to xrisimopoihsoume
 
 all: out
 
@@ -32,8 +34,8 @@ out: $(OBJS)
 ../obj/Graph.o: ../obj/NodeIndex.o ../obj/QueueSet.o ../obj/Buffer.o ../Part1/Graph.cpp ../Part1/Graph.h
 	g++ -c ../Part1/Graph.cpp -o ../obj/Graph.o
 
-../obj/StackLinkedList.o: StackLinkedList.cpp StackLinkedList.h
-	g++ -c StackLinkedList.cpp -o ../obj/StackLinkedList.o
+#../obj/StackLinkedList.o: StackLinkedList.cpp StackLinkedList.h
+#	g++ -c StackLinkedList.cpp -o ../obj/StackLinkedList.o
 
 ../obj/NodeIndex.o: ../Part1/NodeIndex.cpp ../Part1/NodeIndex.h ../Part1/defines.h SCC.h ../Part1/ListNode.h
 	g++ -c ../Part1/NodeIndex.cpp -o ../obj/NodeIndex.o

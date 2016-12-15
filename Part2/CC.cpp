@@ -21,11 +21,35 @@ CC::~CC(){
 	delete updateIndex;
 }
 
+bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
+	bool answer=false, isUpdateUsed=false;
+	if ( findNodeConnectedComponentID(from) == findNodeConnectedComponentID(to) ) {
+		answer = true;
+	}
+	else if ( updateIndex->isConnected( from, to) ) {
+		answer = true;
+		isUpdateUsed = true;
+	}
+	
+	// Update Metric
+	if (isUpdateUsed) number_of_update_index_queries++;
+	number_of_queries++;	
+
+	// Check for overflow
+	if ( OverflowThreshhold() ){
+		rebuildIndexes();
+	}
+
+	return answer;
+}
+
+
 UpdateIndex* CC::getUpdateIndex(){
 	return updateIndex;
 }
 
 void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
+	// An ennonwntai 2 component
 	uint32_t componentS, componentE;
 	componentS= findNodeConnectedComponentID(nodeIdS);
 	componentE= findNodeConnectedComponentID(nodeIdE);
@@ -52,17 +76,9 @@ void  CC::rebuildIndexes(){
 }
 
 bool CC::OverflowThreshhold(){
-	return Metric() > THRESHOLD;
+	return (float)number_of_update_index_queries/number_of_queries > THRESHOLD;
 }
 
-void CC::UpdateMetric(bool update_index_used){
-	if (update_index_used) number_of_update_index_queries;
-	number_of_queries++;	
-}
-
-float CC::Metric(){
-	return (float)number_of_update_index_queries/number_of_queries;
-}
 
 void CC::SetUpdateIndex(uint32_t componentId, uint32_t component_attached){
 	updateIndex->SetUpdateIndex(componentId,component_attached);

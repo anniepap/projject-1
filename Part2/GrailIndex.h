@@ -4,6 +4,7 @@
 #include "../Part1/defines.h"
 #include "../Part1/Graph.h"
 #include "../Part1/PairCursor.h"
+#include "SCC.h"
 
 #define NUMBEROFLABELS 1
 #define ENDOFCOMPONENT -2
@@ -16,11 +17,11 @@ class Collection;
 class GrailIndex {
 	const uint32_t SizeOfIndex;
 	GrailIndexNode** IndexTables;
-	// SCC* components;
+	SCC* components;
 public:
-	GrailIndex(Graph* graph/*, SCC* components pros to parwn den xreiazetai*/); 			// Elegxthike
+	GrailIndex(Graph* graph, SCC* components ); 				// Elegxitke
 	~GrailIndex(); 
-	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);			// Den Elegxthike
+	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);		// Den elegxike	
 };
 
 class GrailIndexNode {

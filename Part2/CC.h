@@ -13,17 +13,15 @@ class CC{
 	uint32_t number_of_update_index_queries;
 	uint32_t number_of_queries;		
 
+	int findNodeConnectedComponentID(uint32_t nodeId);
+	void rebuildIndexes();
+	bool OverflowThreshhold();
 	void SetUpdateIndex(uint32_t componentId, uint32_t component_attached);
 public:
 	CC(uint32_t size, Graph* graph);
 	~CC();
-	UpdateIndex* getUpdateIndex();	
-	void  insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
-	int findNodeConnectedComponentID(uint32_t nodeId);
-	void rebuildIndexes();
-	bool OverflowThreshhold();
-	void UpdateMetric(bool update_index_used=false);	
-	float Metric();
+	void insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
+	bool isPossiblyReachable(uint32_t source_node,uint32_t target_node);
 };
 
 
