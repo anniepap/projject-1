@@ -7,8 +7,8 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	//if (argc != 3) return -1;
-
+	if (argc != 3) return -1;
+	
 	Graph graph;
 	ifstream myReadFile;
 	char com;
@@ -19,12 +19,6 @@ int main(int argc, char** argv) {
 
 	myReadFile.open(argv[1]);
 	if (myReadFile.is_open()) {
-		myReadFile.getline(gType, sizeof(gType)*10);
-
-		for (int i = 0; gType[i] != '\n'; ++i) {
-			size++;
-		}
-
 		while (!myReadFile.eof()) {
 			myReadFile >> from >> to;
 			if (!myReadFile.good())
@@ -33,13 +27,6 @@ int main(int argc, char** argv) {
 		}
 	}
 	myReadFile.close();
-
-	char* graphType = new char[size];
-
-	for (int i = 0; i < size; ++i) {
-		graphType[i] = gType[i];
-	}
-	graphType[size] = '\0';
 
 /* 		Na dokimastei
 	SCC scc(6);
@@ -58,28 +45,44 @@ int main(int argc, char** argv) {
 	}
 */
 
+	// Read Type
+	myReadFile.open(argv[2]);
+	if (!myReadFile.is_open())
+		cerr<<"File can not open"<<endl;
+
+	myReadFile.getline(gType, sizeof(gType)*10);
+
+	for (int i = 0; gType[i] != '\n'; ++i) {
+		size++;
+	}
+
+	char* graphType = new char[size];
+
+	for (int i = 0; i < size; ++i) {
+		graphType[i] = gType[i];
+	}
+	graphType[size] = '\0';
+
+	// Check Type
 	if (strcmp(graphType, "STATIC") == 0) {
 		cout<<"STATIC"<<endl;
-		return 0;
-		SCC components( graph.SizeOfNodes() );
-		// hypergraph()
-		GrailIndex grail_index(&hypergraph ,&components);	
+		SCC components( graph.SizeOfNodes(), graph );
+		GrailIndex grail_index(&components);	
 
-		myReadFile.open(argv[2]);
-		if (myReadFile.is_open()) {
-			while(!myReadFile.eof()) {
-				myReadFile >> com;
-				if (com != 'F')
-					myReadFile >> from >> to;
-				if (com == 'Q'){
-					GRAIL_ANSWER answer = grail_index.isReachableGrailIndex(from,to);
-					if ( answer == NO )
-						cout << -1 << endl;
-					else if ( answer == YES )
-						cout << 1/*components->estimateShortestPathStronglyConnectedComponents( graph, source_node, target_node) Prepei na ulopoihthei (tha mporouse na pernaei kai to Component gia grigori anazitisi)*/ << endl;  // An nai, anazitisi sto sto SCC pou anikoun ta 2 node
-					else 
-						cout << 1 /*graph.question(from, to)*/ << endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
-				}
+		while(!myReadFile.eof()) {
+			myReadFile >> com;
+			if (com != 'F')
+				myReadFile >> from >> to;
+			if (com == 'Q'){
+				GRAIL_ANSWER answer = grail_index.isReachableGrailIndex(from,to);
+				if ( answer == NO )
+					cout << -1 << endl;
+				else if ( answer == YES )
+					cout << graph.question(from, to) << endl;
+					//cout << 1/*components->estimateShortestPathStronglyConnectedComponents( graph, source_node, target_node) Prepei na ulopoihthei (tha mporouse na pernaei kai to Component gia grigori anazitisi)*/ << endl;  // An nai, anazitisi sto sto SCC pou anikoun ta 2 node
+				else 
+					cout << graph.question(from, to) << endl;	// Edw trwei segmentation 
+					//cout << 1 /*graph.question(from, to)*/ << endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
 			}
 		}
 		myReadFile.close();
@@ -102,7 +105,7 @@ int main(int argc, char** argv) {
 				}
 				if (com == 'Q'){
 					if ( cc.isPossiblyReachable( from, to ) )
-						// Anazitisi  cout << graph.question(from, to) << endl;		
+						1==1;//Anazitisi  cout << graph.question(from, to) << endl;		
 				}
 			}
 		}

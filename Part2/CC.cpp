@@ -21,18 +21,41 @@ CC::~CC(){
 	delete updateIndex;
 }
 
+void CC::rebuildIndexes(){
+	for (int i=0;size;i++){
+		ccindex[i] = updateIndex->component_belongs_to_component(ccindex[i]);
+	}
+}
+
+bool CC::OverflowThreshhold(){
+	return (float)number_of_update_index_queries/number_of_queries > THRESHOLD;
+}
+
+int CC::findNodeConnectedComponentID(uint32_t nodeId){
+	return ccindex[nodeId];
+}
+
+void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
+	uint32_t componentS, componentE;
+	componentS= findNodeConnectedComponentID(nodeIdS);
+	componentE= findNodeConnectedComponentID(nodeIdE);
+	updateIndex->MergeComponent(componentS,componentE);
+}
+
 bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
-	bool answer=false, isUpdateUsed=false;
-	if ( findNodeConnectedComponentID(from) == findNodeConnectedComponentID(to) ) {
+	bool answer=false;
+	int source_component = findNodeConnectedComponentID(source_node);
+	int target_component =  findNodeConnectedComponentID(target_node);
+	if ( source_component == target_component ) {
 		answer = true;
 	}
-	else if ( updateIndex->isConnected( from, to) ) {
+	// Search in Update Index
+	else if( updateIndex->component_belongs_to_component(source_component) == updateIndex->component_belongs_to_component(target_component) ) {
 		answer = true;
-		isUpdateUsed = true;
+		number_of_update_index_queries++;
 	}
 	
 	// Update Metric
-	if (isUpdateUsed) number_of_update_index_queries++;
 	number_of_queries++;	
 
 	// Check for overflow
@@ -42,70 +65,55 @@ bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 
 	return answer;
 }
-
-
-UpdateIndex* CC::getUpdateIndex(){
-	return updateIndex;
-}
-
-void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
-	// An ennonwntai 2 component
-	uint32_t componentS, componentE;
-	componentS= findNodeConnectedComponentID(nodeIdS);
-	componentE= findNodeConnectedComponentID(nodeIdE);
-	if (componentS!=componentE){
-		SetUpdateIndex(componentS, componentE);
-		SetUpdateIndex(componentE, componentS);	
-	}
-}
-
-int CC::findNodeConnectedComponentID(uint32_t nodeId){
-	return ccindex[nodeId];
-}
-
-void  CC::rebuildIndexes(){
-	for (int i=0;updateIndex->Size();i++){
-		if ( i<updateIndex->Index(i) ){
-			for(int j=0;j<size;j++){		// theloume Allo algorithmo. Autos kanei n^2
-				if ( ccindex[j]==updateIndex->Index(i) ){
-					ccindex[j]= i;
-				}
-			}
-		}
-	}
-}
-
-bool CC::OverflowThreshhold(){
-	return (float)number_of_update_index_queries/number_of_queries > THRESHOLD;
-}
-
-
-void CC::SetUpdateIndex(uint32_t componentId, uint32_t component_attached){
-	updateIndex->SetUpdateIndex(componentId,component_attached);
-}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 UpdateIndex::UpdateIndex(uint32_t size):size(size){
 	index= new uint32_t[size];
+	//index_list = new List*[size]
+	for (int i = 0; i < size; ++i){
+		index[i] = -1;
+		//index_list = new List();
+	}
 }
 
 UpdateIndex::~UpdateIndex(){
+	for (int i = 0; i < size; ++i)
+	{
+		//delete index_list[i];
+	}
+	//delete[] index_list;
 	delete[] index;
 }
 
-bool UpdateIndex::isConnected(uint32_t from, uint32_t to){
-	//////// code here
-
+int UpdateIndex::component_belongs_to_component(int component){
+	return (index[component]==-1)? component : index[component] ;
 }
 
-void UpdateIndex::SetUpdateIndex(uint32_t componentId, uint32_t component_attached){
-	index[componentId]= component_attached;
-}
+void UpdateIndex::MergeComponent(int componentS,int componentE){
+	int tcomponentS = component_belongs_to_component(componentS);
+	int tcomponentE = component_belongs_to_component(componentE);
 
-uint32_t UpdateIndex::Size(){
-	return size;
-}
+	// Same Component
+	if (tcomponentS==tcomponentE)
+		return;
 
-uint32_t UpdateIndex::Index(uint32_t pos){
-	return index[pos];
+	int max,min;		// mporoume na epilegoume ws min auto me tin mikroteri lista gia megaluteri apodosi
+	if (tcomponentS>tcomponentE){
+		max = tcomponentS;
+		min = tcomponentE;
+	}
+	else{
+		max = tcomponentE;
+		min = tcomponentS;
+	}
+
+	index[max] = min;
+	//index_list[min]->Push(max);
+	int cur_comp;
+	//while (!index_list[max]->Empty()){
+	//	cur_comp = index_list[max].Pop();
+	//	index_list[min]->Push(cur_comp);
+//		index[cur_comp] = min;
+//	}
+
 }

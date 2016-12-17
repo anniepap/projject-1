@@ -8,12 +8,14 @@ Component::Component() {
 	included_node_ids = NULL;
 }
 
-SCC::SCC(size_t capacity) : capacity(capacity) {
+SCC::SCC(size_t capacity, Graph& graph) : capacity(capacity) {
 	components_count = 0;
 	components = NULL;
 	id_belongs_to_component = new uint32_t[capacity];
 	
-	//CreateHyperGraph(Pair& pair);
+	Pair pair = graph.getOut();
+	estimateStronglyConnectedComponents(pair);
+	hyper_graph = CreateHyperGraph(pair);
 }
 
 uint32_t SCC::ComponentsCount(){
@@ -22,6 +24,10 @@ uint32_t SCC::ComponentsCount(){
 
 Component** SCC::getComponents() {
 	return components;
+}
+
+Graph* SCC::getHyperGraph(){
+	return hyper_graph;
 }
 
 void SCC::increaseComponents() {
@@ -40,12 +46,12 @@ void SCC::addNodeToComponent(uint32_t nodeId) {
 }
 
 Graph* SCC::CreateHyperGraph(Pair& pair){
-	Graph* graph = new graph;
+	Graph* graph = new Graph;
 	PairCursor pc(&pair);
 	uint32_t to;
 	for (uint32_t i = 0; i < capacity; ++i) {
 		pc.init(i);
-		while (pc.next(&to)
+		while (pc.next(&to))
 			graph->addEdge(i, to);
 	}
 	return graph;
@@ -75,6 +81,7 @@ void SCC::destroyStronglyConnectedComponents() {
 	free(components);
 	delete[] id_belongs_to_component;
 	components_count = 0;
+	delete hyper_graph;
 }
 
 

@@ -81,7 +81,7 @@ bool Pair::bfs(QueueSet& start, QueueSet& target) {
 	size_t size = start.size();
 	PairCursor pc(this);
 	for (size_t i = 0; i < size; ++i) {
-		pc.init(start.pop());
+		pc.init(start.pop());			// Edw skaei.
 		uint32_t id;
 		while (pc.next(&id)) {
 			if (start.visited(id) == false) {

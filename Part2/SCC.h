@@ -38,12 +38,13 @@ class SCC {
 	uint32_t components_count;
 	Component** components; 				 // Components index - a vector which stores the components information
 	uint32_t* id_belongs_to_component;   // inverted index	
+	Graph* hyper_graph;
 	void increaseComponents();
 	void addNodeToComponent(uint32_t nodeId);
 	Graph* CreateHyperGraph(Pair& pair);
 	void destroyStronglyConnectedComponents();
 public:
-	SCC(size_t capacity);
+	SCC(size_t capacity, Graph& graph);
 	~SCC();
 	
 	int findNodeStronglyConnectedComponentID(uint32_t nodeId);
@@ -51,6 +52,7 @@ public:
 
 	uint32_t ComponentsCount();
 	Component** getComponents();
+	Graph* getHyperGraph();
 	
 	void print();
 
