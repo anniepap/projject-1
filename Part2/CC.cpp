@@ -69,19 +69,19 @@ bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 
 UpdateIndex::UpdateIndex(uint32_t size):size(size){
 	index= new uint32_t[size];
-	//index_list = new List*[size]
+	index_list = new StackLinkedList*[size];
 	for (int i = 0; i < size; ++i){
 		index[i] = -1;
-		//index_list = new List();
+		index_list[i] = new StackLinkedList();					// Mporoume na min dimiourgoume gia ola. Na dimiourgoume mono otan xreiazetai
 	}
 }
 
 UpdateIndex::~UpdateIndex(){
 	for (int i = 0; i < size; ++i)
 	{
-		//delete index_list[i];
+		delete index_list[i];
 	}
-	//delete[] index_list;
+	delete[] index_list;
 	delete[] index;
 }
 
@@ -108,12 +108,12 @@ void UpdateIndex::MergeComponent(int componentS,int componentE){
 	}
 
 	index[max] = min;
-	//index_list[min]->Push(max);
+	index_list[min]->push(max);
 	int cur_comp;
-	//while (!index_list[max]->Empty()){
-	//	cur_comp = index_list[max].Pop();
-	//	index_list[min]->Push(cur_comp);
-//		index[cur_comp] = min;
-//	}
+	while (!index_list[max]->isEmpty()){
+		cur_comp = index_list[max]->pop();
+		index_list[min]->push(cur_comp);
+		index[cur_comp] = min;
+	}
 
 }

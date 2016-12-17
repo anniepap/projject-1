@@ -2,6 +2,7 @@
 #include "../Part1/defines.h"
 #include "../Part1/Graph.h"
 #include "GraphPostOrderCursor.h"
+#include "StackLinkedList.h"
 
 #define THRESHOLD 0.6
 
@@ -27,7 +28,7 @@ public:
 
 class UpdateIndex{
 	uint32_t* index;
-	//List** index_list;	// thelei lista
+	StackLinkedList** index_list;	
 	uint32_t size;
 public:	
 	UpdateIndex(uint32_t size);
