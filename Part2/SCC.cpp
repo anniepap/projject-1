@@ -13,9 +13,8 @@ SCC::SCC(size_t capacity, Graph& graph) : capacity(capacity) {
 	components = NULL;
 	id_belongs_to_component = new uint32_t[capacity];
 	
-	Pair pair = graph.getOut();
-	estimateStronglyConnectedComponents(pair);
-	hyper_graph = CreateHyperGraph(pair);
+	estimateStronglyConnectedComponents(graph.getOut());
+	hyper_graph = CreateHyperGraph(graph.getOut());
 }
 
 uint32_t SCC::ComponentsCount(){
