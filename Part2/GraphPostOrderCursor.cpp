@@ -7,7 +7,7 @@ GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): grap
 	visited= new HashSet(size);
 	random_nodes= new Collection(size);
 	uint32_t element = random_nodes->Pop();	
-	stack->Push( element );
+	stack->push( element );
 	visited->insert( element );
 }
 
@@ -18,10 +18,10 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 }
 
 uint32_t GraphPostOrderCursor::Next(){	
-	if (stack->IsEmpty() && !visited->IsFull() ){
+	if (stack->empty() && !visited->IsFull() ){
 		uint32_t cur_id;
 		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
-		stack->Push( cur_id );	
+		stack->push( cur_id );	
 		visited->insert( cur_id );		
 		return ENDOFCOMPONENT;
 	}
@@ -29,14 +29,14 @@ uint32_t GraphPostOrderCursor::Next(){
 	PairCursor out_cursor( *graph, true );
 	uint32_t curr_id,cur_edge;
 	PairCursor in_cursor( *graph, false );
-	while(!stack->IsEmpty())
+	while(!stack->empty())
 	{
 		curr_id=stack->Top();
 		out_cursor.init(curr_id);
 		bool flag=0;
  		while (out_cursor.next(&cur_edge)) {
 			if (!visited->find(cur_edge)){
-				stack->Push(cur_edge);
+				stack->push(cur_edge);
 				visited->insert(cur_edge);
 				flag=1;
 			}
@@ -45,17 +45,18 @@ uint32_t GraphPostOrderCursor::Next(){
 			in_cursor.init(curr_id);		
 	 		while (in_cursor.next(&cur_edge)) {
 				if (!visited->find(cur_edge)){
-					stack->Push(cur_edge);
+					stack->push(cur_edge);
 					visited->insert(cur_edge);
 					flag=1;
 				}
 	  		}
 	  	}
 		if (!flag){ 
-			stack->Pop();
+			stack->pop();
 			return curr_id;
 		}
 	}
+
 	return NONE;
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,11 +69,11 @@ Stack::~Stack(){
 	delete[] array;
 }
 
-void Stack::Push(uint32_t element){
+void Stack::push(uint32_t element){
 	array[size++]=element;
 }
 
-uint32_t Stack::Pop(){
+uint32_t Stack::pop(){
 	if (size==0){
 		return NONE;
 	}
@@ -93,7 +94,7 @@ bool Stack::find(uint32_t element){			// Na fugei. na ginetai visited otan ginet
 	return false;
 }
 */
-bool Stack::IsEmpty(){
+bool Stack::empty(){
 	return size==0;
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

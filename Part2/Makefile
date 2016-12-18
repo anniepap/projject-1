@@ -1,4 +1,4 @@
-OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o ../obj/GraphPostOrderCursor.o ../obj/StackLinkedList.o 
+OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o ../obj/GraphPostOrderCursor.o ../obj/HashStack.o ../obj/StackLinkedList.o 
 
 # parapanw prepei na fugei to StackLinkedList an telika den to xrisimopoihsoume
 
@@ -6,6 +6,9 @@ all: out
 
 out: $(OBJS)
 	g++ $(OBJS) -o out
+
+../obj/HashStack.o: HashStack.cpp HashStack.h
+	g++ -c HashStack.cpp -o ../obj/HashStack.o
 
 ../obj/GraphPostOrderCursor.o: GraphPostOrderCursor.cpp GraphPostOrderCursor.h
 	g++ -c GraphPostOrderCursor.cpp -o ../obj/GraphPostOrderCursor.o

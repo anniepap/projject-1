@@ -28,24 +28,8 @@ int main(int argc, char** argv) {
 	}
 	myReadFile.close();
 
-/* 		Na dokimastei
-	SCC scc(6);
-	scc.estimateStronglyConnectedComponents(graph.getOut());
-	ComponentCursor cursor;
-
-	cursor.iterateStronglyConnectedComponentID(&scc);
-		cout<<"GRIGORA"<<endl;
-	Component* comp = cursor.GetCurrentConnectedComponent();
-	cout << comp << endl;
-
-	while ( cursor.next_StronglyConnectedComponentID() )
-	{
-		comp = cursor.GetCurrentConnectedComponent();
-		cout << comp << endl;
-	}
-*/
-
 	// Read Type
+	/*		Thelei ftiaksimo
 	myReadFile.open(argv[2]);
 	if (!myReadFile.is_open())
 		cerr<<"File can not open"<<endl;
@@ -62,10 +46,11 @@ int main(int argc, char** argv) {
 		graphType[i] = gType[i];
 	}
 	graphType[size] = '\0';
+	*/
 
 	// Check Type
-	if (strcmp(graphType, "STATIC") == 0) {
-		cout<<"STATIC"<<endl;
+	if (0/*strcmp(graphType, "STATIC") == 0*/) {
+		//cout<<"STATIC"<<endl;
 		SCC components( graph.SizeOfNodes(), graph );
 		GrailIndex grail_index(&components);	
 
@@ -78,19 +63,16 @@ int main(int argc, char** argv) {
 				if ( answer == NO )
 					cout << -1 << endl;
 				else if ( answer == YES )
-					cout << graph.question(from, to) << endl;
-					//cout << 1/*components->estimateShortestPathStronglyConnectedComponents( graph, source_node, target_node) Prepei na ulopoihthei (tha mporouse na pernaei kai to Component gia grigori anazitisi)*/ << endl;  // An nai, anazitisi sto sto SCC pou anikoun ta 2 node
+					cout << components.estimateShortestPathStronglyConnectedComponents( graph, from, to) << endl;  
 				else 
-					cout << graph.question(from, to) << endl;	// Edw trwei segmentation 
+					cout << graph.question(from, to) << endl;	
 					//cout << 1 /*graph.question(from, to)*/ << endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
 			}
 		}
 		myReadFile.close();
 	}
 
-	else if (strcmp(graphType, "DYNAMIC") == 0) {
-		cout<<"DYNAMIC"<<endl;
-		return 0;
+	else if (1/*strcmp(graphType, "DYNAMIC") == 0*/) {
 		CC cc( graph.SizeOfNodes(), &graph );
 
 		myReadFile.open(argv[2]);
@@ -105,7 +87,9 @@ int main(int argc, char** argv) {
 				}
 				if (com == 'Q'){
 					if ( cc.isPossiblyReachable( from, to ) )
-						1==1;//Anazitisi  cout << graph.question(from, to) << endl;		
+						cout << graph.question(from, to) << endl;	// prepei na doume poia sunartisi kaleitai edw
+					else
+						cout<<-1<<endl;		
 				}
 			}
 		}
@@ -115,7 +99,7 @@ int main(int argc, char** argv) {
 	//graph.test();
 
 	delete[] gType;
-	delete[] graphType;
+	//delete[] graphType;
 
 	return 0;
 }

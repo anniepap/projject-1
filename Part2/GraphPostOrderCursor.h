@@ -3,6 +3,7 @@
 
 #include "../Part1/Graph.h"
 #include "../Part1/PairCursor.h"
+#include "HashStack.h"
 
 #define ENDOFCOMPONENT -2
 
@@ -29,11 +30,11 @@ class Stack {					// Elegxthike
 public: 
 	Stack(uint32_t size_of_stack);
 	~Stack();
-	void Push(uint32_t element);
-	uint32_t Pop();
+	void push(uint32_t element);
+	uint32_t pop();
 	uint32_t Top();
 	//bool find(uint32_t element);
-	bool IsEmpty();
+	bool empty();
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

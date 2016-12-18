@@ -16,9 +16,9 @@ class GrailIndex {
 	GrailIndexNode** IndexTables;
 	SCC* components;
 public:
-	GrailIndex(SCC* components ); 				// Elegxitke
+	GrailIndex(SCC* components ); 			
 	~GrailIndex(); 
-	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);		// Den elegxike	
+	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);		
 };
 
 class GrailIndexNode {

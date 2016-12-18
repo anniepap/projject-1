@@ -71,10 +71,17 @@ Graph* SCC::CreateHyperGraph(Pair& pair){
 	Graph* graph = new Graph;
 	PairCursor pc(&pair);
 	uint32_t to;
-	for (uint32_t i = 0; i < capacity; ++i) {
-		pc.init(i);
-		while (pc.next(&to))
-			graph->addEdge(i, to);
+	uint32_t comp_to;
+	for (uint32_t i = 0; i < components_count; i++) {
+		for (uint32_t j=0; components[i]->included_nodes_count ; j++){
+			pc.init(components[i]-> included_node_ids[j]);
+			while (pc.next(&to)){
+				if ((comp_to=findNodeStronglyConnectedComponentID(to))!=i ){
+					graph->addEdge(i, comp_to);
+				}
+			}
+		}
+
 	}
 	return graph;
 }
