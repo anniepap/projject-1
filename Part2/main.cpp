@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -12,8 +13,9 @@ int main(int argc, char** argv) {
 	Graph graph;
 	ifstream myReadFile;
 	char com;
-	char* gType = new char[10];
-	int size = 0;
+	//char* gType = new char[10];
+	string graphType;
+	//int size = 0;
 	uint32_t from;
 	uint32_t to;
 
@@ -34,23 +36,25 @@ int main(int argc, char** argv) {
 	if (!myReadFile.is_open())
 		cerr<<"File can not open"<<endl;
 
-	myReadFile.getline(gType, sizeof(gType)*10);
+	getline(myReadFile, graphType);
+	
+	//myReadFile.getline(gType, sizeof(gType)*10);
 
-	for (int i = 0; gType[i] != '\n'; ++i) {
-		size++;
-	}
+	//for (int i = 0; gType[i] != '\n'; ++i) {
+	//	size++;
+	//}
 
-	char* graphType = new char[size];
-
-	for (int i = 0; i < size; ++i) {
-		graphType[i] = gType[i];
-	}
-	graphType[size] = '\0';
+	//char* graphType = new char[size];
 	*/
 
+	//for (int i = 0; i < size; ++i) {
+	//	graphType[i] = gType[i];
+	//}
+	//graphType[size] = '\0';
+
 	// Check Type
-	if (0/*strcmp(graphType, "STATIC") == 0*/) {
-		//cout<<"STATIC"<<endl;
+	if (graphType == "STATIC") {
+		cout<<"STATIC"<<endl;
 		SCC components( graph.SizeOfNodes(), graph );
 		GrailIndex grail_index(&components);	
 
@@ -72,7 +76,9 @@ int main(int argc, char** argv) {
 		myReadFile.close();
 	}
 
-	else if (1/*strcmp(graphType, "DYNAMIC") == 0*/) {
+	else if (graphType == "DYNAMIC") {
+		cout<<"DYNAMIC"<<endl;
+		return 0;
 		CC cc( graph.SizeOfNodes(), &graph );
 
 		myReadFile.open(argv[2]);
@@ -98,7 +104,7 @@ int main(int argc, char** argv) {
 	
 	//graph.test();
 
-	delete[] gType;
+	//delete[] gType;
 	//delete[] graphType;
 
 	return 0;
