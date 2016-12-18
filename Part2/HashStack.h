@@ -15,7 +15,7 @@ public:
 
 	void push(uint32_t id);
 	uint32_t pop(void);
-	uint32_t Top();
+	uint32_t top_();
 	bool empty(void);
 	size_t size(void);
 };

@@ -45,7 +45,7 @@ uint32_t HashStack::pop() {
 	return id;
 }
 
-uint32_t HashStack::Top(){
+uint32_t HashStack::top_(){
 	size_t row = (top-1)/SIZE;
 	size_t col = (top-1)%SIZE;
 
