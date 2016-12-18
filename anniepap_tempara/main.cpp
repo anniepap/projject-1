@@ -39,11 +39,33 @@ int main(int argc, char** argv) {
 	}
 
 	if (strcmp(graphType, "STATIC") == 0) {
-		// static graph
+		SCC scc(11, graph);
+		uint32_t* ptr = scc->getInvertedIndex();
+		ptr[0] = 1;
+		ptr[1] = 1;
+		ptr[2] = 1;
+		ptr[3] = 2;
+		ptr[4] = 2;
+		ptr[5] = 2;
+		ptr[6] = 3;
+		ptr[7] = 3;
+		ptr[8] = 3;
+		ptr[9] = 3;
+		ptr[10] = 4;
 
+		cout << "not the same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 0, 10) << endl; 
+		cout << "not the same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 2, 3) << endl;
+		cout << "not the same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 10, 9) << endl;
+		cout << "not the same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 5, 7) << endl;
+		cout << "same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 6, 9) << endl;
+		cout << "same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 0, 2) << endl;
+		cout << "same SCC: " << estimateShortestPathStronglyConnectedComponents(graph.out, 3, 4) << endl;
+
+		delete scc;
 	}
+
 	else if (strcmp(graphType, "DYNAMIC")) {
-		/* code */
+		cout << "er!" << endl;
 	}
 	
 	//graph.test();

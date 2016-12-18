@@ -1,9 +1,12 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+class SCC;
+
 #include "NodeIndex.h"
 #include "QueueSet.h"
 #include "Buffer.h"
+#include "../Part2/SCC.h"
 
 class Pair {
 	friend class PairCursor;
@@ -13,6 +16,7 @@ public:
 	void insertNode(uint32_t id);
 	void addEdge(uint32_t from, uint32_t to);
 	bool bfs(QueueSet& start, QueueSet& target);
+	bool bfs(SCC* scc, uint32_t sccId, QueueSet& start, QueueSet& target);
 	size_t getCapacity();
 	size_t getCount(uint32_t id);
 	bool find(uint32_t to, uint32_t from);
@@ -27,6 +31,7 @@ class Graph {
 public:
 	void addEdge(uint32_t from, uint32_t to);
 	long question(uint32_t from, uint32_t to);
+	long question(SCC* scc, uint32_t sccId, uint32_t from, uint32_t to);
 
 	Pair& getOut();
 	Pair& getIn();

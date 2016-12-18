@@ -9,6 +9,7 @@
 
 class NodeIndex;
 class SCC;
+class PairCursor;
 
 struct Component {
 	uint32_t included_nodes_count; // number of nodes in component
@@ -36,9 +37,10 @@ struct TarNode {
 class SCC {
 	size_t capacity;
 	uint32_t components_count;
-	Component** components; 				 // Components index - a vector which stores the components information
-	uint32_t* id_belongs_to_component;   // inverted index	
+	Component** components; 				// Components index - a vector which stores the components information
+	uint32_t* id_belongs_to_component;   	// inverted index	
 	Graph* hyper_graph;
+
 	void increaseComponents();
 	void addNodeToComponent(uint32_t nodeId);
 	Graph* CreateHyperGraph(Pair& pair);
@@ -47,8 +49,8 @@ public:
 	SCC(size_t capacity, Graph& graph);
 	~SCC();
 	
-	int findNodeStronglyConnectedComponentID(uint32_t nodeId);
-	int estimateShortestPathStronglyConnectedComponents(NodeIndex* graph, uint32_t source_node, uint32_t target_node);
+	uint32_t findNodeStronglyConnectedComponentID(uint32_t nodeId);
+	long estimateShortestPathStronglyConnectedComponents(Graph& graph, uint32_t source_node, uint32_t target_node);
 
 	uint32_t ComponentsCount();
 	Component** getComponents();
@@ -57,6 +59,7 @@ public:
 	void print();
 
 	void estimateStronglyConnectedComponents(Pair& pair);
+	//uint32_t* getInvertedIndex();
 };
 
 #endif

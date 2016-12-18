@@ -49,6 +49,32 @@ long Graph::question(uint32_t from, uint32_t to) {
 	return -1;
 }
 
+long Graph::question(SCC* scc, uint32_t sccId, uint32_t from, uint32_t to) {
+	if (to == from) return 0;
+
+	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
+
+	QueueSet start(max);
+	QueueSet target(max);
+
+	long lvl = 1;
+
+	start.push(from);
+	target.push(to);
+
+	while (!start.empty() && !target.empty()) {
+		if (target.size() < start.size()) {
+			if (in.bfs(scc, sccId, target, start)) return lvl;
+		}
+		else {
+			if (out.bfs(scc, sccId, start, target)) return lvl;
+		}
+		lvl++;
+	}
+
+	return -1;
+}
+
 Pair& Graph::getOut() {
 	return out;
 }
@@ -85,6 +111,24 @@ bool Pair::bfs(QueueSet& start, QueueSet& target) {
 		uint32_t id;
 		while (pc.next(&id)) {
 			if (start.visited(id) == false) {
+				if (target.visited(id) == true) return true;
+				start.push(id);
+			}
+		}
+	}
+	return false;
+}
+
+bool Pair::bfs(SCC* scc, uint32_t sccId, QueueSet& start, QueueSet& target) {
+	size_t size = start.size();
+	PairCursor pc(this);
+	for (size_t i = 0; i < size; ++i) {
+		pc.init(start.pop());			
+		uint32_t id;
+		uint32_t sccNid;
+		while (pc.next(&id)) {
+			sccNid = scc->findNodeStronglyConnectedComponentID(id);
+			if (start.visited(id) == false && sccNid == sccId) {
 				if (target.visited(id) == true) return true;
 				start.push(id);
 			}
