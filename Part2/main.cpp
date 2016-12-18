@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 	
 	Graph graph;
 	ifstream myReadFile;
-	string graphType;
+	char* graphType = new char[10];
 	char com;
 	uint32_t from;
 	uint32_t to;
@@ -32,13 +32,10 @@ int main(int argc, char** argv) {
 	myReadFile.open(argv[2]);
 	if (!myReadFile.is_open())
 		cerr<<"File can not open"<<endl;
-
-	getline(myReadFile, graphType);
-	
-	cout<<"|"<<graphType<<"|"<<endl;
+	myReadFile>>graphType;
 
 	// Check Type
-	if (graphType == "STATIC") {
+	if (strcmp(graphType,"STATIC")==0) {
 		SCC components( graph.SizeOfNodes(), graph );
 		GrailIndex grail_index(&components);	
 
@@ -60,31 +57,28 @@ int main(int argc, char** argv) {
 		myReadFile.close();
 	}
 
-	else if (graphType == "DYNAMIC") {
+	else if (strcmp(graphType,"DYNAMIC")==0) {
 		CC cc( graph.SizeOfNodes(), &graph );
 
-		myReadFile.open(argv[2]);
-		if (myReadFile.is_open()) {
-			while(!myReadFile.eof()) {
-				myReadFile >> com;
-				cout<<com<<endl;
-				return 0;
-				if (com != 'F')
-					myReadFile >> from >> to;
-				if (com == 'A'){
-					graph.addEdge( from, to );
-					cc.insertNewEdge( from, to ); 
-				}
-				if (com == 'Q'){
-					if ( cc.isPossiblyReachable( from, to ) )
-						cout << graph.question(from, to) << endl;	// prepei na doume poia sunartisi kaleitai edw
-					else
-						cout<<-1<<endl;		
-				}
+		while(!myReadFile.eof()) {
+			myReadFile>>com;
+			if (com != 'F')
+				myReadFile >> from >> to;
+			if (com == 'A'){
+				graph.addEdge( from, to );
+				cc.insertNewEdge( from, to ); 
+			}
+			if (com == 'Q'){
+				if ( cc.isPossiblyReachable( from, to ) )
+					cout << graph.question(from, to) << endl;	// prepei na doume poia sunartisi kaleitai edw
+				else
+					cout<<-1<<endl;		
 			}
 		}
 		myReadFile.close();
 	}
 
+	delete[] graphType;
+	
 	return 0;
 }
