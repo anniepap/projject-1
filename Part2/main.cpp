@@ -54,7 +54,6 @@ int main(int argc, char** argv) {
 					//cout << 1 /*graph.question(from, to)*/ << endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
 			}
 		}
-		myReadFile.close();
 	}
 
 	else if (strcmp(graphType,"DYNAMIC")==0) {
@@ -75,8 +74,9 @@ int main(int argc, char** argv) {
 					cout<<-1<<endl;		
 			}
 		}
-		myReadFile.close();
 	}
+	myReadFile.close();
+
 
 	delete[] graphType;
 	
