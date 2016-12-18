@@ -73,15 +73,14 @@ Graph* SCC::CreateHyperGraph(Pair& pair){
 	uint32_t to;
 	uint32_t comp_to;
 	for (uint32_t i = 0; i < components_count; i++) {
-		for (uint32_t j=0; components[i]->included_nodes_count ; j++){
-			pc.init(components[i]-> included_node_ids[j]);
+		for (uint32_t j=0; j < components[i]->included_nodes_count; j++){
+			pc.init(components[i]->included_node_ids[j]);
 			while (pc.next(&to)){
-				if ((comp_to=findNodeStronglyConnectedComponentID(to))!=i ){
+				if ((comp_to=findNodeStronglyConnectedComponentID(to)) != i){
 					graph->addEdge(i, comp_to);
 				}
 			}
 		}
-
 	}
 	return graph;
 }
@@ -130,7 +129,7 @@ long SCC::estimateShortestPathStronglyConnectedComponents(Graph& graph, uint32_t
 }
 
 void SCC::estimateStronglyConnectedComponents(Pair& pair) {
-/*	uint32_t index = 1;
+	uint32_t index = 1;
 
 	TarNode* table = new TarNode[capacity];
 	for (size_t i = 0; i < capacity; ++i) {
@@ -151,7 +150,7 @@ void SCC::estimateStronglyConnectedComponents(Pair& pair) {
 			index++;
 			u.pc = new PairCursor(&pair);
 			u.pc->init(id);
-			tarjanStack.Push(id);
+			tarjanStack.push(id);
 			u.caller = NULL;
 			u.onStack = true;
 			TarNode* last = &u;
@@ -165,7 +164,7 @@ void SCC::estimateStronglyConnectedComponents(Pair& pair) {
 						index++;
 						w.pc = new PairCursor(&pair);
 						w.pc->init(wid);
-						tarjanStack.Push(wid);
+						tarjanStack.push(wid);
 						w.caller = last;
 						w.onStack = true;
 						last = &w;
@@ -182,7 +181,7 @@ void SCC::estimateStronglyConnectedComponents(Pair& pair) {
 
 						increaseComponents();
 						do {
-							tid = tarjanStack.Pop();
+							tid = tarjanStack.pop();
 							top = &table[tid];
 							top->onStack = false;
 							addNodeToComponent(tid);
@@ -204,5 +203,4 @@ void SCC::estimateStronglyConnectedComponents(Pair& pair) {
 		delete table[i].pc;
 	}
 	delete[] table;
-*/
 }

@@ -78,6 +78,7 @@ long Graph::question(SCC* scc, uint32_t sccId, uint32_t from, uint32_t to) {
 Pair& Graph::getOut() {
 	return out;
 }
+
 Pair& Graph::getIn() {
 	return in;
 }

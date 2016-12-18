@@ -2,7 +2,10 @@ OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/
 
 # parapanw prepei na fugei to StackLinkedList an telika den to xrisimopoihsoume
 
-all: out
+all: mkdir out
+
+mkdir:
+	mkdir -p ../obj
 
 out: $(OBJS)
 	g++ $(OBJS) -o out
@@ -50,4 +53,4 @@ out: $(OBJS)
 	g++ -c SCC.cpp -o ../obj/SCC.o
 
 clean:
-	rm -rf ./Unit/*/CMakeFiles ./Unit/*/cmake_install.cmake ./Unit/*/runTests ./Unit/*/CMakeCache.txt ./Unit/*/Makefile out *.o
+	rm -rf ./Unit/*/CMakeFiles ./Unit/*/cmake_install.cmake ./Unit/*/runTests ./Unit/*/CMakeCache.txt ./Unit/*/Makefile out ../obj/*.o

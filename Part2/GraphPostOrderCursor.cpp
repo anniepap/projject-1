@@ -1,5 +1,6 @@
 
 #include "GraphPostOrderCursor.h"
+#include <ctime>
 
 GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): graph(graph), undirected(undirected) {
 	uint32_t size= graph->SizeOfNodes();
@@ -17,7 +18,7 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 	delete random_nodes;
 }
 
-uint32_t GraphPostOrderCursor::Next(){	
+short GraphPostOrderCursor::next(uint32_t* id) {	
 	if (stack->empty() && !visited->IsFull() ){
 		uint32_t cur_id;
 		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
@@ -53,11 +54,12 @@ uint32_t GraphPostOrderCursor::Next(){
 	  	}
 		if (!flag){ 
 			stack->pop();
-			return curr_id;
+			*id = curr_id;
+			return OK_SUCCESS;
 		}
 	}
 
-	return NONE;
+	return ENDOFCURSOR;
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

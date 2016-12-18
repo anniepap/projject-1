@@ -5,7 +5,9 @@
 #include "../Part1/PairCursor.h"
 #include "HashStack.h"
 
-#define ENDOFCOMPONENT -2
+#define OK_SUCCESS 0
+#define ENDOFCURSOR 1
+#define ENDOFCOMPONENT 2
 
 class Stack;
 class Collection;
@@ -19,7 +21,7 @@ class GraphPostOrderCursor {		// Elegxthike
 public: 
 	GraphPostOrderCursor(Graph* graph, bool undirected=false); 
 	~GraphPostOrderCursor();
-	uint32_t Next();
+	short next(uint32_t* id);
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

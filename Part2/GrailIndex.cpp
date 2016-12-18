@@ -1,5 +1,4 @@
 #include "GrailIndex.h"
-#include <ctime>
 
 //buildGrailIndex
 GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph()->SizeOfNodes() ), components(components) {  // To hyper_graph prepei na einai upergrafos
@@ -19,8 +18,9 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 		GraphPostOrderCursor* post_order_cursor= new GraphPostOrderCursor(hyper_graph);
 		int rank=1;
 		unsigned int min_rank;
-		while( (curr_id=post_order_cursor->Next())!=NONE ) {
-			if (curr_id==ENDOFCOMPONENT)
+		short res;
+		while ((res = post_order_cursor->next(&curr_id)) != ENDOFCURSOR) {
+			if (res==ENDOFCOMPONENT)
 				continue;
 						
 			uint32_t min_rank = -1;

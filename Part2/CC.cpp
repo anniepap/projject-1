@@ -8,8 +8,9 @@ CC::CC(const uint32_t size, Graph* graph):size(size),number_of_update_index_quer
 	uint32_t components_counter=0;		
 	uint32_t curr_id;
 
-	while((curr_id=DfsIterator->Next())!=NONE){
-		if (curr_id==ENDOFCOMPONENT){
+	short res;
+	while ((res = DfsIterator->next(&curr_id)) != ENDOFCURSOR){
+		if (res==ENDOFCOMPONENT){
 			components_counter++;
 			continue;
 		}

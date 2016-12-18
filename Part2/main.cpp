@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 	
 	Graph graph;
 	ifstream myReadFile;
-	char* graphType = new char[10];
+	char graphType[10];
 	char com;
 	uint32_t from;
 	uint32_t to;
@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
 	// Check Type
 	if (strcmp(graphType,"STATIC")==0) {
-		SCC components( graph.SizeOfNodes(), graph );
+		SCC components(graph.SizeOfNodes(), graph);
 		GrailIndex grail_index(&components);	
 
 		while(!myReadFile.eof()) {
@@ -55,30 +55,27 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
-
 	else if (strcmp(graphType,"DYNAMIC")==0) {
-		CC cc( graph.SizeOfNodes(), &graph );
+		CC cc(graph.SizeOfNodes(), &graph);
 
 		while(!myReadFile.eof()) {
 			myReadFile>>com;
 			if (com != 'F')
 				myReadFile >> from >> to;
 			if (com == 'A'){
-				graph.addEdge( from, to );
-				cc.insertNewEdge( from, to ); 
+				graph.addEdge(from, to);
+				cc.insertNewEdge(from, to); 
 			}
 			if (com == 'Q'){
-				if ( cc.isPossiblyReachable( from, to ) )
+				if (cc.isPossiblyReachable(from, to))
 					cout << graph.question(from, to) << endl;	// prepei na doume poia sunartisi kaleitai edw
 				else
 					cout<<-1<<endl;		
 			}
 		}
 	}
+
 	myReadFile.close();
-
-
-	delete[] graphType;
 	
 	return 0;
 }
