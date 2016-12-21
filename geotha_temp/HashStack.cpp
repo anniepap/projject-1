@@ -1,15 +1,16 @@
 #include <cmath>
 #include "HashStack.h"
+using namespace std;
 
-HashStack::HashStack(size_t capacity) {
+HashStack::HashStack(uint32_t capacity) {
 	size_ = 0;
 	top = 0;
-	rows = (size_t) ceil((double) capacity/SIZE);
+	rows = (uint32_t) ceil((double) capacity/SIZE);
 	hash = (uint32_t**) calloc(rows, sizeof(uint32_t*));
 }
 
 HashStack::~HashStack() {
-	for (size_t i = 0; i < rows; ++i) {
+	for (uint32_t i = 0; i < rows; ++i) {
 		if (hash[i] != NULL)
 			free(hash[i]);
 	}
@@ -17,8 +18,9 @@ HashStack::~HashStack() {
 }
 
 void HashStack::push(uint32_t id) {
-	size_t row = top/SIZE;
-	size_t col = top%SIZE;
+	uint32_t row = top/SIZE;
+	uint32_t col = top%SIZE;
+
 
 	if (hash[row] == NULL) {
 		hash[row] = (uint32_t*) malloc(sizeof(uint32_t)*SIZE);
@@ -31,9 +33,10 @@ void HashStack::push(uint32_t id) {
 
 uint32_t HashStack::pop() {
 	top -= 1;
-	size_t row = top/SIZE;
-	size_t col = top%SIZE;
+	uint32_t row = top/SIZE;
+	uint32_t col = top%SIZE;
 	uint32_t id = hash[row][col];
+
 
 	if (col == 0) {
 		free(hash[row]);
@@ -46,8 +49,10 @@ uint32_t HashStack::pop() {
 }
 
 uint32_t HashStack::top_(){
-	size_t row = (top-1)/SIZE;
-	size_t col = (top-1)%SIZE;
+	uint32_t row = (top-1)/SIZE;
+	uint32_t col = (top-1)%SIZE;
+
+
 
 	return hash[row][col];
 }
@@ -56,6 +61,6 @@ bool HashStack::empty() {
 	return size_ == 0;
 }
 
-size_t HashStack::size() {
+uint32_t HashStack::size() {
 	return size_;
 }

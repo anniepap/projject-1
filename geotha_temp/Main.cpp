@@ -1,14 +1,15 @@
 #include <iostream>
-#include "GrailIndex.h"
-#include "../Graph.h"
+#include "../Part1/Graph.h"
 #include <fstream>
+#include "GraphPostOrderCursor.h"
+
 
 using namespace std;
 
 main(int argc, char** argv){
 
 
-	if (argc != 2) return -1;
+	if (argc != 3) return -1;
 
 	Graph graph;
 	ifstream myReadFile;
@@ -28,12 +29,28 @@ main(int argc, char** argv){
 	myReadFile.close();
 
 
+HashStack h(2000);
+for (int i=0;i<2000;i++)
+{
+	h.push(i);
+}
+for (int i=0;i<2000;i++)
+{
+	cout<<h.top_()<<" ";
+	cout<<h.pop()<<endl;
+}
 
-	GrailIndex* temp= new GrailIndex(&graph);
 
-	cout<< temp->isReachableGrailIndex(5,6) << endl;
 
-	delete temp;
+GraphPostOrderCursor temp(&graph,true);
+	int flag;
+	uint32_t cur;
+	while ((flag=temp.next(&cur))!=ENDOFCURSOR){
+		if (flag==ENDOFCOMPONENT){
+			//cout<<endl;
+			continue;
+		}
+		//cout<<cur<<endl;
+	}
 
-	
 }

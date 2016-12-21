@@ -2,12 +2,21 @@
 #include "GraphPostOrderCursor.h"
 #include <ctime>
 
+using namespace std;
+
 GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): graph(graph), undirected(undirected) {
 	uint32_t size= graph->SizeOfNodes();
+	if (size<1) {
+		//cout<<"Line 10"<<endl;
+		return;
+	}
 	stack= new HashStack(size);
 	visited= new HashSet(size);
 	random_nodes= new Collection(size);
 	uint32_t element = random_nodes->Pop();	
+	if (element==NONE){
+		//cout<<"Line 18"<<endl;
+	}
 	stack->push( element );
 	visited->insert( element );
 }
@@ -21,7 +30,18 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 short GraphPostOrderCursor::next(uint32_t* id) {	
 	if (stack->empty() && !visited->IsFull() ){
 		uint32_t cur_id;
-		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
+
+		cur_id=random_nodes->Pop();
+		if (cur_id==NONE){
+			//cout<<"Line 35"<<endl;
+		}
+
+		while (	visited->find(cur_id) ){
+			cur_id=random_nodes->Pop();
+			if (cur_id==NONE){
+				//cout<<"Line 42"<<endl;
+			}
+		 }	
 		stack->push( cur_id );	
 		visited->insert( cur_id );		
 		return ENDOFCOMPONENT;
@@ -32,7 +52,9 @@ short GraphPostOrderCursor::next(uint32_t* id) {
 	PairCursor in_cursor( *graph, false );
 	while(!stack->empty())
 	{
+		///cout<<"GIA "<<stack->size_<<endl;
 		curr_id=stack->top_();
+		//cout<<"DW "<<endl;
 		out_cursor.init(curr_id);
 		bool flag=0;
  		while (out_cursor.next(&cur_edge)) {
@@ -104,7 +126,7 @@ bool Stack::empty(){
 Collection::Collection(const uint32_t size): size_of_collection(size), cur_pos(0){
 	array= new uint32_t[size];
 
-	srand(time(NULL));
+	//srand(time(NULL));
 	uint32_t up_index=0, down_index=size-1, first_num=0, last_num=size-1, index,curr_id;
 	for (int i=0; i<size; i++){
 		index= (rand()%2==0)? up_index++: down_index--;
@@ -120,3 +142,19 @@ Collection::~Collection(){
 uint32_t Collection::Pop(){
 	return (cur_pos>size_of_collection-1)? NONE : array[cur_pos++];
 }
+
+
+	Dokimi::Dokimi(const uint32_t size){
+		array= new uint32_t[size];
+
+		
+		for (int i=0; i<size; i++){
+			array[i]=i;
+		}
+	}
+	Dokimi::~Dokimi(){
+		delete[] array;
+	}
+	uint32_t Dokimi::Pop(){
+
+	}	

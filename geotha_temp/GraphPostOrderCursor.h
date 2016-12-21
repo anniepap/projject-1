@@ -50,4 +50,16 @@ public:
 	uint32_t Pop();	
 };
 
+class Dokimi {					// Elegxthike
+	uint32_t size_of_collection;
+	uint32_t* array;
+	uint32_t cur_pos;
+public:
+	Dokimi(const uint32_t size);
+	~Dokimi();
+	uint32_t Pop();	
+};
+
+
+
 #endif
