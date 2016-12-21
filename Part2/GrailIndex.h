@@ -6,7 +6,7 @@
 #include "SCC.h"
 #include "GraphPostOrderCursor.h"
 
-#define NUMBEROFLABELS 1
+#define NUMBEROFLABELS 2
 enum GRAIL_ANSWER  {NO=0, MAYBE=1, YES=2};		
 
 class GrailIndexNode;
@@ -25,7 +25,9 @@ class GrailIndexNode {
 	int min_rank;
 	int rank;
 public:
+	GrailIndexNode();
 	void set(int min_rank, int rank);
+	bool isSeted();
 	bool isSubSet(GrailIndexNode& Y);
 	int MinRank();
 };
