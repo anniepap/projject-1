@@ -13,9 +13,9 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 	PairCursor graph_cursor( &hyper_graph-> getOut() );
 	uint32_t curr_id,cur_edge;
 
-	GraphPostOrderCursor* post_order_cursor= new GraphPostOrderCursor(hyper_graph);
-
+	GraphPostOrderCursor* post_order_cursor;
 	for (int j=0; j<NUMBEROFLABELS;j++){
+		post_order_cursor= new GraphPostOrderCursor(hyper_graph);
 		//Post Order
 		int rank=1;
 		unsigned int min_rank;
@@ -39,8 +39,8 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 			IndexTables[curr_id][j].set(min_rank, rank);
 			rank++;
 		}
+		delete post_order_cursor;
 	}
-	delete post_order_cursor;
 }
 
 //destroyGrailIndex
