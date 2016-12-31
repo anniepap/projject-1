@@ -7,14 +7,17 @@
 class Job
 {
 	uint32_t id;
-	void* (*func)(void*);
+	int (*func)(void*);
 	void* arg;
 public:
-	Job(int id, void* (*func)(void*),void* arg);
-	void execute();
+	Job(int id, int (*func)(void*) ,void* arg);
+
+	int execute();
 
 	void Id(uint32_t id);
 	void Arg(void* arg);
+
+	uint32_t Id();
 };
 
 #endif

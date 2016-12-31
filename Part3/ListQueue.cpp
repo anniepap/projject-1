@@ -1,9 +1,9 @@
 #include "ListQueue.h"
 
-ListQueue::Node::Node(uint32_t id) : id(id), next(NULL) {
+ListQueue::Node::Node(Job* job) : job(*job), next(NULL) {
 }
 
-ListQueue::ListQueue(void) : head(NULL), back(NULL) {
+ListQueue::ListQueue(void) : size_(0), head(NULL), back(NULL) {
 }
 
 ListQueue::~ListQueue() {
@@ -12,20 +12,28 @@ ListQueue::~ListQueue() {
 	}
 }
 
-void ListQueue::push(uint32_t id) {
+void ListQueue::push(Job* job) {
 	size_++;
-	Node* node = new Node(id);
+	Node* node = new Node(job);
 	if (!head) head = back = node;
 	else back = back->next = node;
 }
 
-uint32_t ListQueue::pop() {
+Job ListQueue::pop() {
 	size_--;
 	Node* node = head;
 	head = head->next;
 	if (!head) back = NULL;
-	uint32_t id = node->id;
+	Job job = node->job;
 	delete node;
-	return id;
+	return job;
 }
 
+
+bool ListQueue::empty() {
+	return size_ == 0;
+}
+
+size_t ListQueue::size() {
+	return size_;
+}

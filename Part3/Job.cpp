@@ -1,11 +1,11 @@
 
 #include "Job.h"
 
-Job::Job(int id, void* (*func)(void*), void* arg ): id(id), func(func), arg(arg) {}
+Job::Job(int id, int (*func)(void*), void* arg ): id(id), func(func), arg(arg) {}
 
-void Job::execute()
+int Job::execute()
 {
-	(*func)(arg);
+	return (*func)(arg);
 }
 
 void Job::Id(uint32_t id)
@@ -16,6 +16,11 @@ void Job::Id(uint32_t id)
 void Job::Arg(void* arg)
 {
 	this->arg=arg;
+}
+
+uint32_t Job::Id()
+{
+	return id;
 }
 
 // Auto tha mpei stin main

@@ -1,4 +1,4 @@
-OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o ../obj/GraphPostOrderCursor.o ../obj/HashStack.o ../obj/StackLinkedList.o ../obj/Job.o ../obj/JobScheduler.o
+OBJS = ../obj/HashQueue.o ../obj/Buffer.o ../obj/HashSet.o ../obj/main.o ../obj/QueueSet.o ../obj/Graph.o ../obj/NodeIndex.o ../obj/SCC.o ../obj/PairCursor.o ../obj/GrailIndex.o ../obj/CC.o ../obj/GraphPostOrderCursor.o ../obj/HashStack.o ../obj/StackLinkedList.o ../obj/Job.o ../obj/JobScheduler.o ../obj/ListQueue.o
 
 # parapanw prepei na fugei to StackLinkedList an telika den to xrisimopoihsoume
 
@@ -15,6 +15,9 @@ out: $(OBJS)
 
 ../obj/JobScheduler.o: JobScheduler.cpp JobScheduler.h
 	g++ -c JobScheduler.cpp -o ../obj/JobScheduler.o	
+
+../obj/ListQueue.o: ListQueue.cpp ListQueue.h
+	g++ -c ListQueue.cpp -o ../obj/ListQueue.o
 
 ../obj/HashStack.o: ../Part2/HashStack.cpp ../Part2/HashStack.h
 	g++ -c ../Part2/HashStack.cpp -o ../obj/HashStack.o

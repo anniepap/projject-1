@@ -1,14 +1,18 @@
 #ifndef __LIST_QUEUE_H__
 #define __LIST_QUEUE_H__
 
-#include "Queue.h"
+#include "Job.h"
+//#include "../Part1/Queue.h"
 
-class ListQueue : public Queue {
+// Prepei na doume an kanoume pio genikes tis domes h' den tha klironomei apo Queue
+
+class ListQueue /*: public Queue prosorino*/ {
+	size_t size_;		
 
 	struct Node {
-		uint32_t id;
+		Job job;
 		Node* next;
-		Node(uint32_t id);
+		Node(Job* job);
 	};
 
 	Node* head;
@@ -17,8 +21,11 @@ public:
 	ListQueue(void);
 	~ListQueue();
 
-	uint32_t pop(void);
-	void push(uint32_t id);
+	Job pop(void);
+	void push(Job* job);
+
+	bool empty();
+	size_t size();
 };
 
 #endif

@@ -10,26 +10,31 @@
 #include "Job.h"
 #include "JobScheduler.h"
 
+#define ARGARRAYCAPACITY 1024
+
 using namespace std;
 
 struct question_arguments
 {
-	Graph graph;
+	Graph* graph;
 	uint32_t from;
 	uint32_t to;
 	uint32_t version;
+
+	int question()
+	{
+		return graph->question(from, to/*, version*/);	// Prepei na ftiaksoume tis klaseis STATIC kai DYNAMIC graph me moni sunartisi tin question pou tha perilamvanei ta grail ktlp
+	}
 };
 
-void* encode_question(void* question_arg)
+int encode_question(void* question_arg)
 {
-	struct question_arguments* arguments = (struct question_arguments*) question_arg;
-	//arguments->graph.question(arguments->from, arguments->to, arguments->version);	// Prepei na ftiaksoume tis klaseis STATIC kai DYNAMIC graph me moni sunartisi tin question pou tha perilamvanei ta grail ktlp
-	return NULL;
+	return ((struct question_arguments*) question_arg)->question();	
 }
 
 int main(int argc, char** argv) {
 	if (argc != 3) return -1;
-	
+
 	Graph graph;
 	ifstream myReadFile;
 	char graphType[10];
@@ -54,9 +59,11 @@ int main(int argc, char** argv) {
 		cerr<<"File can not open"<<endl;
 	myReadFile>>graphType;
 
-	//JobScheduler job_scheduler(SIZEOFTHREADPOOL);
-	//struct question_arguments arg;
-	//Job cur_job(0,&question_arguments,NULL);
+	JobScheduler job_scheduler(SIZEOFTHREADPOOL);
+	uint32_t capacity = ARGARRAYCAPACITY;
+	struct question_arguments** arg_array = new struct question_arguments*[capacity];
+	uint32_t last_arg_array = 0;
+	Job cur_job(0, encode_question ,NULL);
 	uint32_t cur_id=0;
 
 	// Check Type
@@ -71,24 +78,36 @@ int main(int argc, char** argv) {
 			if (com == 'Q'){
 
 				// Add a job to scheduler  -----
-				/*arg.graph=graph;
-				arg.from=from;
-				arg.to=to;
-				arg.version=0;
+				if(last_arg_array>=capacity){
+					capacity = 2*capacity;
+					arg_array = (struct question_arguments**) realloc( arg_array, capacity*sizeof(struct question_arguments*));
+				}
+
+				arg_array[last_arg_array] = new struct question_arguments;
+				arg_array[last_arg_array]->graph=&graph;
+				arg_array[last_arg_array]->from=from;
+				arg_array[last_arg_array]->to=to;
+				arg_array[last_arg_array]->version=0;
 
 				cur_job.Id(cur_id);
-				cur_job.Arg(arg);
-				job_scheduler.submit_job(cur_job);*/
+				cur_job.Arg((void*) arg_array[last_arg_array] );
+				job_scheduler.submit_job(&cur_job);
 				//  ----------
-				//cur_id++;
+				cur_id++;
+				last_arg_array++;
 			}
 			if (com=='F')
 			{
-				return 0;
-				//job_scheduler.execute_all_jobs();
-				//job_scheduler.wait_all_tasks_finish();
-				//job_scheduler.print();
+				job_scheduler.execute_all_jobs();
+				job_scheduler.wait_all_tasks_finish();
+				job_scheduler.print_all_return_values();
 				//job_scheduler.initialize(); mporei na min xreiastei
+
+				for (int i=0; i<last_arg_array; i++)
+				{
+					delete arg_array[i];
+				}
+				last_arg_array = 0;
 				cur_id = 0;
 			}
 		}
@@ -135,8 +154,9 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
-
 	myReadFile.close();
+
+	delete[] arg_array;
 
 	return 0;
 }
