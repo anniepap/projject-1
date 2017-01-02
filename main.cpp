@@ -1,6 +1,8 @@
-#include "GrailIndex.h"
-#include "CC.h"
-#include "SCC.h"
+/* PART 2 MAIN */
+
+#include "Part2/GrailIndex.h"
+#include "Part2/CC.h"
+#include "Part2/SCC.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>

@@ -3,7 +3,7 @@
 ListQueue::Node::Node(Job* job) : job(*job), next(NULL) {
 }
 
-ListQueue::ListQueue(void) : size_(0), head(NULL), back(NULL) {
+ListQueue::ListQueue(void) : head(NULL), back(NULL) {
 }
 
 ListQueue::~ListQueue() {
@@ -27,13 +27,4 @@ Job ListQueue::pop() {
 	Job job = node->job;
 	delete node;
 	return job;
-}
-
-
-bool ListQueue::empty() {
-	return size_ == 0;
-}
-
-size_t ListQueue::size() {
-	return size_;
 }

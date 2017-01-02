@@ -1,16 +1,7 @@
 #include <cmath>
 #include "HashQueue.h"
 
-bool HashQueue::empty() {
-	return size_ == 0;
-}
-
-size_t HashQueue::size() {
-	return size_;
-}
-
 HashQueue::HashQueue(size_t capacity) {
-	size_ = 0;
 	head = back = 0;
 	rows = (size_t) ceil((double) capacity/SIZE);
 	hash = (uint32_t**) calloc(rows, sizeof(uint32_t*));

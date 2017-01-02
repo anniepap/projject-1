@@ -11,4 +11,3 @@ bool Queue::empty() {
 size_t Queue::size() {
 	return size_;
 }
-

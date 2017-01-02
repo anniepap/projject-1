@@ -29,7 +29,7 @@ struct question_arguments
 
 int encode_question(void* question_arg)
 {
-	return ((struct question_arguments*) question_arg)->question();	
+	return ((question_arguments*) question_arg)->question();	
 }
 
 int main(int argc, char** argv) {
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
 
 	JobScheduler job_scheduler(SIZEOFTHREADPOOL);
 	uint32_t capacity = ARGARRAYCAPACITY;
-	struct question_arguments** arg_array = new struct question_arguments*[capacity];
+	question_arguments** arg_array = new question_arguments*[capacity];
 	uint32_t last_arg_array = 0;
 	Job cur_job(0, encode_question ,NULL);
 	uint32_t cur_id=0;
@@ -80,10 +80,10 @@ int main(int argc, char** argv) {
 				// Add a job to scheduler  -----
 				if(last_arg_array>=capacity){
 					capacity = 2*capacity;
-					arg_array = (struct question_arguments**) realloc( arg_array, capacity*sizeof(struct question_arguments*));
+					arg_array = (question_arguments**) realloc( arg_array, capacity*sizeof(question_arguments*));
 				}
 
-				arg_array[last_arg_array] = new struct question_arguments;
+				arg_array[last_arg_array] = new question_arguments;
 				arg_array[last_arg_array]->graph=&graph;
 				arg_array[last_arg_array]->from=from;
 				arg_array[last_arg_array]->to=to;
