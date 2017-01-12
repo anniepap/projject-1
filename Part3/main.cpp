@@ -39,6 +39,8 @@ int main(int argc, char** argv) {
 	ifstream myReadFile;
 	char graphType[10];
 	char com;
+	char prevcom = 'A';
+	uint32_t current_version = 0;
 	uint32_t from;
 	uint32_t to;
 
@@ -120,23 +122,21 @@ int main(int argc, char** argv) {
 			if (com != 'F')
 				myReadFile >> from >> to;
 			if (com == 'A'){
-				
 				// Kwdikas Annas ...
-				// ...
-				
+				if (prevcom == 'Q') {
+					current_version += 1;
+				}
+				// Telos kwdikas Annies
 				graph.addEdge(from, to);	// kainourgia add edge
 				cc.insertNewEdge(from, to); // kainourgia insertNewEdge
 			}
 			if (com == 'Q'){
 
-				// Kwdikas Annas ....
-				// ...
-
 				// Add a job to scheduler  -----
 				/*arg.graph=graph;
 				arg.from=from;
 				arg.to=to;
-				arg.version=//version pou prepei;
+				arg.version=current_version;//version pou prepei;
 
 				cur_job.Id(id);
 				cur_job.Arg(arg);
@@ -152,6 +152,7 @@ int main(int argc, char** argv) {
 				//job_scheduler.initialize(); mporei na min xreiastei
 				cur_id = 0;
 			}
+			prevcom = com;
 		}
 	}
 	myReadFile.close();
