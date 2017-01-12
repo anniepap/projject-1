@@ -63,7 +63,8 @@ int main(int argc, char** argv) {
 
 	JobScheduler job_scheduler(SIZEOFTHREADPOOL);
 	uint32_t capacity = ARGARRAYCAPACITY;
-	question_arguments** arg_array = new question_arguments*[capacity];
+	question_arguments** arg_array = malloc( capacity * sizeof(question_arguments) );
+
 	uint32_t last_arg_array = 0;
 	Job cur_job(0, encode_question ,NULL);
 	uint32_t cur_id=0;
@@ -157,7 +158,7 @@ int main(int argc, char** argv) {
 	}
 	myReadFile.close();
 
-	delete[] arg_array;
+	free(arg_array);
 
 	return 0;
 }
