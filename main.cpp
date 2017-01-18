@@ -12,12 +12,21 @@ using namespace std;
 int main(int argc, char** argv) {
 	if (argc != 3) return -1;
 	
-	Graph graph;
-	ifstream myReadFile;
+	Graph* graph;
+	ifstream myReadFile;	
 	char graphType[10];
 	char com;
 	uint32_t from;
 	uint32_t to;
+
+	// Read Type
+	myReadFile.open(argv[2]);
+	if (!myReadFile.is_open())
+		cerr<<"File can not open"<<endl;
+	myReadFile>>graphType;
+	myReadFile.close();
+
+	graph = (strcmp(graphType,"STATIC")==0)  new StaticGraph():new DynamicGraph();
 
 	myReadFile.open(argv[1]);
 	if (myReadFile.is_open()) {
@@ -25,17 +34,30 @@ int main(int argc, char** argv) {
 			myReadFile >> from >> to;
 			if (!myReadFile.good())
 				break;
-			graph.addEdge(from, to);
+			graph->Graph::addEdge(from, to);
 		}
 	}
 	myReadFile.close();
  	
+	graph->init();
+
 	// Read Type
 	myReadFile.open(argv[2]);
-	if (!myReadFile.is_open())
-		cerr<<"File can not open"<<endl;
-	myReadFile>>graphType;
 
+	while(!myReadFile.eof()) {
+		myReadFile>>com;
+		if (com != 'F')
+			myReadFile >> from >> to;
+		if (com == 'A'){
+			graph->addEdge(from, to);
+		}
+		if (com == 'Q'){
+			graph->question(from, to);
+		}
+	}
+
+
+/*
 	// Check Type
 	if (strcmp(graphType,"STATIC")==0) {
 		SCC components(graph.SizeOfNodes(), graph);
@@ -53,7 +75,7 @@ int main(int argc, char** argv) {
 					cout << components.estimateShortestPathStronglyConnectedComponents( graph, from, to) << endl;  
 				else 
 					cout << graph.question(from, to) << endl;	
-					//cout << 1 /*graph.question(from, to)*/ << endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
+					//cout << 1 /*graph.question(from, to)*/ /*<< endl;  // Psaksimo se olo to graph kai elegxos kathe fora eswterika sto grail
 			}
 		}
 	}
@@ -76,8 +98,12 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
+*/
+ 
+	delete graph; 
 
 	myReadFile.close();
 	
 	return 0;
 }
+
