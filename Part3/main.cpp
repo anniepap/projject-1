@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 
 	JobScheduler job_scheduler(SIZEOFTHREADPOOL);
 	uint32_t capacity = ARGARRAYCAPACITY;
-	question_arguments** arg_array = malloc( capacity * sizeof(question_arguments) );
+	question_arguments** arg_array = (question_arguments**) malloc( capacity * sizeof(question_arguments) );
 
 	uint32_t last_arg_array = 0;
 	Job cur_job(0, encode_question ,NULL);

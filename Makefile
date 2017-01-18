@@ -51,8 +51,8 @@ obj/Buffer.o: Part1/Buffer.cpp Part1/Buffer.h Part1/ListNode.h
 obj/HashSet.o: Part1/HashSet.cpp Part1/HashSet.h
 	g++ -o2 -w $(WFLAGS) -c Part1/HashSet.cpp -o obj/HashSet.o
 
-obj/main.o: obj/Graph.o main.cpp
-	g++ -o2 -w $(WFLAGS) -c main.cpp -o obj/main.o
+obj/main.o: obj/Graph.o ./Part3/main.cpp
+	g++ -o2 -w $(WFLAGS) -c ./Part3/main.cpp -o obj/main.o
 
 obj/QueueSet.o: obj/HashSet.o obj/HashQueue.o Part1/QueueSet.cpp Part1/QueueSet.h Part1/defines.h
 	g++ -o2 -w $(WFLAGS) -c Part1/QueueSet.cpp -o obj/QueueSet.o
