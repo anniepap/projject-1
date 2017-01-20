@@ -27,16 +27,17 @@ Component* ComponentCursor::GetCurrentConnectedComponent(){
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SCC::SCC(size_t capacity, Graph& graph) : capacity(capacity) {
+SCC::SCC(Graph* graph) {
+	capacity = graph->SizeOfNodes();
 	components_count = 0;
 	components = NULL;
-	id_belongs_to_component = new uint32_t[capacity];
+	id_belongs_to_component = (uint32_t*) malloc(sizeof(uint32_t)*capacity);
 	
-	estimateStronglyConnectedComponents(graph.getOut());
-	hyper_graph = CreateHyperGraph(graph.getOut());
+	estimateStronglyConnectedComponents(graph->getOut());
+	hyper_graph = CreateHyperGraph(graph->getOut());
 }
 
-uint32_t SCC::ComponentsCount(){
+uint32_t SCC::ComponentsCount() {
 	return components_count;
 }
 
@@ -107,7 +108,7 @@ void SCC::destroyStronglyConnectedComponents() {
 		delete components[i];
 	}
 	free(components);
-	delete[] id_belongs_to_component;
+	free(id_belongs_to_component);
 	components_count = 0;
 	delete hyper_graph;
 }
@@ -116,15 +117,15 @@ uint32_t SCC::findNodeStronglyConnectedComponentID(uint32_t nodeId) {
 	return id_belongs_to_component[nodeId];
 }
 
-long SCC::estimateShortestPathStronglyConnectedComponents(Graph& graph, uint32_t source_node, uint32_t target_node) {
+long SCC::estimateShortestPathStronglyConnectedComponents(uint32_t source_node, uint32_t target_node) {
 	uint32_t source_scc_id = findNodeStronglyConnectedComponentID(source_node);
 	uint32_t target_scc_id = findNodeStronglyConnectedComponentID(target_node);
 
 	if (source_scc_id != target_scc_id)
 		return -1;
-
 	else {
-		return graph.question(this, source_scc_id, source_node, target_node);	
+		return -1;
+//		return graph->question(this, source_scc_id, source_node, target_node);	
 	}
 }
 

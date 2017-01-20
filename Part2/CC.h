@@ -19,7 +19,7 @@ class CC{
 	bool OverflowThreshhold();
 	int findNodeConnectedComponentID(uint32_t nodeId);
 public:
-	CC(uint32_t size, Graph* graph);
+	CC(Graph* graph);
 	~CC();
 	void insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
 	bool isPossiblyReachable(uint32_t source_node,uint32_t target_node);

@@ -1,5 +1,5 @@
 PART1_OBJS = obj/Buffer.o obj/Graph.o obj/HashQueue.o obj/HashSet.o obj/NodeIndex.o obj/PairCursor.o obj/Queue.o obj/QueueSet.o
-PART2_OBJS = obj/CC.o obj/GrailIndex.o obj/GraphPostOrderCursor.o obj/HashStack.o obj/SCC.o obj/StackLinkedList.o
+PART2_OBJS = obj/CC.o obj/GrailIndex.o obj/GraphPostOrderCursor.o obj/HashStack.o obj/SCC.o obj/StackLinkedList.o obj/DynamicGraph.o obj/StaticGraph.o
 PART3_OBJS = obj/Job.o obj/JobScheduler.o obj/ListQueue.o
 MAIN_OBJ = obj/main.o
 WFLAGS = -Wall -Wextra -Wconversion
@@ -51,11 +51,17 @@ obj/Buffer.o: Part1/Buffer.cpp Part1/Buffer.h Part1/ListNode.h
 obj/HashSet.o: Part1/HashSet.cpp Part1/HashSet.h
 	g++ -o2 -w $(WFLAGS) -c Part1/HashSet.cpp -o obj/HashSet.o
 
-obj/main.o: obj/Graph.o ./Part3/main.cpp
+obj/main.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part3/main.cpp
 	g++ -o2 -w $(WFLAGS) -c ./Part3/main.cpp -o obj/main.o
 
 obj/QueueSet.o: obj/HashSet.o obj/HashQueue.o Part1/QueueSet.cpp Part1/QueueSet.h Part1/defines.h
 	g++ -o2 -w $(WFLAGS) -c Part1/QueueSet.cpp -o obj/QueueSet.o
+
+obj/DynamicGraph.o: obj/Graph.o Part2/DynamicGraph.cpp Part2/DynamicGraph.h
+	g++ -o2 -w $(WFLAGS) -c Part2/DynamicGraph.cpp -o obj/DynamicGraph.o
+
+obj/StaticGraph.o: obj/Graph.o Part2/StaticGraph.cpp Part2/StaticGraph.h
+	g++ -o2 -w $(WFLAGS) -c Part2/StaticGraph.cpp -o obj/StaticGraph.o
 
 obj/Graph.o: obj/NodeIndex.o obj/QueueSet.o obj/Buffer.o Part1/Graph.cpp Part1/Graph.h
 	g++ -o2 -w $(WFLAGS) -c Part1/Graph.cpp -o obj/Graph.o

@@ -1,12 +1,11 @@
 /* PART 2 MAIN */
 
-#include "Part2/GrailIndex.h"
-#include "Part2/CC.h"
-#include "Part2/SCC.h"
+#include "Part2/StaticGraph.h"
+#include "Part2/DynamicGraph.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <string>
+
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -26,7 +25,10 @@ int main(int argc, char** argv) {
 	myReadFile>>graphType;
 	myReadFile.close();
 
-	graph = (strcmp(graphType,"STATIC")==0)  new StaticGraph():new DynamicGraph();
+	if (strcmp(graphType,"STATIC")==0)
+		graph = new StaticGraph();
+	else
+		graph = new DynamicGraph();
 
 	myReadFile.open(argv[1]);
 	if (myReadFile.is_open()) {

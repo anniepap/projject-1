@@ -1,15 +1,16 @@
 #include "CC.h"
 
-CC::CC(const uint32_t size, Graph* graph):size(size),number_of_update_index_queries(0),number_of_queries(0){
+CC::CC(Graph* graph) : number_of_update_index_queries(0), number_of_queries(0) {
+	size = graph->SizeOfNodes();
 	ccindex= new uint32_t[size];
 	updateIndex= new UpdateIndex(size);
 
-	GraphPostOrderCursor* DfsIterator =new GraphPostOrderCursor(graph, true);
+	GraphPostOrderCursor* DfsIterator = new GraphPostOrderCursor(graph, true);
 	uint32_t components_counter=0;		
 	uint32_t curr_id;
 
 	short res;
-	while ((res = DfsIterator->next(&curr_id)) != ENDOFCURSOR){
+	while ((res = DfsIterator->next(&curr_id)) != ENDOFCURSOR) {
 		if (res==ENDOFCOMPONENT){
 			components_counter++;
 			continue;
@@ -23,8 +24,8 @@ CC::~CC(){
 	delete updateIndex;
 }
 
-void CC::rebuildIndexes(){
-	for (int i=0;size;i++){
+void CC::rebuildIndexes() {
+	for (int i=0;size;i++) {
 		ccindex[i] = updateIndex->component_belongs_to_component(ccindex[i]);
 	}
 }
@@ -39,8 +40,8 @@ int CC::findNodeConnectedComponentID(uint32_t nodeId){
 
 void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
 	uint32_t componentS, componentE;
-	componentS= findNodeConnectedComponentID(nodeIdS);
-	componentE= findNodeConnectedComponentID(nodeIdE);
+	componentS = findNodeConnectedComponentID(nodeIdS);
+	componentE = findNodeConnectedComponentID(nodeIdE);
 	updateIndex->MergeComponent(componentS,componentE);
 }
 
@@ -88,7 +89,7 @@ UpdateIndex::~UpdateIndex(){
 }
 
 int UpdateIndex::component_belongs_to_component(int component){
-	return (index[component]==-1)? component : index[component] ;
+	return (index[component]==-1) ? component : index[component];
 }
 
 void UpdateIndex::MergeComponent(int componentS,int componentE){

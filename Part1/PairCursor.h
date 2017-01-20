@@ -1,10 +1,6 @@
 #ifndef __PAIR_CURSOR_H__
 #define __PAIR_CURSOR_H__
 
-class Pair;
-class Node;
-class Graph;
-
 #include "Graph.h"
 #include "NodeIndex.h"
 

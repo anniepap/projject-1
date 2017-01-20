@@ -1,29 +1,12 @@
 #ifndef __SCC_H__
 #define __SCC_H__
 
-#include "../Part1/defines.h"
-#include "../Part1/NodeIndex.h"
-#include "../Part1/Graph.h"
-#include "../Part1/Buffer.h"
 #include "../Part1/PairCursor.h"
-
-class NodeIndex;
-class SCC;
-class PairCursor;
 
 struct Component {
 	uint32_t included_nodes_count; // number of nodes in component
 	uint32_t* included_node_ids;   // ids of included nodes
-	Component(); 
-};
-
-class ComponentCursor{
-	SCC* scc;
-	int index;
-public :
-	void iterateStronglyConnectedComponentID(SCC* components);
-	bool next_StronglyConnectedComponentID();
-	Component* GetCurrentConnectedComponent();
+	Component();
 };
 
 struct TarNode {
@@ -46,11 +29,11 @@ class SCC {
 	Graph* CreateHyperGraph(Pair& pair);
 	void destroyStronglyConnectedComponents();
 public:
-	SCC(size_t capacity, Graph& graph);
+	SCC(Graph* graph);
 	~SCC();
 	
 	uint32_t findNodeStronglyConnectedComponentID(uint32_t nodeId);
-	long estimateShortestPathStronglyConnectedComponents(Graph& graph, uint32_t source_node, uint32_t target_node);
+	long estimateShortestPathStronglyConnectedComponents(uint32_t source_node, uint32_t target_node);
 
 	uint32_t ComponentsCount();
 	Component** getComponents();
@@ -60,6 +43,15 @@ public:
 
 	void estimateStronglyConnectedComponents(Pair& pair);
 	//uint32_t* getInvertedIndex();
+};
+
+class ComponentCursor{
+	SCC* scc;
+	int index;
+public :
+	void iterateStronglyConnectedComponentID(SCC* components);
+	bool next_StronglyConnectedComponentID();
+	Component* GetCurrentConnectedComponent();
 };
 
 #endif
