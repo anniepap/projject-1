@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-int main1(int argc, char** argv) {
+int main(int argc, char** argv) {
 	if (argc != 3) return -1;
 
 	Graph graph;
@@ -25,15 +25,21 @@ int main1(int argc, char** argv) {
 
 	myReadFile.open(argv[2]);
 	if (myReadFile.is_open()) {
-		while(!myReadFile.eof()) {
+		myReadFile >> com;
+		if (com == 'S' || com == 'D') {
+			myReadFile.ignore(10, '\n');
 			myReadFile >> com;
-			if (com != 'F')
+		}
+		while(myReadFile.good()) {
+			if (com != 'F') {
 				myReadFile >> from >> to;
-			if (com == 'A')
-				graph.addEdge(from, to);
-			else if (com == 'Q')
-				cout << graph.question(from, to) << endl;
+				if (com == 'A')
+					graph.addEdge(from, to);
+				else if (com == 'Q')
+					cout << graph.question(from, to) << endl;
 //				graph.question(from, to);
+			}
+			myReadFile >> com;
 		}
 	}
 	myReadFile.close();

@@ -1,7 +1,25 @@
 #include "StaticGraph.h"
-/*
+#include "GrailIndex.h"
 
-long Graph::question(uint32_t from, uint32_t to, uint32_t version, SCC* scc, uint32_t sccId) {
+bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
+	size_t size = start.size();
+	PairCursor pc(this);
+	for (size_t i = 0; i < size; ++i) {
+		pc.init(start.pop());
+		uint32_t id;
+		uint32_t sccNid;
+		while (pc.next(&id)) {
+			sccNid = scc->findNodeStronglyConnectedComponentID(id);
+			if (start.visited(id) == false && sccNid == sccId) {
+				if (target.visited(id) == true) return true;
+				start.push(id);
+			}
+		}
+	}
+	return false;
+}
+
+long StaticGraph::question(uint32_t from, uint32_t to, SCC* scc, uint32_t sccId) {
 	if (to == from) return 0;
 
 	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
@@ -27,26 +45,8 @@ long Graph::question(uint32_t from, uint32_t to, uint32_t version, SCC* scc, uin
 	return -1;
 }
 
-bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
-	size_t size = start.size();
-	PairCursor pc(this);
-	for (size_t i = 0; i < size; ++i) {
-		pc.init(start.pop());
-		uint32_t id;
-		uint32_t sccNid;
-		while (pc.next(&id)) {
-			sccNid = scc->findNodeStronglyConnectedComponentID(id);
-			if (start.visited(id) == false && sccNid == sccId) {
-				if (target.visited(id) == true) return true;
-				start.push(id);
-			}
-		}
-	}
-	return false;
-}
-*/
 void StaticGraph::init(void) {
-	components = new SCC(this);
+	components = new SCC(*this);
 	grail_index = new GrailIndex(components);
 }
 

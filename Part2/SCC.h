@@ -2,6 +2,7 @@
 #define __SCC_H__
 
 #include "../Part1/PairCursor.h"
+class StaticGraph;
 
 struct Component {
 	uint32_t included_nodes_count; // number of nodes in component
@@ -22,14 +23,16 @@ class SCC {
 	uint32_t components_count;
 	Component** components; 				// Components index - a vector which stores the components information
 	uint32_t* id_belongs_to_component;   	// inverted index	
-	Graph* hyper_graph;
+	Graph hyper_graph;
+
+	StaticGraph& graph;
 
 	void increaseComponents();
 	void addNodeToComponent(uint32_t nodeId);
-	Graph* CreateHyperGraph(Pair& pair);
+	void CreateHyperGraph(Pair& pair);
 	void destroyStronglyConnectedComponents();
 public:
-	SCC(Graph* graph);
+	SCC(StaticGraph& graph);
 	~SCC();
 	
 	uint32_t findNodeStronglyConnectedComponentID(uint32_t nodeId);
@@ -37,7 +40,7 @@ public:
 
 	uint32_t ComponentsCount();
 	Component** getComponents();
-	Graph* getHyperGraph();
+	Graph& getHyperGraph();
 	
 	void print();
 

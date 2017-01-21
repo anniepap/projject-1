@@ -7,7 +7,7 @@
 #include "GraphPostOrderCursor.h"
 
 #define NUMBEROFLABELS 2
-enum GRAIL_ANSWER  {NO=0, MAYBE=1, YES=2};		
+enum GRAIL_ANSWER {NO=0, MAYBE=1, YES=2};
 
 class GrailIndexNode;
 
@@ -16,9 +16,9 @@ class GrailIndex {
 	GrailIndexNode** IndexTables;
 	SCC* components;
 public:
-	GrailIndex(SCC* components ); 			
-	~GrailIndex(); 
-	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);		
+	GrailIndex(SCC* components);
+	~GrailIndex();
+	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);
 };
 
 class GrailIndexNode {

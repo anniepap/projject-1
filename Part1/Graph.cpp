@@ -1,6 +1,5 @@
 #include "Graph.h"
-#include "PairCursor.h"
-#include "QueueSet.h"
+#include "../Part2/SCC.h"
 
 void Graph::addEdge(uint32_t from, uint32_t to, uint32_t version) {
 
@@ -13,8 +12,8 @@ void Graph::addEdge(uint32_t from, uint32_t to, uint32_t version) {
 		}
 	}
 
-	out.addEdge(from, to);
-	in.addEdge(to, from);
+	out.addEdge(from, to, version);
+	in.addEdge(to, from, version);
 }
 
 long Graph::question(uint32_t from, uint32_t to, uint32_t version) {
@@ -32,10 +31,10 @@ long Graph::question(uint32_t from, uint32_t to, uint32_t version) {
 
 	while (!start.empty() && !target.empty()) {
 		if (target.size() < start.size()) {
-			if (in.bfs(target, start)) return lvl;
+			if (in.bfs(target, start, version)) return lvl;
 		}
 		else {
-			if (out.bfs(start, target)) return lvl;
+			if (out.bfs(start, target, version)) return lvl;
 		}
 		lvl++;
 	}
@@ -57,31 +56,37 @@ uint32_t Graph::SizeOfNodes(){
 
 /////////////////////////////////////////////////
 
-void Pair::addEdge(uint32_t from, uint32_t to) {
+void Pair::addEdge(uint32_t from, uint32_t to, uint32_t version) {
 	insertNode(from);
 
 	Node& node = index[from];
 
-	if (node.size[to % NODE_HASH] == LIST_NODE_CAPACITY) {
-		node.offset[to % NODE_HASH] = buffer.allocNewNode(node.offset[to % NODE_HASH]);
-		node.size[to % NODE_HASH] = 0;
+	int mod = to % NODE_HASH;
+
+	if (node.size[mod] == LIST_NODE_CAPACITY) {
+		node.offset[mod] = buffer.allocNewNode(node.offset[mod]);
+		node.size[mod] = 0;
 		node.count++;
 	}
 
-	buffer[node.offset[to % NODE_HASH]].neighbor[node.size[to % NODE_HASH]] = to;
+	buffer[node.offset[mod]].neighbor[node.size[mod]] = to;
+	buffer[node.offset[mod]].edgeProperty[node.size[mod]] = version;
 	node.size[to % NODE_HASH]++;
 }
 
-bool Pair::bfs(QueueSet& start, QueueSet& target) {
+bool Pair::bfs(QueueSet& start, QueueSet& target, uint32_t version) {
 	size_t size = start.size();
 	PairCursor pc(this);
+	uint32_t id;
+	uint32_t vid;
 	for (size_t i = 0; i < size; ++i) {
-		pc.init(start.pop());			// Edw skaei.
-		uint32_t id;
-		while (pc.next(&id)) {
-			if (start.visited(id) == false) {
-				if (target.visited(id) == true) return true;
-				start.push(id);
+		pc.init(start.pop());
+		while (pc.next(&id, &vid)) {
+			if (vid <= version) {
+				if (start.visited(id) == false) {
+					if (target.visited(id) == true) return true;
+					start.push(id);
+				}
 			}
 		}
 	}

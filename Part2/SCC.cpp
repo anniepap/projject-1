@@ -1,6 +1,8 @@
 #include <iostream>
 #include "SCC.h"
-#include "GrailIndex.h"
+#include "ArrayStack.h"
+#include "StaticGraph.h"
+
 using namespace std;
 
 Component::Component() {
@@ -27,14 +29,14 @@ Component* ComponentCursor::GetCurrentConnectedComponent(){
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SCC::SCC(Graph* graph) {
-	capacity = graph->SizeOfNodes();
+SCC::SCC(StaticGraph& graph) : graph(graph) {
+	capacity = graph.SizeOfNodes();
 	components_count = 0;
 	components = NULL;
 	id_belongs_to_component = (uint32_t*) malloc(sizeof(uint32_t)*capacity);
 	
-	estimateStronglyConnectedComponents(graph->getOut());
-	hyper_graph = CreateHyperGraph(graph->getOut());
+	estimateStronglyConnectedComponents(graph.getOut());
+	CreateHyperGraph(graph.getOut());
 }
 
 uint32_t SCC::ComponentsCount() {
@@ -45,7 +47,7 @@ Component** SCC::getComponents() {
 	return components;
 }
 
-Graph* SCC::getHyperGraph() {
+Graph& SCC::getHyperGraph() {
 	return hyper_graph;
 }
 /*
@@ -68,8 +70,7 @@ void SCC::addNodeToComponent(uint32_t nodeId) {
 	id_belongs_to_component[nodeId] = components_count - 1;
 }
 
-Graph* SCC::CreateHyperGraph(Pair& pair){
-	Graph* graph = new Graph;
+void SCC::CreateHyperGraph(Pair& pair){
 	PairCursor pc(&pair);
 	uint32_t to;
 	uint32_t comp_to;
@@ -78,12 +79,11 @@ Graph* SCC::CreateHyperGraph(Pair& pair){
 			pc.init(components[i]->included_node_ids[j]);
 			while (pc.next(&to)){
 				if ((comp_to=findNodeStronglyConnectedComponentID(to)) != i){
-					graph->addEdge(i, comp_to);
+					hyper_graph.addEdge(i, comp_to);
 				}
 			}
 		}
 	}
-	return graph;
 }
 
 void SCC::print() {
@@ -110,7 +110,6 @@ void SCC::destroyStronglyConnectedComponents() {
 	free(components);
 	free(id_belongs_to_component);
 	components_count = 0;
-	delete hyper_graph;
 }
 
 uint32_t SCC::findNodeStronglyConnectedComponentID(uint32_t nodeId) {
@@ -123,10 +122,8 @@ long SCC::estimateShortestPathStronglyConnectedComponents(uint32_t source_node, 
 
 	if (source_scc_id != target_scc_id)
 		return -1;
-	else {
-		return -1;
-//		return graph->question(this, source_scc_id, source_node, target_node);	
-	}
+	else
+		return graph.question(source_node, target_node, this, source_scc_id);
 }
 
 void SCC::estimateStronglyConnectedComponents(Pair& pair) {

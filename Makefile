@@ -2,12 +2,20 @@ PART1_OBJS = obj/Buffer.o obj/Graph.o obj/HashQueue.o obj/HashSet.o obj/NodeInde
 PART2_OBJS = obj/CC.o obj/GrailIndex.o obj/GraphPostOrderCursor.o obj/HashStack.o obj/SCC.o obj/StackLinkedList.o obj/DynamicGraph.o obj/StaticGraph.o
 PART3_OBJS = obj/Job.o obj/JobScheduler.o obj/ListQueue.o
 MAIN_OBJ = obj/main.o
+MAIN1_OBJ = obj/main1.o
+MAIN2_OBJ = obj/main2.o
 WFLAGS = -Wall -Wextra -Wconversion
 
-all: mkdir out
+all: mkdir out out1 out2
 
 mkdir:
 	mkdir -p obj
+
+out1: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN1_OBJ)
+	g++ -o2 -w $(WFLAGS) $(PART1_OBJS) $(MAIN1_OBJ) -o out1
+
+out2: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN2_OBJ)
+	g++ -o2 -w $(WFLAGS) $(PART1_OBJS) $(PART2_OBJS) $(MAIN2_OBJ) -o out2
 
 out: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN_OBJ)
 	g++ -o2 -w $(WFLAGS) $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN_OBJ) -o out -pthread
@@ -16,7 +24,7 @@ obj/Job.o: Part3/Job.cpp Part3/Job.h
 	g++ -o2 -w $(WFLAGS) -c Part3/Job.cpp -o obj/Job.o
 
 obj/JobScheduler.o: Part3/JobScheduler.cpp Part3/JobScheduler.h
-	g++ -o2 -w $(WFLAGS) -c Part3/JobScheduler.cpp -o obj/JobScheduler.o	
+	g++ -o2 -w $(WFLAGS) -c Part3/JobScheduler.cpp -o obj/JobScheduler.o
 
 obj/ListQueue.o: Part3/ListQueue.cpp Part3/ListQueue.h
 	g++ -o2 -w $(WFLAGS) -c Part3/ListQueue.cpp -o obj/ListQueue.o
@@ -50,6 +58,12 @@ obj/Buffer.o: Part1/Buffer.cpp Part1/Buffer.h Part1/ListNode.h
 
 obj/HashSet.o: Part1/HashSet.cpp Part1/HashSet.h
 	g++ -o2 -w $(WFLAGS) -c Part1/HashSet.cpp -o obj/HashSet.o
+
+obj/main1.o: obj/Graph.o ./Part1/main.cpp
+	g++ -o2 -w $(WFLAGS) -c ./Part1/main.cpp -o obj/main1.o
+
+obj/main2.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part2/main.cpp
+	g++ -o2 -w $(WFLAGS) -c ./Part2/main.cpp -o obj/main2.o
 
 obj/main.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part3/main.cpp
 	g++ -o2 -w $(WFLAGS) -c ./Part3/main.cpp -o obj/main.o

@@ -1,21 +1,21 @@
 #include "GrailIndex.h"
 
 //buildGrailIndex
-GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph()->SizeOfNodes() ), components(components) {  // To hyper_graph prepei na einai upergrafos
+GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph().SizeOfNodes() ), components(components) {  // To hyper_graph prepei na einai upergrafos
 	// Allocation of table
 	IndexTables= new GrailIndexNode*[SizeOfIndex];
 	for(int i=0;i<SizeOfIndex;i++){
 		IndexTables[i]= new GrailIndexNode[NUMBEROFLABELS];
 	}
 
-	Graph* hyper_graph = components->getHyperGraph();
+	Graph& hyper_graph = components->getHyperGraph();
 //---------------------------------------
-	PairCursor graph_cursor( &hyper_graph-> getOut() );
+	PairCursor graph_cursor( &hyper_graph.getOut() );
 	uint32_t curr_id,cur_edge;
 
 	GraphPostOrderCursor* post_order_cursor;
 	for (int j=0; j<NUMBEROFLABELS;j++){
-		post_order_cursor= new GraphPostOrderCursor(hyper_graph);
+		post_order_cursor= new GraphPostOrderCursor(&hyper_graph);//change
 		//Post Order
 		int rank=1;
 		unsigned int min_rank;

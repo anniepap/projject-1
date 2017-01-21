@@ -10,7 +10,7 @@ class Job
 	int (*func)(void*);
 	void* arg;
 public:
-	Job(int id, int (*func)(void*) ,void* arg);
+	Job(int (*func)(void*));
 
 	int execute();
 

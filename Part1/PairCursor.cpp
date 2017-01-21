@@ -22,9 +22,12 @@ void PairCursor::init(uint32_t id) {
 	}
 }
 
-bool PairCursor::next(uint32_t* id) {
+bool PairCursor::next(uint32_t* id, uint32_t* vid) {
 	if (hash == NODE_HASH) return false;
-	*id = pair->buffer[offset].neighbor[pos++];
+	*id = pair->buffer[offset].neighbor[pos];
+	if (vid != NULL)
+		*vid = pair->buffer[offset].edgeProperty[pos];
+	pos++;
 
 	if (pos != size) return true;
 	if (pair->buffer[offset].nextListNode != NONE) {

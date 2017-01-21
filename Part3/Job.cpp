@@ -1,7 +1,7 @@
 
 #include "Job.h"
 
-Job::Job(int id, int (*func)(void*), void* arg ): id(id), func(func), arg(arg) {}
+Job::Job(int (*func)(void*)) : func(func) {}
 
 int Job::execute()
 {

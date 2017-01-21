@@ -2,7 +2,6 @@
 #define __PAIR_CURSOR_H__
 
 #include "Graph.h"
-#include "NodeIndex.h"
 
 class PairCursor {
 	Pair* pair;
@@ -15,7 +14,7 @@ public:
 	PairCursor(Pair* pair);
 	PairCursor(Graph& graph, bool out);
 	void init(uint32_t id);
-	bool next(uint32_t* id);
+	bool next(uint32_t* id, uint32_t* vid=NULL);
 };
 
 #endif
