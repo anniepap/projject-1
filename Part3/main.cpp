@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
 
 	// Read Type
 	while(!secondFile.eof()) {
-		secondFile>>com;
+		secondFile >> com;
 		if (com != 'F') {
 			secondFile >> from >> to;
 
@@ -121,6 +121,7 @@ int main(int argc, char** argv) {
 			}
 			cur_id = 0;
 		}
+		prevcom = com;
 	}
 
 	secondFile.close();

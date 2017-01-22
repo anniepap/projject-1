@@ -15,7 +15,7 @@ class JobScheduler
 	ListQueue* q; 	// a queue that holds submitted jobs / tasks
 	
 	uint32_t print_array_capacity;
-	int* print_array;
+	long* print_array;
 	uint32_t last_job;
 
 	pthread_mutex_t q_mutex;
@@ -30,13 +30,10 @@ public:
 
 	pthread_mutex_t* QMutex();
 	ListQueue* Q();
-	uint32_t PrintArrayCapacity();
-	void PrintArrayCapacity(uint32_t capacity);
-	int* PrintArray();
-	void PrintArray(int* new_array);
+	long* PrintArray();
+	void resize(uint32_t capacity);
 	uint32_t LastJob();
 	void LastJob(uint32_t last_job);
-
 };
 
 #endif
