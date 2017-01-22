@@ -43,10 +43,10 @@ int main(int argc, char** argv) {
 	char prevcom = 'A';
 	uint32_t current_version = 0;
 
-	if (!firstFile.is_open())
+	if (!firstFile.is_open() || !secondFile.is_open()){
 		cerr<<"File can not open"<<endl;
-	if (!secondFile.is_open())
-		cerr<<"File can not open"<<endl;
+		return 1;
+	}
 
 	// Read Type
 	secondFile>>graphType;
