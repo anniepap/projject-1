@@ -50,7 +50,7 @@ public:
 
 class ComponentCursor{
 	SCC* scc;
-	int index;
+	uint32_t index;
 public :
 	void iterateStronglyConnectedComponentID(SCC* components);
 	bool next_StronglyConnectedComponentID();

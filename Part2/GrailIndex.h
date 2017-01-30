@@ -22,14 +22,14 @@ public:
 };
 
 class GrailIndexNode {
-	int min_rank;
-	int rank;
+	uint32_t min_rank;
+	uint32_t rank;
 public:
 	GrailIndexNode();
-	void set(int min_rank, int rank);
+	void set(uint32_t min_rank, uint32_t rank);
 	bool isSeted();
 	bool isSubSet(GrailIndexNode& Y);
-	int MinRank();
+	uint32_t MinRank();
 };
 
 #endif

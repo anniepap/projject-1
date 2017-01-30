@@ -17,7 +17,7 @@ class CC{
 
 	void rebuildIndexes();				// Tha mporousame na kanoume inverted pinaka gia min diatrexoume olo ton ccindex
 	bool OverflowThreshhold();
-	int findNodeConnectedComponentID(uint32_t nodeId);
+	uint32_t findNodeConnectedComponentID(uint32_t nodeId);
 public:
 	CC(Graph* graph);
 	~CC();
@@ -33,6 +33,6 @@ class UpdateIndex{
 public:	
 	UpdateIndex(uint32_t size);
 	~UpdateIndex();
-	int component_belongs_to_component(int component);
-	void MergeComponent(int componentS,int componentE);
+	uint32_t component_belongs_to_component(uint32_t component);
+	void MergeComponent(uint32_t componentS,uint32_t componentE);
 };

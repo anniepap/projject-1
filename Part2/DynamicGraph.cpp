@@ -6,6 +6,7 @@ void DynamicGraph::addEdge(uint32_t from, uint32_t to) {
 }
 
 long DynamicGraph::question(uint32_t from, uint32_t to) {
+	std::cerr<<"Mpika 3"<<std::endl;
 	return (cc->isPossiblyReachable(from, to)) ? question(from, to) : -1;
 	// prepei na doume poia sunartisi kaleitai edw
 }

@@ -5,12 +5,14 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
 int main(int argc, char** argv) {
 	if (argc != 3) return -1;
 	
+	srand((unsigned int)time(NULL));
 	Graph* graph;
 	ifstream firstFile(argv[1]);
 	ifstream secondFile(argv[2]);	

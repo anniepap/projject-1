@@ -18,7 +18,7 @@ void ComponentCursor::iterateStronglyConnectedComponentID(SCC* components) {
 
 bool ComponentCursor::next_StronglyConnectedComponentID() {
 	if ( index == scc->ComponentsCount() - 1 ){
-		false;
+		return false;
 	}
 	index++;
 	return true;

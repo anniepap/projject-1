@@ -25,16 +25,18 @@ CC::~CC(){
 }
 
 void CC::rebuildIndexes() {
-	for (int i=0;size;i++) {
+	for (uint32_t i=0;i<size;i++) {
 		ccindex[i] = updateIndex->component_belongs_to_component(ccindex[i]);
 	}
 }
 
 bool CC::OverflowThreshhold(){
-	return (float)number_of_update_index_queries/number_of_queries > THRESHOLD;
+	std::cerr<< "MPIKA"<<std::endl;
+	return false;
+	return ((float)number_of_update_index_queries)/((float)number_of_queries) > THRESHOLD;
 }
 
-int CC::findNodeConnectedComponentID(uint32_t nodeId){
+uint32_t CC::findNodeConnectedComponentID(uint32_t nodeId){
 	return ccindex[nodeId];
 }
 
@@ -47,8 +49,8 @@ void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
 
 bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 	bool answer=false;
-	int source_component = findNodeConnectedComponentID(source_node);
-	int target_component =  findNodeConnectedComponentID(target_node);
+	uint32_t source_component = findNodeConnectedComponentID(source_node);
+	uint32_t target_component =  findNodeConnectedComponentID(target_node);
 	if ( source_component == target_component ) {
 		answer = true;
 	}
@@ -73,14 +75,14 @@ bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 UpdateIndex::UpdateIndex(uint32_t size):size(size){
 	index= new uint32_t[size];
 	index_list = new StackLinkedList*[size];
-	for (int i = 0; i < size; ++i){
-		index[i] = -1;
+	for (uint32_t i = 0; i < size; ++i){
+		index[i] = (uint32_t)-1;
 		index_list[i] = new StackLinkedList();					// Mporoume na min dimiourgoume gia ola. Na dimiourgoume mono otan xreiazetai
 	}
 }
 
 UpdateIndex::~UpdateIndex(){
-	for (int i = 0; i < size; ++i)
+	for (uint32_t i = 0; i < size; ++i)
 	{
 		delete index_list[i];
 	}
@@ -88,19 +90,19 @@ UpdateIndex::~UpdateIndex(){
 	delete[] index;
 }
 
-int UpdateIndex::component_belongs_to_component(int component){
-	return (index[component]==-1) ? component : index[component];
+uint32_t UpdateIndex::component_belongs_to_component(uint32_t component){
+	return (index[component]==(uint32_t)-1) ? component : index[component];
 }
 
-void UpdateIndex::MergeComponent(int componentS,int componentE){
-	int tcomponentS = component_belongs_to_component(componentS);
-	int tcomponentE = component_belongs_to_component(componentE);
+void UpdateIndex::MergeComponent(uint32_t componentS,uint32_t componentE){
+	uint32_t tcomponentS = component_belongs_to_component(componentS);
+	uint32_t tcomponentE = component_belongs_to_component(componentE);
 
 	// Same Component
 	if (tcomponentS==tcomponentE)
 		return;
 
-	int max,min;		// mporoume na epilegoume ws min auto me tin mikroteri lista gia megaluteri apodosi
+	uint32_t max,min;		// mporoume na epilegoume ws min auto me tin mikroteri lista gia megaluteri apodosi
 	if (tcomponentS>tcomponentE){
 		max = tcomponentS;
 		min = tcomponentE;
@@ -112,7 +114,7 @@ void UpdateIndex::MergeComponent(int componentS,int componentE){
 
 	index[max] = min;
 	index_list[min]->push(max);
-	int cur_comp;
+	uint32_t cur_comp;
 	while (!index_list[max]->isEmpty()){
 		cur_comp = index_list[max]->pop();
 		index_list[min]->push(cur_comp);

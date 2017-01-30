@@ -4,7 +4,7 @@
 GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph().SizeOfNodes() ), components(components) {  // To hyper_graph prepei na einai upergrafos
 	// Allocation of table
 	IndexTables= new GrailIndexNode*[SizeOfIndex];
-	for(int i=0;i<SizeOfIndex;i++){
+	for(uint32_t i=0;i<SizeOfIndex;i++){
 		IndexTables[i]= new GrailIndexNode[NUMBEROFLABELS];
 	}
 
@@ -17,8 +17,7 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 	for (int j=0; j<NUMBEROFLABELS;j++){
 		post_order_cursor= new GraphPostOrderCursor(&hyper_graph);//change
 		//Post Order
-		int rank=1;
-		unsigned int min_rank;
+		uint32_t rank=1;
 		short res;
 		while ((res = post_order_cursor->next(&curr_id)) != ENDOFCURSOR) {
 			if (res==ENDOFCOMPONENT)
@@ -48,15 +47,15 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 
 //destroyGrailIndex
 GrailIndex::~GrailIndex() {
-	for(int i=0;i<SizeOfIndex;i++){
+	for(uint32_t i=0;i<SizeOfIndex;i++){
 		delete[] IndexTables[i];
 	}
 	delete[] IndexTables;
 }
 
 GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t target_node){
-	int source_component = components->findNodeStronglyConnectedComponentID(source_node);
-	int target_component = components->findNodeStronglyConnectedComponentID(target_node);
+	uint32_t source_component = components->findNodeStronglyConnectedComponentID(source_node);
+	uint32_t target_component = components->findNodeStronglyConnectedComponentID(target_node);
 	if ( source_component == target_component )
 		return YES;
 
@@ -69,9 +68,9 @@ GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t tar
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GrailIndexNode::GrailIndexNode():rank(0),min_rank(0){}
+GrailIndexNode::GrailIndexNode():min_rank(0),rank(0){}
 
-void GrailIndexNode::set(int min_rank, int rank) {
+void GrailIndexNode::set(uint32_t min_rank, uint32_t rank) {
 	this->min_rank = min_rank;
 	this->rank = rank;
 }
@@ -80,7 +79,7 @@ bool GrailIndexNode::isSeted(){
 	return rank!=0 && min_rank!=0;
 }
 
-int GrailIndexNode::MinRank() {
+uint32_t GrailIndexNode::MinRank() {
 	return min_rank;
 }
 

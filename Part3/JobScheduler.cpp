@@ -7,7 +7,7 @@ using namespace std;
 void* ThreadWork(void* arg){
 	JobScheduler* job_scheduler = (JobScheduler*) arg;
 	Job cur_job(NULL);//change maybe
-	int ret;
+	long ret;
 	while (1)
 	{
 		pthread_mutex_lock( job_scheduler->QMutex() );
@@ -73,7 +73,7 @@ void JobScheduler::wait_all_tasks_finish()
 
 void JobScheduler::print_all_return_values()
 {
-	for (int i=0; i<last_job; i++)
+	for (uint32_t i=0; i<last_job; i++)
 		cout << print_array[i]<< endl;
 	last_job = 0;
 }

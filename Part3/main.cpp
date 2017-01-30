@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <ctime>
 
 #include "Job.h"
 #include "JobScheduler.h"
@@ -19,13 +20,13 @@ struct question_arguments
 	uint32_t to;
 	uint32_t version;
 
-	int question()
+	long int question()
 	{
-		return graph->question(from, to, version);	// Prepei na ftiaksoume tis klaseis STATIC kai DYNAMIC graph me moni sunartisi tin question pou tha perilamvanei ta grail ktlp
+		return graph->question(from, to, version);	
 	}
 };
 
-int encode_question(void* question_arg)
+long int encode_question(void* question_arg)
 {
 	return ((question_arguments*) question_arg)->question();	
 }
@@ -33,6 +34,7 @@ int encode_question(void* question_arg)
 int main(int argc, char** argv) {
 	if (argc != 3) return -1;
 	
+	srand((unsigned int)time(NULL));
 	Graph* graph;
 	ifstream firstFile(argv[1]);
 	ifstream secondFile(argv[2]);
@@ -50,10 +52,12 @@ int main(int argc, char** argv) {
 
 	// Read Type
 	secondFile>>graphType;
-	if (strcmp(graphType,"STATIC")==0)
+	if (strcmp(graphType,"STATIC")==0){
 		graph = new StaticGraph();
-	else
+	}
+	else{
 		graph = new DynamicGraph();
+	}
 
 	// Read Graph
 	if (firstFile.is_open()) {
@@ -115,7 +119,7 @@ int main(int argc, char** argv) {
 			job_scheduler.print_all_return_values();
 			//job_scheduler.initialize(); mporei na min xreiastei
 
-			for (int i=0; i<cur_id; i++)
+			for (uint32_t i=0; i<cur_id; i++)
 			{
 				delete arg_array[i];
 			}

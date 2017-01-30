@@ -1,6 +1,5 @@
 
 #include "GraphPostOrderCursor.h"
-#include <ctime>
 
 GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): graph(graph), undirected(undirected) {
 	uint32_t size= graph->SizeOfNodes();
@@ -104,9 +103,8 @@ bool Stack::empty(){
 Collection::Collection(const uint32_t size): size_of_collection(size), cur_pos(0){
 	array= new uint32_t[size];
 
-	srand(time(NULL));
 	uint32_t up_index=0, down_index=size-1, first_num=0, last_num=size-1, index,curr_id;
-	for (int i=0; i<size; i++){
+	for (uint32_t i=0; i<size; i++){
 		index= (rand()%2==0)? up_index++: down_index--;
 		curr_id= (rand()%2==0)? first_num++: last_num--;
 		array[index]= curr_id;
