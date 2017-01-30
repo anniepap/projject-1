@@ -31,8 +31,6 @@ void CC::rebuildIndexes() {
 }
 
 bool CC::OverflowThreshhold(){
-	std::cerr<< "MPIKA"<<std::endl;
-	return false;
 	return ((float)number_of_update_index_queries)/((float)number_of_queries) > THRESHOLD;
 }
 

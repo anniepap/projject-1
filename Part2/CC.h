@@ -4,7 +4,7 @@
 #include "GraphPostOrderCursor.h"
 #include "StackLinkedList.h"
 
-#define THRESHOLD 0.6
+#define THRESHOLD 1
 
 class UpdateIndex;
 
