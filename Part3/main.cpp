@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
 			}
 		}
 		else {
-			job_scheduler.execute_all_jobs();
+			job_scheduler.execute_all_jobs(cur_id);
 			job_scheduler.wait_all_tasks_finish();
 			job_scheduler.print_all_return_values();
 			//job_scheduler.initialize(); mporei na min xreiastei
