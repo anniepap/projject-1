@@ -24,7 +24,7 @@ public:
 	~JobScheduler();	//destroy_scheduler
 	
 	void submit_job(Job* j);
-	void execute_all_jobs();
+	void execute_all_jobs(uint32_t last_job);
 	void wait_all_tasks_finish(); //waits all submitted tasks to finish
 	void print_all_return_values();
 

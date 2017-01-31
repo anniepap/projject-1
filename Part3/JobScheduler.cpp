@@ -20,20 +20,10 @@ void* ThreadWork(void* arg){
 			
 			cur_job = job_scheduler->Q()->pop();
 
-			// Check if realloc need
-			job_scheduler->resize(cur_job.Id());
-
-			// Set last position
-			if (cur_job.Id()>=job_scheduler->LastJob())
-			{
-				job_scheduler->LastJob( cur_job.Id()+1 );
-			}
 		pthread_mutex_unlock( job_scheduler->QMutex() );
 			
 		ret=cur_job.execute(); 	
-		pthread_mutex_lock( job_scheduler->QMutex() );			// Den mou aresei alla den ginetai alliws afou kanoume realloc - trwei 2 sec
-			job_scheduler->PrintArray()[cur_job.Id()] = ret;
-		pthread_mutex_unlock( job_scheduler->QMutex() );
+		job_scheduler->PrintArray()[cur_job.Id()] = ret;
 	}
 	return NULL;
 }
@@ -59,8 +49,14 @@ void JobScheduler::submit_job(Job* j)
 	q->push(j);
 }
 
-void JobScheduler::execute_all_jobs()
+void JobScheduler::execute_all_jobs(uint32_t last_job)
 {
+	// Set last position
+	LastJob( last_job );
+
+	// Check if realloc need
+	resize(last_job);
+
 	for (int i=0; i<execution_threads; i++)
 		pthread_create(tids+i, NULL, ThreadWork, this);
 }
