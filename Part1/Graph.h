@@ -6,6 +6,7 @@
 #include "Buffer.h"
 
 class SCC;
+class GrailIndex;
 
 class Pair {
 	friend class PairCursor;
@@ -16,6 +17,7 @@ public:
 	void addEdge(uint32_t from, uint32_t to, uint32_t version);
 	bool bfs(QueueSet& start, QueueSet& target, uint32_t version);
 	bool bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId);
+	bool bfs(QueueSet& start, QueueSet& target, SCC* scc, GrailIndex* grail_index);
 	size_t getCapacity();
 	size_t getCount(uint32_t id);
 	bool find(uint32_t to, uint32_t from);

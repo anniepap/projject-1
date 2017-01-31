@@ -12,6 +12,7 @@ public:
 
 	void push(uint32_t id);
 	uint32_t pop(void);
+	uint32_t top(void);
 	bool empty(void);
 	size_t size(void);
 	bool visited(size_t index);

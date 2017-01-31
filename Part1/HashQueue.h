@@ -15,6 +15,7 @@ public:
 	~HashQueue();
 
 	uint32_t pop(void);
+	uint32_t top(void);
 	void push(uint32_t id);
 };
 

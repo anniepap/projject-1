@@ -44,3 +44,9 @@ uint32_t HashQueue::pop() {
 	return id;
 }
 
+uint32_t HashQueue::top() {
+	size_t row = head/SIZE;
+	size_t col = head%SIZE;
+
+	return hash[row][col];
+}

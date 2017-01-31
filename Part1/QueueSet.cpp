@@ -26,3 +26,7 @@ uint32_t QueueSet::pop() {
 	return queue.pop();
 }
 
+uint32_t QueueSet::top() {
+	return queue.top();
+}
+
