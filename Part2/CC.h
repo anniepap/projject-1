@@ -13,7 +13,7 @@ class CC{
 	uint32_t size;
 	UpdateIndex* updateIndex;
 	uint32_t number_of_update_index_queries;
-	uint32_t number_of_queries;		
+	uint32_t number_of_queries;
 
 	void rebuildIndexes();				// Tha mporousame na kanoume inverted pinaka gia min diatrexoume olo ton ccindex
 	bool OverflowThreshhold();
@@ -24,11 +24,12 @@ public:
 	void insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE);
 	bool isPossiblyReachable(uint32_t source_node,uint32_t target_node);
 };
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class UpdateIndex{
 	uint32_t* index;
-	StackLinkedList** index_list;	
+	StackLinkedList** index_list;
 	uint32_t size;
 public:	
 	UpdateIndex(uint32_t size);

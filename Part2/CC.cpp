@@ -5,12 +5,12 @@ CC::CC(Graph* graph) : number_of_update_index_queries(0), number_of_queries(0) {
 	ccindex= new uint32_t[size];
 	updateIndex= new UpdateIndex(size);
 
-	GraphPostOrderCursor* DfsIterator = new GraphPostOrderCursor(graph, true);
+	GraphPostOrderCursor DfsIterator(graph, true);
 	uint32_t components_counter=0;		
 	uint32_t curr_id;
 
 	short res;
-	while ((res = DfsIterator->next(&curr_id)) != ENDOFCURSOR) {
+	while ((res = DfsIterator.next(&curr_id)) != ENDOFCURSOR) {
 		if (res==ENDOFCOMPONENT){
 			components_counter++;
 			continue;
@@ -19,7 +19,7 @@ CC::CC(Graph* graph) : number_of_update_index_queries(0), number_of_queries(0) {
 	}
 }
 
-CC::~CC(){
+CC::~CC() {
 	delete[] ccindex;
 	delete updateIndex;
 }
@@ -48,12 +48,12 @@ void CC::insertNewEdge(uint32_t nodeIdS, uint32_t nodeIdE){
 bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 	bool answer=false;
 	uint32_t source_component = findNodeConnectedComponentID(source_node);
-	uint32_t target_component =  findNodeConnectedComponentID(target_node);
+	uint32_t target_component = findNodeConnectedComponentID(target_node);
 	if ( source_component == target_component ) {
 		answer = true;
 	}
 	// Search in Update Index
-	else if( updateIndex->component_belongs_to_component(source_component) == updateIndex->component_belongs_to_component(target_component) ) {
+	else if ( updateIndex->component_belongs_to_component(source_component) == updateIndex->component_belongs_to_component(target_component) ) {
 		answer = true;
 		number_of_update_index_queries++;
 	}

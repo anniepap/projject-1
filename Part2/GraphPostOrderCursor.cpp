@@ -62,44 +62,6 @@ short GraphPostOrderCursor::next(uint32_t* id) {
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Stack::Stack(uint32_t size_of_stack): size_of_stack(size_of_stack), size(0){
-	array= new uint32_t[size_of_stack];
-}
-
-Stack::~Stack(){
-	delete[] array;
-}
-
-void Stack::push(uint32_t element){
-	array[size++]=element;
-}
-
-uint32_t Stack::pop(){
-	if (size==0){
-		return NONE;
-	}
-	return array[--size];
-}
-
-uint32_t Stack::top_(){
-	if (size==0)
-		return NONE;
-	return array[size-1];
-}
-/*
-bool Stack::find(uint32_t element){			// Na fugei. na ginetai visited otan ginetai push
-	for (int i=0; i<size;i++){
-		if (array[i]==element) 
-			return true;
-	}
-	return false;
-}
-*/
-bool Stack::empty(){
-	return size==0;
-}
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Collection::Collection(const uint32_t size): size_of_collection(size), cur_pos(0){
 	array= new uint32_t[size];
 

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SCC.h"
-#include "ArrayStack.h"
+#include "HashStack.h"
 #include "StaticGraph.h"
 
 using namespace std;
@@ -138,7 +138,7 @@ void SCC::estimateStronglyConnectedComponents(Pair& pair) {
 		table[i].caller = NULL;
 	}
 
-	Stack tarjanStack(capacity);
+	HashStack tarjanStack(capacity);
 
 	for (size_t id = 0; id < capacity; ++id) {
 		if (table[id].index == 0) { // Simulate the dfs search that recursion is doing
