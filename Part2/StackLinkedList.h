@@ -16,9 +16,10 @@ public:
     	size = 0;
         top_ = NULL;
     }
+    ~StackLinkedList();
     void push(uint32_t); 
     uint32_t pop(); 
-   	uint32_t top(); 
+    uint32_t top(); 
     bool isEmpty();
     uint32_t getSize();
 };

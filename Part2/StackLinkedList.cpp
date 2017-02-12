@@ -1,6 +1,11 @@
 
 #include "StackLinkedList.h"
 
+StackLinkedList::~StackLinkedList() {
+    while (top_!=NULL)
+        pop();
+}
+
 void StackLinkedList::push(uint32_t id) {
     size++;
     node* ptr;
@@ -23,7 +28,7 @@ uint32_t StackLinkedList::pop() {
 }
 
 uint32_t StackLinkedList::top() {
-	return top_->id;
+    return top_->id;
 }
 
 bool StackLinkedList::isEmpty() {
