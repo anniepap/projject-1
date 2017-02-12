@@ -1,7 +1,7 @@
 #include "GrailIndex.h"
 
 //buildGrailIndex
-GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph().SizeOfNodes() ), components(components) {  // To hyper_graph prepei na einai upergrafos
+GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph().SizeOfNodes() ), components(components) { // To hyper_graph prepei na einai upergrafos
 	// Allocation of table
 	IndexTables= new GrailIndexNode*[SizeOfIndex];
 	for(uint32_t i=0;i<SizeOfIndex;i++){
@@ -36,7 +36,7 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 					min_rank= IndexTables[ cur_edge ][j].MinRank();
 				}
 				f = graph_cursor.next(&cur_edge);
-	  		} 
+			} 
 
 			IndexTables[curr_id][j].set(min_rank, rank);
 			rank++;

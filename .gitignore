@@ -16,6 +16,6 @@ projject/projject.vcxproj
 *.filters
 *.txt
 /CMakeFiles/
-out
 out2
 out1
+out

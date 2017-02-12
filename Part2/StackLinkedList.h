@@ -4,24 +4,24 @@
 #include "../Part1/defines.h"
 
 struct node {
-    uint32_t id;
-    node* next;
+	uint32_t id;
+	node* next;
 };
 
 class StackLinkedList {
 	uint32_t size;
-    node* top_;   
+	node* top_;
 public:
-    StackLinkedList() {
-    	size = 0;
-        top_ = NULL;
-    }
-    ~StackLinkedList();
-    void push(uint32_t); 
-    uint32_t pop(); 
-    uint32_t top(); 
-    bool isEmpty();
-    uint32_t getSize();
+	StackLinkedList() {
+		size = 0;
+		top_ = NULL;
+	}
+	~StackLinkedList();
+	void push(uint32_t);
+	uint32_t pop();
+	uint32_t top();
+	bool isEmpty();
+	uint32_t getSize();
 };
 
 #endif

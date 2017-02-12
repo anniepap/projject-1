@@ -9,7 +9,7 @@
 class UpdateIndex;
 
 class CC{
-	uint32_t*  ccindex;
+	uint32_t* ccindex;
 	uint32_t size;
 	UpdateIndex* updateIndex;
 	uint32_t number_of_update_index_queries;
@@ -31,7 +31,7 @@ class UpdateIndex{
 	uint32_t* index;
 	StackLinkedList** index_list;
 	uint32_t size;
-public:	
+public:
 	UpdateIndex(uint32_t size);
 	~UpdateIndex();
 	uint32_t component_belongs_to_component(uint32_t component);

@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
 				graph->addEdge(from, to, current_version);	// kainourgia add edge
 			}
 			else if (com == 'Q') {
-				// Add a job to scheduler  -----
+				// Add a job to scheduler -----
 				if (cur_id>=capacity) {
 					capacity <<= 1;
 					arg_array = (question_arguments**) realloc( arg_array, capacity*sizeof(question_arguments*));
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
 				cur_job.Id(cur_id);
 				cur_job.Arg((void*) arg_array[cur_id]);
 				job_scheduler.submit_job(&cur_job);
-				//  ----------
+				// ----------
 				cur_id++;
 			}
 		}

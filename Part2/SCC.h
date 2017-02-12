@@ -5,8 +5,8 @@
 class StaticGraph;
 
 struct Component {
-	uint32_t included_nodes_count; // number of nodes in component
-	uint32_t* included_node_ids;   // ids of included nodes
+	uint32_t included_nodes_count;	// number of nodes in component
+	uint32_t* included_node_ids;	// ids of included nodes
 	Component();
 };
 
@@ -21,8 +21,8 @@ struct TarNode {
 class SCC {
 	size_t capacity;
 	uint32_t components_count;
-	Component** components; 				// Components index - a vector which stores the components information
-	uint32_t* id_belongs_to_component;   	// inverted index	
+	Component** components;					// Components index - a vector which stores the components information
+	uint32_t* id_belongs_to_component;		// inverted index	
 	Graph hyper_graph;
 
 	StaticGraph& graph;
@@ -34,7 +34,7 @@ class SCC {
 public:
 	SCC(StaticGraph& graph);
 	~SCC();
-	
+
 	uint32_t findNodeStronglyConnectedComponentID(uint32_t nodeId);
 	long estimateShortestPathStronglyConnectedComponents(uint32_t source_node, uint32_t target_node);
 

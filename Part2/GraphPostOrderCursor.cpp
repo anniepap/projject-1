@@ -6,7 +6,7 @@ GraphPostOrderCursor::GraphPostOrderCursor(Graph* graph, bool undirected ): grap
 	stack= new HashStack(size);
 	visited= new HashSet(size);
 	random_nodes= new Collection(size);
-	uint32_t element = random_nodes->Pop();	
+	uint32_t element = random_nodes->Pop();
 	stack->push( element );
 	visited->insert( element );
 }
@@ -17,12 +17,12 @@ GraphPostOrderCursor::~GraphPostOrderCursor(){
 	delete random_nodes;
 }
 
-short GraphPostOrderCursor::next(uint32_t* id) {	
+short GraphPostOrderCursor::next(uint32_t* id) {
 	if (stack->empty() && !visited->IsFull() ){
 		uint32_t cur_id;
-		while (	visited->find(cur_id=random_nodes->Pop()) ){ }	
-		stack->push( cur_id );	
-		visited->insert( cur_id );		
+		while (	visited->find(cur_id=random_nodes->Pop()) ){ }
+		stack->push( cur_id );
+		visited->insert( cur_id );
 		return ENDOFCOMPONENT;
 	}
 
@@ -40,17 +40,17 @@ short GraphPostOrderCursor::next(uint32_t* id) {
 				visited->insert(cur_edge);
 				flag=1;
 			}
-  		}
-  		if (undirected){
-			in_cursor.init(curr_id);		
+		}
+		if (undirected){
+			in_cursor.init(curr_id);
 	 		while (in_cursor.next(&cur_edge)) {
 				if (!visited->find(cur_edge)){
 					stack->push(cur_edge);
 					visited->insert(cur_edge);
 					flag=1;
 				}
-	  		}
-	  	}
+			}
+		}
 		if (!flag){ 
 			stack->pop();
 			*id = curr_id;
