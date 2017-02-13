@@ -26,3 +26,11 @@
 
 ## Implementation Environment
 This project has been developed at Linux Platform but it was tested at Windows as well.
+
+## Application Design
+
+## Optimizations
+
+## Experiment Results
+
+## Suitable Structures
