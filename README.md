@@ -30,6 +30,9 @@ This project has been developed at Linux Platform but it was tested at Windows a
 ## Application Design
 
 ## Optimizations
+Time:
+
+Memory:
 
 ## Experiment Results
 
