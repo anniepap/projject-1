@@ -31,7 +31,7 @@ void CC::rebuildIndexes() {
 }
 
 bool CC::OverflowThreshhold(){
-	return ((float)number_of_update_index_queries)/((float)number_of_queries) > THRESHOLD;
+	return number_of_update_index_queries > THRESHOLD * (double) number_of_queries;
 }
 
 uint32_t CC::findNodeConnectedComponentID(uint32_t nodeId){
@@ -59,7 +59,7 @@ bool CC::isPossiblyReachable(uint32_t source_node,uint32_t target_node){
 	}
 	
 	// Update Metric
-	number_of_queries++;	
+	number_of_queries++;
 
 	// Check for overflow
 	if ( OverflowThreshhold() ){

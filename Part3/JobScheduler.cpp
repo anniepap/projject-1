@@ -19,10 +19,9 @@ void* ThreadWork(void* arg){
 			}
 			
 			cur_job = job_scheduler->Q()->pop();
-
 		pthread_mutex_unlock( job_scheduler->QMutex() );
 			
-		ret=cur_job.execute(); 	
+		ret=cur_job.execute();
 		job_scheduler->PrintArray()[cur_job.Id()] = ret;
 	}
 	return NULL;
