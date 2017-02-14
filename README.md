@@ -29,10 +29,32 @@ This project has been developed at Linux Platform but it was tested at Windows a
 
 ## Application Design
 
-## Optimizations
-Time:
+* __PART 1:__
 
-Memory:
+In order to have minimal code design we created __defines.h__ file that gathers the values of necessary constants for the project. This makes the process of testing the project way easier, beacause we only have to make changes to this file and not everywhere.
+
+The graph (__Graph.h__ file) is represented by two pair, one for the incoming and the other for the outcomig edges. Each pair consists of one buffer and one index to that buffer. 
+
+The buffer (__Buffer.h__ file), other than that, consists of a table that includes list_nodes, each list_node is mainly a sum of node identifiers with a pointer to another list_node. Obviously, the pointer mentioned before is used when overflow is unavoidable. In such cases our design keeps a pointer to the last overflow instead of the first list node. Let's try to virtualize the previous sentence, if we have buckets (that contain nodes) in a row, then in our implementation the first bucket is the most recent added and the others following are already full.
+
+The node index (__NodeIndex.h__ file) represents the connection between the starting node with all the nodes it has edges with. The design we have chosen to implement this is that the id of the starting node is the offset of the node_index array. The content of each cell is the offset of the list_node that contains the incoming/outcomig edges for this cell.
+
+When the time comes to add an edge in a pair (__Graph.cpp__ file, void Pair::addEdge(uint32_t from, uint32_t to, uint32_t version)) we implement a hash method. This simple hash method evaluates the position where the key will be inserted by calculating the modulo of the destination node id with 2. Just for the first and second part there is no problem calling the function with only two arguments due to this line:
+```c++ 
+   virtual void addEdge(uint32_t from, uint32_t to, uint32_t version=0);
+```
+
+The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by having two QueueSets, one including the nodes visited when starting at the source and the other one when starting at the target. +++
+
+* __PART 2:__
+
+* __PART 3:__
+
+## Optimizations
+//
+* Time:
+
+* Memory:
 
 ## Experiment Results
 
