@@ -20,7 +20,7 @@ bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
 }
 
 //TODO
-bool Pair::bfs(QueueSet& start, QueueSet& target, GrailIndex* grail_index) {
+int Pair::bfs(QueueSet& start, QueueSet& target, GrailIndex* grail_index) {
 	size_t size = start.size();
 	PairCursor pc(this);
 	uint32_t id;
@@ -28,14 +28,14 @@ bool Pair::bfs(QueueSet& start, QueueSet& target, GrailIndex* grail_index) {
 	for (size_t i = 0; i < size; ++i) {
 		pc.init(start.pop());
 		while (pc.next(&id)) {
-			if (grail_index->isReachableGrailIndex(id, target_top) == NO) return false;
+			if (grail_index->isReachableGrailIndex(id, target_top) == NO) return -1;
 			if (start.visited(id) == false) {
-				if (target.visited(id) == true) return true;
+				if (target.visited(id) == true) return 1;
 				start.push(id);
 			}
 		}
 	}
-	return false;
+	return 0;
 }
 
 long StaticGraph::question(uint32_t from, uint32_t to, SCC* scc, uint32_t sccId) {
@@ -51,12 +51,21 @@ long StaticGraph::question(uint32_t from, uint32_t to, SCC* scc, uint32_t sccId)
 	start.push(from);
 	target.push(to);
 
+	int result;
 	while (!start.empty() && !target.empty()) {
 		if (target.size() < start.size()) {
-			if (in.bfs(target, start, scc, sccId)) return lvl;
+			result = in.bfs(target, start, scc, sccId);
+			if (result == -1)
+				return -1;
+			else if (result == 1)
+				return lvl;
 		}
 		else {
-			if (out.bfs(start, target, scc, sccId)) return lvl;
+			result = out.bfs(start, target, scc, sccId);
+			if (result == -1)
+				return -1;
+			else if (result == 1) 
+				return lvl;
 		}
 		lvl++;
 	}
