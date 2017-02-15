@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
 				if (prevcom == 'Q') {
 					current_version += 1;
 				}
-				graph->addEdge(from, to, current_version);	// kainourgia add edge
+				graph->addEdge(from, to, current_version);
 			}
 			else if (com == 'Q') {
 				// Add a job to scheduler -----
@@ -117,7 +117,6 @@ int main(int argc, char** argv) {
 			job_scheduler.execute_all_jobs(cur_id);
 			job_scheduler.wait_all_tasks_finish();
 			job_scheduler.print_all_return_values();
-			//job_scheduler.initialize(); mporei na min xreiastei
 
 			for (uint32_t i=0; i<cur_id; i++)
 			{

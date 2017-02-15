@@ -50,11 +50,7 @@ Component** SCC::getComponents() {
 Graph& SCC::getHyperGraph() {
 	return hyper_graph;
 }
-/*
-uint32_t* SCC::getInvertedIndex() {
-	return id_belongs_to_component;
-}
-*/
+
 void SCC::increaseComponents() {
 	components_count++;
 	components = (Component**) realloc(components, sizeof(Component*)*components_count);

@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
 					graph.addEdge(from, to);
 				else if (com == 'Q')
 					cout << graph.question(from, to) << endl;
-//				graph.question(from, to);
 			}
 			myReadFile >> com;
 		}

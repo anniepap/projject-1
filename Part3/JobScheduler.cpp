@@ -6,7 +6,7 @@ using namespace std;
 
 void* ThreadWork(void* arg){
 	JobScheduler* job_scheduler = (JobScheduler*) arg;
-	Job cur_job(NULL);//change maybe
+	Job cur_job(NULL);
 	long ret;
 	while (1)
 	{

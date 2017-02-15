@@ -45,7 +45,6 @@ public:
 	void print();
 
 	void estimateStronglyConnectedComponents(Pair& pair);
-	//uint32_t* getInvertedIndex();
 };
 
 class ComponentCursor{

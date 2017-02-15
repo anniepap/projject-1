@@ -4,8 +4,6 @@
 #include "Job.h"
 #include "../Part1/Queue.h"
 
-// Prepei na doume an kanoume pio genikes tis domes h' den tha klironomei apo Queue
-
 class ListQueue : public Queue {
 	struct Node {
 		Job job;

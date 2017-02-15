@@ -15,7 +15,7 @@ class CC{
 	uint32_t number_of_update_index_queries;
 	uint32_t number_of_queries;
 
-	void rebuildIndexes();				// Tha mporousame na kanoume inverted pinaka gia min diatrexoume olo ton ccindex
+	void rebuildIndexes();				
 	bool OverflowThreshhold();
 	uint32_t findNodeConnectedComponentID(uint32_t nodeId);
 public:

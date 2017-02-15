@@ -7,7 +7,6 @@ void DynamicGraph::addEdge(uint32_t from, uint32_t to,uint32_t version) {
 
 long DynamicGraph::question(uint32_t from, uint32_t to,uint32_t version) {
 	return (cc->isPossiblyReachable(from, to)) ? Graph::question(from, to,version) : -1;
-	// prepei na doume poia sunartisi kaleitai edw
 }
 
 void DynamicGraph::init(void) {

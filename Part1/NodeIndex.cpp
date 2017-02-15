@@ -20,7 +20,7 @@ NodeIndex::~NodeIndex() {
 void NodeIndex::insertNode(uint32_t nodeId) {
 	if (capacity > nodeId) return;
 	size_t old_cap = capacity;
-	while (capacity <= nodeId) //kati pio eksupno?
+	while (capacity <= nodeId) 
 		capacity <<= 1;
 	table = (Node*) realloc(table, capacity*sizeof(Node));
 	for (size_t i = old_cap; i < capacity; ++i)

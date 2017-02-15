@@ -1,7 +1,7 @@
 #ifndef __ARRAY_STACK_H__
 #define __ARRAY_STACK_H__
 
-class Stack {					// Elegxthike
+class Stack {					
 	uint32_t size_of_stack;
 	uint32_t* array;
 	uint32_t size;

@@ -9,7 +9,7 @@
 #define ENDOFCURSOR 1
 #define ENDOFCOMPONENT 2
 
-class Collection {					// Elegxthike
+class Collection {					
 	uint32_t size_of_collection;
 	uint32_t* array;
 	uint32_t cur_pos;
@@ -21,7 +21,7 @@ public:
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class GraphPostOrderCursor {		// Elegxthike
+class GraphPostOrderCursor {		
 	Graph* graph;
 	bool undirected;
 	HashStack* stack;

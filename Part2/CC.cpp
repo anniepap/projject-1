@@ -75,7 +75,7 @@ UpdateIndex::UpdateIndex(uint32_t size):size(size){
 	index_list = new StackLinkedList*[size];
 	for (uint32_t i = 0; i < size; ++i){
 		index[i] = (uint32_t)-1;
-		index_list[i] = new StackLinkedList();					// Mporoume na min dimiourgoume gia ola. Na dimiourgoume mono otan xreiazetai
+		index_list[i] = new StackLinkedList();
 	}
 }
 
@@ -96,11 +96,10 @@ void UpdateIndex::MergeComponent(uint32_t componentS,uint32_t componentE){
 	uint32_t tcomponentS = component_belongs_to_component(componentS);
 	uint32_t tcomponentE = component_belongs_to_component(componentE);
 
-	// Same Component
 	if (tcomponentS==tcomponentE)
 		return;
 
-	uint32_t max,min;		// mporoume na epilegoume ws min auto me tin mikroteri lista gia megaluteri apodosi
+	uint32_t max,min;		
 	if (tcomponentS>tcomponentE){
 		max = tcomponentS;
 		min = tcomponentE;
