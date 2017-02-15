@@ -56,7 +56,7 @@ Queue, HashQueue, Set, QueueSet, HashSet
 
 An auxiliary class named UpdateIndex (__CC.h__ file) has been implemented, to simulate the idea that we need to know in O(1) if two connected components have been merged. We decided that a stack linked list is appropriate to represent this structure.
 
-A design technique that we believe makes part 2 handy, is that we seperated the static and the dynamic graph by implementing two different classes wich both inherit from class Graph.
+A design technique that we believe makes part 2 handy, is that we seperated the static and the dynamic graph by implementing two different classes which both inherit from class Graph.
 
 !!!!++
 
