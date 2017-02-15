@@ -87,4 +87,4 @@ obj/NodeIndex.o: Part1/NodeIndex.cpp Part1/NodeIndex.h Part1/defines.h Part2/SCC
 	g++ $(WFLAGS) -c Part1/NodeIndex.cpp -o obj/NodeIndex.o
 
 clean:
-	rm -rf Unit/*/CMakeFiles Unit/*/cmake_install.cmake Unit/*/runTests Unit/*/CMakeCache.txt Unit/*/Makefile out obj
+	rm -rf Unit/*/CMakeFiles Unit/*/cmake_install.cmake Unit/*/runTests Unit/*/CMakeCache.txt Unit/*/Makefile out out1 out2 obj
