@@ -21,7 +21,7 @@ public:
 	GRAIL_ANSWER isReachableGrailIndex(uint32_t source_node,uint32_t target_node);
 };
 
-class GrailIndexNode {
+struct GrailIndexNode {
 	uint32_t min_rank;
 	uint32_t rank;
 public:

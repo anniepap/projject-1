@@ -23,9 +23,9 @@ GrailIndex::GrailIndex(SCC* components): SizeOfIndex( components->getHyperGraph(
 			if (res==ENDOFCOMPONENT)
 				continue;
 
-			if (!IndexTables[curr_id][j].isSeted())
+			if (IndexTables[curr_id][j].isSeted())
 				continue;			
-						
+
 			uint32_t min_rank = -1;
 			graph_cursor.init(curr_id);
 			bool f = graph_cursor.next(&cur_edge);
@@ -59,8 +59,10 @@ GRAIL_ANSWER GrailIndex::isReachableGrailIndex(uint32_t source_node,uint32_t tar
 	if ( source_component == target_component )
 		return YES;
 
+	GrailIndexNode* target = IndexTables[target_component];
+	GrailIndexNode* source = IndexTables[source_component];
 	for(int i=0;i<NUMBEROFLABELS;i++){
-		if ( !IndexTables[target_component][i].isSubSet(IndexTables[source_component][i]) ){
+		if ( !target[i].isSubSet(source[i]) ){
 			return NO;
 		}
 	}
@@ -76,7 +78,8 @@ void GrailIndexNode::set(uint32_t min_rank, uint32_t rank) {
 }
 
 bool GrailIndexNode::isSeted(){
-	return rank!=0 && min_rank!=0;
+	//return rank!=0 && min_rank!=0;
+	return rank & min_rank;
 }
 
 uint32_t GrailIndexNode::MinRank() {

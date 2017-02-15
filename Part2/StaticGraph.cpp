@@ -19,15 +19,17 @@ bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
 	return false;
 }
 
+//TODO
 bool Pair::bfs(QueueSet& start, QueueSet& target, GrailIndex* grail_index) {
 	size_t size = start.size();
 	PairCursor pc(this);
-	uint32_t id,target_top=target.top();
+	uint32_t id;
+	uint32_t target_top=target.top();
 	for (size_t i = 0; i < size; ++i) {
 		pc.init(start.pop());
 		while (pc.next(&id)) {
 			if (grail_index->isReachableGrailIndex(id, target_top) == NO) return false;
-			if (start.visited(id) == false ) {
+			if (start.visited(id) == false) {
 				if (target.visited(id) == true) return true;
 				start.push(id);
 			}
@@ -63,56 +65,57 @@ long StaticGraph::question(uint32_t from, uint32_t to, SCC* scc, uint32_t sccId)
 }
 
 long StaticGraph::question(uint32_t from, uint32_t to, GrailIndex* grail_index) {
-		
-		if (to == from) return 0;
 
-		size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
+	if (to == from) return 0;
 
-		QueueSet start(max);
-		QueueSet target(max);
+	size_t max = (out.getCapacity() > in.getCapacity()) ? out.getCapacity() : in.getCapacity();
 
-		long lvl = 1;
+	QueueSet start(max);
+	QueueSet target(max);
 
-		start.push(from);
-		target.push(to);
+	long lvl = 1;
 
-		while (!start.empty() && !target.empty()) {
-			if (target.size() < start.size()) {
-				if (in.bfs(target, start, grail_index)) return lvl;
-			}
-			else {
-				if (out.bfs(start, target, grail_index)) return lvl;
-			}
-			lvl++;
+	start.push(from);
+	target.push(to);
+
+	while (!start.empty() && !target.empty()) {
+		if (target.size() < start.size()) {
+			if (in.bfs(target, start, grail_index)) return lvl;
 		}
+		else {
+			if (out.bfs(start, target, grail_index)) return lvl;
+		}
+		lvl++;
+	}
 
-		return -1;
+	return -1;
 
 }
-
 
 void StaticGraph::init(void) {
 	components = new SCC(*this);
 	grail_index = new GrailIndex(components);
 }
 
+#include <iostream>
 long StaticGraph::question(uint32_t from, uint32_t to,uint32_t version) {
 	GRAIL_ANSWER answer = grail_index->isReachableGrailIndex(from, to);
-
-	if (answer == NO)
-		return -1;
-	else if (answer == YES)
-		return components->estimateShortestPathStronglyConnectedComponents(from, to);
-	else
-		return question(from,to,grail_index);	
-		//return Graph::question(from, to);	
+	switch (answer)
+	{
+		case NO:
+			//std::cerr << "NO" << std::endl;
+			return -1;
+		case MAYBE:
+			//std::cerr << "MAYBE" << std::endl;
+			return question(from, to, grail_index);
+			//return Graph::question(from, to);	
+		case YES:
+			//std::cerr << "YES" << std::endl;
+			return components->estimateShortestPathStronglyConnectedComponents(from, to);
+	}
 }
 
 StaticGraph::~StaticGraph() {
 	delete components;
 	delete grail_index;
 }
-
-
-
-
