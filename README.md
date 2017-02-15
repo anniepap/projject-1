@@ -9,11 +9,11 @@
 
 ## Compile Instructions
 Every part produces its own output. 
-> ./out  (part1)
+> ./out  (part3)
 
-> ./out1 (part2)
+> ./out2 (part2)
 
-> ./out2 (part3)
+> ./out1 (part1)
 
 ### Derive exe file
 >make all
@@ -22,17 +22,11 @@ Every part produces its own output.
 >make clean
 
 ## Execution Instructions
-### Run tiny Dataset
->make tiny
-
-### Run small Dataset
->make small
-
-### Run medium Dataset
->make medium
+### Run Dataset
+> ./out graph.txt workload.txt
 
 ## Implementation Environment
-This project has been developed at Linux Platform but it was tested at Windows as well.
+This project has been developed at Linux Platform.
 
 ## Application Design
 
@@ -56,7 +50,9 @@ The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by ha
 The variety of structures that have been implemented to examine and achieve the quickest time in Part 1 are given namely below:  
 Queue, HashQueue, Set, QueueSet, HashSet
 
-!!!!!!!!!!ΚΑΤΙ ΓΙΑ ΤΟ pair cursor!!!!!!
+We considered necessary to create a structure (__PairCursor.h__ file) that iterates the Pair structure to find the neighbours of a specific id.
+
+We implemented unit testing by using [googletest](https://github.com/google/googletest).
 
 * __PART 2:__
 
@@ -64,17 +60,30 @@ An auxiliary class named UpdateIndex (__CC.h__ file) has been implemented, to si
 
 A design technique that we believe makes part 2 handy, is that we seperated the static and the dynamic graph by implementing two different classes which both inherit from class Graph.
 
-!!!!++
+We chose to simulate the dfs search that recursion is doing in Tarjan algorithm (__SCC.cpp__ file) by implementing a stack. The last element inserted in stack is being compared with the neighbour nodes according to their lowlink and index values.
+
+The function for creating hypergraph is being implemented in __SCC.cpp__ file with purose to use it later in grail.
+
+A useful approach to implement the Graph Post Order Cursor (__GraphPostOrderCursor.h__ file) was to make the class Collection that is being used to fastly produce random order for selecting the starting point of Grail.
 
 The variety of structures that have been implemented to examine and achieve the quickest time in Part 2 are given namely below:  
 ArrayStack, HashStack, StackLinkedList
 
+The quickest time of storing and accessing data has been proven to be HashStack.
+
+In order to satisfy the demands of the project we implemented the idea that when two nodes are not in the same strongly connected component then we ask grail according to their ids on hypergraph. Though the running seemed to be higher so these lines are commented and not included in the calculation of the result.
+
 * __PART 3:__
 
-!!!+++
+Both (__Job.h__ file) and (__JobScheduler.h__ file) include classes that have been implemented in such a way that is easily adaptable to other projects.
+
+Every thread is working in one job of the query, if there are no jobs then the thread blocks until other threads terminate.
+
+A (__ListQueue.h__ file) has been implemented beacause we thought it was the ideal structure to have quickly access to the query of jobs.
 
 ## Optimizations
 * Time:
+
 
 * Memory:
 
