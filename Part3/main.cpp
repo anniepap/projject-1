@@ -1,6 +1,6 @@
 
 #include "../Part2/StaticGraph.h"
-#include "../Part2/DynamicGraph.h"
+#include "MultiDynamicGraph.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 		graph = new StaticGraph();
 	}
 	else{
-		graph = new DynamicGraph();
+		graph = new MultiDynamicGraph();
 	}
 
 	// Read Graph

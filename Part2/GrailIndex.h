@@ -6,7 +6,7 @@
 #include "SCC.h"
 #include "GraphPostOrderCursor.h"
 
-#define NUMBEROFLABELS 2
+#define NUMBEROFLABELS 4
 enum GRAIL_ANSWER {NO=0, MAYBE=1, YES=2};
 
 class GrailIndexNode;

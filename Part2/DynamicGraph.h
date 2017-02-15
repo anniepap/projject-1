@@ -5,11 +5,12 @@
 #include "CC.h"
 
 class DynamicGraph : public Graph {
+protected:
 	CC* cc;
 public:
-	~DynamicGraph();
+	virtual ~DynamicGraph();
 	void addEdge(uint32_t from, uint32_t to, uint32_t version);
-	long question(uint32_t from, uint32_t to,uint32_t version);
+	virtual long question(uint32_t from, uint32_t to, uint32_t version);
 	void init(void);
 };
 

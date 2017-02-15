@@ -1,6 +1,6 @@
 PART1_OBJS = obj/Buffer.o obj/Graph.o obj/HashQueue.o obj/HashSet.o obj/NodeIndex.o obj/PairCursor.o obj/Queue.o obj/QueueSet.o
 PART2_OBJS = obj/CC.o obj/GrailIndex.o obj/GraphPostOrderCursor.o obj/HashStack.o obj/SCC.o obj/StackLinkedList.o obj/DynamicGraph.o obj/StaticGraph.o
-PART3_OBJS = obj/Job.o obj/JobScheduler.o obj/ListQueue.o
+PART3_OBJS = obj/Job.o obj/JobScheduler.o obj/ListQueue.o obj/MultiDynamicGraph.o
 MAIN_OBJ = obj/main.o
 MAIN1_OBJ = obj/main1.o
 MAIN2_OBJ = obj/main2.o
@@ -11,10 +11,10 @@ all: mkdir out out1 out2
 mkdir:
 	mkdir -p obj
 
-out1: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN1_OBJ)
+out1: $(PART1_OBJS) $(MAIN1_OBJ)
 	g++ $(WFLAGS) $(PART1_OBJS) $(MAIN1_OBJ) -o out1
 
-out2: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN2_OBJ)
+out2: $(PART1_OBJS) $(PART2_OBJS) $(MAIN2_OBJ)
 	g++ $(WFLAGS) $(PART1_OBJS) $(PART2_OBJS) $(MAIN2_OBJ) -o out2
 
 out: $(PART1_OBJS) $(PART2_OBJS) $(PART3_OBJS) $(MAIN_OBJ)
@@ -62,7 +62,7 @@ obj/HashSet.o: Part1/HashSet.cpp Part1/HashSet.h
 obj/main1.o: obj/Graph.o ./Part1/main.cpp
 	g++ $(WFLAGS) -c ./Part1/main.cpp -o obj/main1.o
 
-obj/main2.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part2/main.cpp
+obj/main2.o: obj/MultiDynamicGraph.o obj/StaticGraph.o ./Part2/main.cpp
 	g++ $(WFLAGS) -c ./Part2/main.cpp -o obj/main2.o
 
 obj/main.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part3/main.cpp
@@ -70,6 +70,9 @@ obj/main.o: obj/DynamicGraph.o obj/StaticGraph.o ./Part3/main.cpp
 
 obj/QueueSet.o: obj/HashSet.o obj/HashQueue.o Part1/QueueSet.cpp Part1/QueueSet.h Part1/defines.h
 	g++ $(WFLAGS) -c Part1/QueueSet.cpp -o obj/QueueSet.o
+
+obj/MultiDynamicGraph.o: obj/DynamicGraph.o Part3/MultiDynamicGraph.cpp Part3/MultiDynamicGraph.h
+	g++ $(WFLAGS) -c Part3/MultiDynamicGraph.cpp -o obj/MultiDynamicGraph.o
 
 obj/DynamicGraph.o: obj/Graph.o Part2/DynamicGraph.cpp Part2/DynamicGraph.h
 	g++ $(WFLAGS) -c Part2/DynamicGraph.cpp -o obj/DynamicGraph.o
