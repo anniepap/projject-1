@@ -8,6 +8,7 @@
 [Papachristou Anna](https://github.com/anniepap)
 
 ## Compile Instructions
+Every part produces its own output. (./out for part1, ./out1 for part2, ./out for part3)
 ### Derive exe file
 >make all
 
@@ -44,14 +45,29 @@ When the time comes to add an edge in a pair (__Graph.cpp__ file, void Pair::add
    virtual void addEdge(uint32_t from, uint32_t to, uint32_t version=0);
 ```
 
-The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by having two QueueSets, one including the nodes visited when starting at the source and the other one when starting at the target. +++
+The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by having two QueueSets, one including the nodes visited when starting at the source and the other one when starting at the target. BBFS extends the queue set with the least elements.
+
+The variety of structures that have been implemented to examine and achieve the quickest time in Part 1 are given namely below:  
+Queue, HashQueue, Set, QueueSet, HashSet
+
+!!!!!!!!!!ΚΑΤΙ ΓΙΑ ΤΟ pair cursor!!!!!!
 
 * __PART 2:__
 
+An auxiliary class named UpdateIndex (__CC.h__ file) has been implemented, to simulate the idea that we need to know in O(1) if two connected components have been merged. We decided that a stack linked list is appropriate to represent this structure.
+
+A design technique that we believe makes part 2 handy, is that we seperated the static and the dynamic graph by implementing two different classes wich both inherit from class Graph.
+
+!!!!++
+
+The variety of structures that have been implemented to examine and achieve the quickest time in Part 2 are given namely below:  
+ArrayStack, HashStack, StackLinkedList
+
 * __PART 3:__
 
+!!!+++
+
 ## Optimizations
-//
 * Time:
 
 * Memory:
