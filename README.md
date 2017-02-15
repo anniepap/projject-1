@@ -45,11 +45,6 @@ When the time comes to add an edge in a pair (__Graph.cpp__ file, void Pair::add
    virtual void addEdge(uint32_t from, uint32_t to, uint32_t version=0);
 ```
 
-The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by having two QueueSets, one including the nodes visited when starting at the source and the other one when starting at the target. BBFS extends the queue set with the least elements.
-
-The variety of structures that have been implemented to examine and achieve the quickest time in Part 1 are given namely below:  
-Queue, HashQueue, Set, QueueSet, HashSet
-
 We considered necessary to create a structure (__PairCursor.h__ file) that iterates the Pair structure to find the neighbours of a specific id.
 
 We implemented unit testing by using [googletest](https://github.com/google/googletest).
@@ -82,11 +77,37 @@ Every thread is working in one job of the query, if there are no jobs then the t
 A (__ListQueue.h__ file) has been implemented beacause we thought it was the ideal structure to have quickly access to the query of jobs.
 
 ## Optimizations
-* Time:
 
+* __Time:__
+
+The Bidirectional Breadth First Search (__Graph.cpp__ file) is implemented by having two QueueSets, one including the nodes visited when starting at the source and the other one when starting at the target. BBFS extends the queue set with the least elements rather than extending each side once at a time. This method helps to minimize the execution time because we expect having more "no" than "yes".
+
+This code below is fragment optimizations that reduces comparisons.
+```c++ 
+   // return rank!=0 && min_rank!=0;
+   return rank & min_rank;
+   
+   // if (start.visited(id) == false && sccNid == sccId)
+   if (sccNid == sccId && start.visited(id) == false) {...}
+```
 
 * Memory:
 
 ## Experiment Results
 
+We were curious if a bfs would do the job as quick as a bbfs, so we implemented a bfs and executed the algorithm. The results proved that a bbfs algorithm was clearly more efficient for large datasets.
+
+The execution of the project gives results always lower than 1.5gb for the static and 3.5gb for the dynamic input.
+
+Threashold constant value is set to 0.03 because it is a reasonable value for medium dataset but for large datasets there is no point giving threashod a value because the number of queries to index is negligible. Just because the value of 0.03 is pretty small there is no difference in execution time.
+
+Experiments also proved that when the value of NUMBEROFLABELS is set higher (e.g. 4 instead of 2) in large datasets the execution time is better. On the other hand, for smaller datasets higher value is better to be avoided. 
+
+As far as the constants in __defines.h__ file are considered, we chose that the NODEHASH has value 2 only because this value the project authors demanded. Also LISTNODECAPACITY value is set to 5 based on the experiments we executed. A higher value would allocate huger amount of memory which would slow down the computer during the execution.
+
 ## Suitable Structures
+
+Initially, Set and Queue are abstract classes that contribute to the implementation of a variety of structures thar are given namely below:
+HashQueue, ArrayQueue, LinkedListQueue
+
+The purpose was to examine and achieve the quickest time. We conluded that HashQueue was the ideal structure based on access time.
