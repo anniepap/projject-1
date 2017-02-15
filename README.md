@@ -8,7 +8,13 @@
 [Papachristou Anna](https://github.com/anniepap)
 
 ## Compile Instructions
-Every part produces its own output. (./out for part1, ./out1 for part2, ./out for part3)
+Every part produces its own output. 
+> ./out  (part1)
+
+> ./out1 (part2)
+
+> ./out2 (part3)
+
 ### Derive exe file
 >make all
 
