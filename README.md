@@ -119,4 +119,4 @@ The number of threads is set to 16 because this was the appropriate number for t
 Initially, Set and Queue are abstract classes that contribute to the implementation of a variety of structures thar are given namely below:
 HashQueue, ArrayQueue, LinkedListQueue
 
-The purpose was to examine and achieve the quickest time. We conluded that HashQueue was the ideal structure based on access time.
+The purpose was to examine and achieve the quickest time. We concluded that HashQueue was the ideal structure based on access time.
