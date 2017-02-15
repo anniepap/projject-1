@@ -10,7 +10,7 @@ bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
 		pc.init(start.pop());
 		while (pc.next(&id)) {
 			sccNid = scc->findNodeStronglyConnectedComponentID(id);
-			if (start.visited(id) == false && sccNid == sccId) {
+			if (sccNid == sccId && start.visited(id) == false) {
 				if (target.visited(id) == true) return true;
 				start.push(id);
 			}
@@ -19,7 +19,6 @@ bool Pair::bfs(QueueSet& start, QueueSet& target, SCC* scc, uint32_t sccId) {
 	return false;
 }
 
-//TODO
 int Pair::bfs(QueueSet& start, QueueSet& target, GrailIndex* grail_index) {
 	size_t size = start.size();
 	PairCursor pc(this);
@@ -112,14 +111,11 @@ long StaticGraph::question(uint32_t from, uint32_t to,uint32_t version) {
 	switch (answer)
 	{
 		case NO:
-			//std::cerr << "NO" << std::endl;
 			return -1;
 		case MAYBE:
-			//std::cerr << "MAYBE" << std::endl;
-			return question(from, to, grail_index);
-			//return Graph::question(from, to);	
-		case YES:
-			//std::cerr << "YES" << std::endl;
+			//return question(from, to, grail_index);
+			return Graph::question(from, to, version);	
+		default:
 			return components->estimateShortestPathStronglyConnectedComponents(from, to);
 	}
 }
