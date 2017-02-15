@@ -91,8 +91,6 @@ This code below is fragment optimizations that reduces comparisons.
    if (sccNid == sccId && start.visited(id) == false) {...}
 ```
 
-* Memory:
-
 ## Experiment Results
 
 We were curious if a bfs would do the job as quick as a bbfs, so we implemented a bfs and executed the algorithm. The results proved that a bbfs algorithm was clearly more efficient for large datasets.
@@ -104,6 +102,17 @@ Threashold constant value is set to 0.03 because it is a reasonable value for me
 Experiments also proved that when the value of NUMBEROFLABELS is set higher (e.g. 4 instead of 2) in large datasets the execution time is better. On the other hand, for smaller datasets higher value is better to be avoided. 
 
 As far as the constants in __defines.h__ file are considered, we chose that the NODEHASH has value 2 only because this value the project authors demanded. Also LISTNODECAPACITY value is set to 5 based on the experiments we executed. A higher value would allocate huger amount of memory which would slow down the computer during the execution.
+
+The number of threads is set to 16 because this was the appropriate number for the architecture of the machine where the project was executed.
+
+## Execution Times
+
+| Part       | Small | Medium/Dynamic | Medium/Static | Large/Dynamic  | Large/Static |
+| ---------- |:-----:|:--------------:|:-------------:|:--------------:|:------------:|
+| Part1      |0' 2"  |0' 31"          |0' 29"         |                |              |
+| Part2      |0' 1"  |0' 17"          |0' 9"          |                |              |
+| Part3      |0' 1"  |0' 9"           |0' 7"          |19' 0"          |12' 0"        |
+
 
 ## Suitable Structures
 
